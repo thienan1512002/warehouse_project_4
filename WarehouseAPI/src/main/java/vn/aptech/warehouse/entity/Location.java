@@ -20,7 +20,9 @@ public class Location {
     private String loc_code;
     private String loc_desc;
     private boolean loc_status;
+    private String loc_type;
     private double loc_cap;
+    private double loc_remain;
     private double loc_holding;
     private double loc_outgo;
     private boolean flammable;
