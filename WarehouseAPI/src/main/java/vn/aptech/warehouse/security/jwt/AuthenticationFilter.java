@@ -26,7 +26,7 @@ public class AuthenticationFilter extends OncePerRequestFilter{
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     
-    private static final Logger logger = LoggerFactory.
+    private static final Logger logger = LoggerFactory.;
     
 
     @Override
