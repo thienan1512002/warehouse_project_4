@@ -35,9 +35,10 @@ create table supplier
 	TaxCode varchar(max),
 	active bit
 )
-create table users
+go
+create table [user]
 (
-	id int identity primary key , 
+	id int primary key identity , 
 	username varchar(20),
 	email varchar(50),
 	[password] varchar(120)
@@ -53,7 +54,7 @@ create table user_role
 (
 	id int primary key identity , 
 	role_id int foreign key references role,
-	user_id int foreign key references user
+	[user_id] int foreign key references [user]
 )
 go
 create table permission(

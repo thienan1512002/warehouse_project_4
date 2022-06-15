@@ -5,6 +5,8 @@
 package vn.aptech.warehouse.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -33,7 +35,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="user",
+@Table(name="users",
         uniqueConstraints = {
             @UniqueConstraint(columnNames = "username"),
             @UniqueConstraint(columnNames = "email")
@@ -41,7 +43,7 @@ import lombok.NoArgsConstructor;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     
     @NotBlank
     @Size(max = 20)
@@ -55,13 +57,15 @@ public class User implements Serializable {
     @NotBlank
     @Size(max = 120)
     private String password;
+
+
     
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinTable(name="user_role",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id"))
-    private Set<Role> roles = new HashSet<>();
-    
+//    @JoinTable(name="user_role",
+//            joinColumns = @JoinColumn(name="user_id"),
+//            inverseJoinColumns = @JoinColumn(name="role_id"))
+//    private Set<Role> roles = new HashSet<>();
+    private Collection<Role> roles = new ArrayList<>();
     
     
     
