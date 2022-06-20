@@ -29,15 +29,15 @@ public class WarehouseApplication {
 //                userService.saveRole(new Role(0,"ROLE_ADMIN"));
 ////                
 //                  userService.saveUser(new User(0,"long", "long@gmail.com", "123", new ArrayList<>()));
-////                userService.saveUser(new User(0,"hien", "hien@gmail.com", "123", new ArrayList<>()));
-////                userService.saveUser(new User(0,"dung", "dung@gmail.com", "123", new ArrayList<>()));
-////                userService.saveUser(new User(0,"tuan", "tuan@gmail.com", "123", new ArrayList<>()));
+//                userService.saveUser(new User(0,"hien", "hien@gmail.com", "123", new ArrayList<>()));
+//                userService.saveUser(new User(0,"dung", "dung@gmail.com", "123", new ArrayList<>()));
+//                userService.saveUser(new User(0,"tuan", "tuan@gmail.com", "123", new ArrayList<>()));
 //                    userService.addRoleToUser("long", "ROLE_USER");
-////                userService.addRoleToUser("hien", "ROLE_USER");
-////                userService.addRoleToUser("hien", "ROLE_ADMIN");
-////                userService.addRoleToUser("hien", "ROLE_MANAGER");
-////                userService.addRoleToUser("dung", "ROLE_MANAGER");
-////                userService.addRoleToUser("tuan", "ROLE_ADMIN");
+//                userService.addRoleToUser("hien", "ROLE_USER");
+//                userService.addRoleToUser("hien", "ROLE_ADMIN");
+//                userService.addRoleToUser("hien", "ROLE_MANAGER");
+//                userService.addRoleToUser("dung", "ROLE_MANAGER");
+//                userService.addRoleToUser("tuan", "ROLE_ADMIN");
 //                
 //            };
 //        }
