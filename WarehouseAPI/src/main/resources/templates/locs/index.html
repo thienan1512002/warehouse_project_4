@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Warehouse</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Location Lists</h1>
+
+
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <button  class="btn btn-primary" id="btnShow">
+                        <i class="fa-solid fa-plus"></i> Add New Locations
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblLoc" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Location code</th>
+                                    <th>Description</th>
+                                    <th>Loc Type</th>
+                                    <th>Loc Capacity</th>
+                                    <th>Loc Remain</th>
+                                    <th>Flammable</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="loc:${locs}">
+                                    <td><button th:text="${loc.loc_code}" class="btn btn-primary" th:id="${loc.loc_code}"></button></td>
+                                    <td th:text="${loc.loc_desc}"></td>
+                                    <td th:text="${loc.loc_type}"></td>
+                                    <td th:text="${loc.loc_cap}"></td>
+                                    <td th:text="${loc.loc_remain}"></td>
+                            <div th:if="${loc.flammable}">
+                                <td><span class="badge badge-danger">Flammable</span></td>
+                            </div>
+                            <div th:unless="${loc.flammable}">
+                                <td><span class="badge badge-sucess">Not Flammable</span></td>
+                            </div>
+                            <div th:if="${loc.loc_status}">
+                                <td><span class="badge badge-success">Active</span></td>
+                            </div>
+                            <div th:unless="${loc.loc_status}">
+                                <td><span class="badge badge-info">Inactive</span></td>
+                            </div>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--             Modal 
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add new warehouse</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group col-4">
+                                                <label for="wh_code">Warehouse code</label>
+                                                <input id="wh_code" class="form-control"/> 
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <label for="wh_desc">Description</label>
+                                                <input id="wh_desc" class="form-control"/> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label for="wh_cmt">Status</label>
+                                                <textarea class="form-control" id="wh_cmt">
+                                                    
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+            <!--             Modal 
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit warehouse</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <input type="hidden" id="wh_editCode" class="form-control" readonly/>
+                                            <div class="form-group col-8">
+                                                <label for="wh_desc">Description</label>
+                                                <input id="wh_editDesc" class="form-control"/> 
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="form-check-label" for="wh_editStatus">Active</label>
+                                                <div class="form-check form-switch">
+                                                    <input type="checkbox" id="wh_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label for="wh_editCmt">Comment</label>
+                                                <textarea class="form-control" id="wh_editCmt">
+                                                    
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnEdit">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#tblLoc').dataTable();
+                });
+            </script>
+        </div>
+    </body>
+</html>
