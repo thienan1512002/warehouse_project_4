@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.aptech.warehouse.entity.Location;
 import vn.aptech.warehouse.entity.Supplier;
 import vn.aptech.warehouse.service.SupplierService;
 
@@ -33,20 +32,10 @@ public class SuppliersController {
     public List<Supplier> findAll(){
         return service.findAll();
     }
-    
-    @GetMapping(value="/{TaxCode}")
-    public List<Supplier> findByTaxCode(@PathVariable("TaxCode") String TaxCode){
-        return service.findByTaxCode(TaxCode);
-    }
-    
-    @GetMapping(value="/{name}")
-    public List<Supplier> findByName(@PathVariable("name") String sup_name){
-        return service.findByName(sup_name);
-    }
-    
+
     @GetMapping(value="/details/{id}")
-    public Optional<Supplier> findByCode(@PathVariable("id") String sup_code){
-        return service.findByCode(sup_code);
+    public Optional<Supplier> findBySupCode(@PathVariable("id") String sup_code){
+        return service.findBySupCode(sup_code);
     }
     
     @PostMapping(value="")

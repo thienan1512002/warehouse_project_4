@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
  * @author thien
  */
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name="supplier")
 public class Supplier {
     @Id
