@@ -53,9 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-//          http.authorizeHttpRequests().antMatchers("/home/login/**").permitAll();
-//        http.authorizeHttpRequests().antMatchers("/**").authenticated();
-//        http.authorizeHttpRequests().antMatchers("/create","/save").hasRole("ADMIN");
+//          http.authorizeHttpRequests().antMatchers("/home/login").permitAll();
+//        //http.authorizeHttpRequests().anyRequest().authenticated();
+//        http.authorizeHttpRequests().antMatchers("/create","/save").hasRole("ROLE_  ADMIN");
 //        http.authorizeHttpRequests().and().formLogin()
 //                .loginProcessingUrl("/j_spring_security_check")
 //                .loginPage("/home/login")
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //                .defaultSuccessUrl("/warehouse")
 //                .failureUrl("/login?error=true")
 //                .and().logout().logoutUrl("/logout")
-//                .logoutSuccessUrl("/login")
+//                .logoutSuccessUrl("/home/login")
 //                .and().exceptionHandling().accessDeniedPage("/403");
 //        http.authorizeHttpRequests().and().rememberMe()
 //                .tokenRepository(persistentTokenRepository())
