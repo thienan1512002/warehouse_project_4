@@ -41,33 +41,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-//        //customAuthenticationFilter.setFilterProcessesUrl("api/login");
-//        http.csrf().disable();
-//        http.sessionManagement().sessionCreationPolicy(STATELESS);
-//        //truy cap cong khai them duong dan vao antMatchers("")
-//        http.authorizeRequests().antMatchers("/login","/api/token/refresh/**","/home/test-layout","/**","/warehouse/*" ,"/api/warehouses/**","/locs/**").permitAll();
-//        http.authorizeRequests().antMatchers(GET,"/api/users/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(POST,"/api/users/user/save/**").hasAnyAuthority("ROLE_ADMIN");
-//        http.authorizeRequests().anyRequest().authenticated();
-//        http.addFilter(customAuthenticationFilter);
-//        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-          http.authorizeHttpRequests().antMatchers("/home/login").permitAll();
-        http.authorizeHttpRequests().antMatchers("/**").authenticated();
-        http.authorizeHttpRequests().antMatchers("/create","/save").hasRole("ADMIN");
-        http.authorizeHttpRequests().and().formLogin()
-                .loginProcessingUrl("/j_spring_security_check")
-                .loginPage("/home/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/warehouse")
-                .failureUrl("/login?error=true")
-                .and().logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .and().exceptionHandling().accessDeniedPage("/403");
-        http.authorizeHttpRequests().and().rememberMe()
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(24*60*60);
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        //customAuthenticationFilter.setFilterProcessesUrl("api/login");
+        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(STATELESS);
+        //truy cap cong khai them duong dan vao antMatchers("")
+        http.authorizeRequests().antMatchers("/home/login","/api/token/refresh/**","/home/test-layout","/**","/warehouse/*" ,"/api/warehouses/**","/locs/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/api/users/**").hasAnyAuthority("ROLE_USER");
+        http.authorizeRequests().antMatchers(POST,"/api/users/user/save/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().anyRequest().authenticated();
+        http.addFilter(customAuthenticationFilter);
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+//          http.authorizeHttpRequests().antMatchers("/home/login/**").permitAll();
+//        http.authorizeHttpRequests().antMatchers("/**").authenticated();
+//        http.authorizeHttpRequests().antMatchers("/create","/save").hasRole("ADMIN");
+//        http.authorizeHttpRequests().and().formLogin()
+//                .loginProcessingUrl("/j_spring_security_check")
+//                .loginPage("/home/login")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/warehouse")
+//                .failureUrl("/login?error=true")
+//                .and().logout().logoutUrl("/logout")
+//                .logoutSuccessUrl("/login")
+//                .and().exceptionHandling().accessDeniedPage("/403");
+//        http.authorizeHttpRequests().and().rememberMe()
+//                .tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(24*60*60);
     }
     @Bean
     @Override
