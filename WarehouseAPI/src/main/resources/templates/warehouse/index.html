@@ -132,12 +132,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $(document).ready(function () {
+                    $('.nav-warehouse').addClass('active');
                     $('#tblWh').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
                     });
                     $('#btnAdd').click(function () {
-                        const account = {
+                        const warehouse = {
                             wh_code: $('#wh_code').val(),
                             wh_desc: $('#wh_desc').val(),
                             wh_status: 1,
@@ -148,7 +149,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             url: '/warehouse/save',
                             type: 'POST',
                             contentType: "application/json",
-                            data: JSON.stringify(account),
+                            data: JSON.stringify(warehouse),
                             success: function (res) {
                                 if (res === 200) {
                                     Swal.fire(
@@ -161,11 +162,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 }
                             }
                         });
-                        console.log(account);
+                        console.log(warehouse);
                         $('#exampleModal').modal('hide');
                     });
                     $('#btnEdit').click(function () {
-                        const account = {
+                        const warehouse = {
                             wh_code: $('#wh_editCode').val(),
                             wh_desc: $('#wh_editDesc').val(),
                             wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
@@ -176,7 +177,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             url: `api/warehouses/${$('#wh_editCode').val()}`,
                             type: 'PUT',
                             contentType: "application/json",
-                            data: JSON.stringify(account),
+                            data: JSON.stringify(warehouse),
                             success: function (res) {
                                 if (res === 200) {
                                     Swal.fire(
@@ -189,7 +190,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 }
                             }
                         });
-                        console.log(account);
+                        console.log(warehouse);
 
                     });
                 });

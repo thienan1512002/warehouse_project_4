@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
     <head>
-        <title>Warehouse</title>
+        <title>Locations</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -20,7 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <button  class="btn btn-primary" id="btnShow">
+                    <button class="btn btn-primary" id="btnShow">
                         <i class="fa-solid fa-plus"></i> Add New Locations
                     </button>
                 </div>
@@ -40,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </thead>
                             <tbody>
                                 <tr th:each="loc:${locs}">
-                                    <td><button th:text="${loc.loc_code}" class="btn btn-primary" th:id="${loc.loc_code}"></button></td>
+                                    <td><button th:text="${loc.loc_code}" class="btn btn-primary" th:id="${loc.loc_code}" th:onclick="editLoc([[${loc.loc_code}]])"></button></td>
                                     <td th:text="${loc.loc_desc}"></td>
                                     <td th:text="${loc.loc_type}"></td>
                                     <td th:text="${loc.loc_cap}"></td>
@@ -49,7 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <td><span class="badge badge-danger">Flammable</span></td>
                             </div>
                             <div th:unless="${loc.flammable}">
-                                <td><span class="badge badge-sucess">Not Flammable</span></td>
+                                <td><span class="badge badge-success">Not Flammable</span></td>
                             </div>
                             <div th:if="${loc.loc_status}">
                                 <td><span class="badge badge-success">Active</span></td>
@@ -63,88 +63,219 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                 </div>
             </div>
-            <!--             Modal 
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add new warehouse</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="form-group col-4">
-                                                <label for="wh_code">Warehouse code</label>
-                                                <input id="wh_code" class="form-control"/> 
-                                            </div>
-                                            <div class="form-group col-8">
-                                                <label for="wh_desc">Description</label>
-                                                <input id="wh_desc" class="form-control"/> 
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-12">
-                                                <label for="wh_cmt">Status</label>
-                                                <textarea class="form-control" id="wh_cmt">
-                                                    
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
 
-            <!--             Modal 
-                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit warehouse</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <input type="hidden" id="wh_editCode" class="form-control" readonly/>
-                                            <div class="form-group col-8">
-                                                <label for="wh_desc">Description</label>
-                                                <input id="wh_editDesc" class="form-control"/> 
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label class="form-check-label" for="wh_editStatus">Active</label>
-                                                <div class="form-check form-switch">
-                                                    <input type="checkbox" id="wh_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-12">
-                                                <label for="wh_editCmt">Comment</label>
-                                                <textarea class="form-control" id="wh_editCmt">
-                                                    
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="btnEdit">Save changes</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add new locations</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="wh_code">Location code</label>
+                                    <input id="loc_code" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-8">
+                                    <label for="wh_desc">Description</label>
+                                    <input id="loc_desc" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="wh_code">Warehouse</label>
+                                    <select class="form-control" id="wh_code">
+                                        <option th:each="wh : ${warehouses}" th:value="${wh.wh_code}" th:text="${wh.wh_desc}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="loc_type">Location type</label>
+                                    <select class="form-control" id="loc_type">
+                                        <option value="Fixed location">Fixed location</option>
+                                        <option value="MFG location">MFG location</option>
+                                        <option value="Temporary location">Temporary location</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="loc_cap">Capacity</label>
+                                    <input type="number" class="form-control" id="loc_cap"/>
+                                </div>
+                                <div class="form-group  col-4" >
+                                    <label for="flammable" class="form-check-label">Flammable</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="flammable" style="cursor:pointer; margin-top: 20px"/>
                                     </div>
                                 </div>
                             </div>
-                        </div>-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Location</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="hidden" id="loc_editCode" class="form-control" readonly/>
+                                <input type="hidden" id="loc_editType" class="form-control" readonly/>
+                                <input type="hidden" id="loc_editRemain" class="form-control" readonly/>
+                                <input type="hidden" id="loc_editHolding" class="form-control" readonly/>
+                                <input type="hidden" id="loc_editOutgo" class="form-control" readonly/>
+                                <input type="hidden" id="wh_editCode" class="form-control" readonly/>
+                                <div class="form-group col-8">
+                                    <label for="loc_editDesc">Description</label>
+                                    <input id="loc_editDesc" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="loc_editCap">Capacity</label>
+                                    <input type="number" id="loc_editCap" class="form-control"/> 
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-1">
+                                    <label class="form-check-label" for="loc_editStatus">Active</label>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" id="loc_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-1">
+                                    <label class="form-check-label" for="edit_flammable">Flammable</label>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" id="edit_flammable" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnEdit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $(document).ready(function () {
+                    $('.nav-locs').addClass("active");
                     $('#tblLoc').dataTable();
+                    $('#btnShow').click(function () {
+                        $('#exampleModal').modal('show');
+                    });
+
+                    $('#btnAdd').click(function () {
+                        const location = {
+                            loc_code: $('#loc_code').val(),
+                            loc_desc: $('#loc_desc').val(),
+                            loc_status: 1,
+                            loc_cap: $('#loc_cap').val(),
+                            loc_type: $('#loc_type :selected').val(),
+                            loc_remain: $('#loc_cap').val(),
+                            loc_holding: 0,
+                            loc_outgo: 0,
+                            wh_code: $('#wh_code :selected').val(),
+                            flammable: $('#flammable').is(":checked") ? 1 : 0
+                        };
+                        $.ajax({
+                            url: '/locs/save',
+                            type: 'POST',
+                            contentType: "application/json",
+                            data: JSON.stringify(location),
+                            success: function (res) {
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Add new Location success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                    });
+                    
+                    $('#btnEdit').click(function(){
+                         const location = {
+                            loc_code: $('#loc_editCode').val(),
+                            loc_desc: $('#loc_editDesc').val(),
+                            loc_status: $('#loc_editStatus').is(":checked") ? 1 : 0,
+                            loc_cap: $('#loc_editCap').val(),
+                            loc_type: $('#loc_editType').val(),
+                            loc_remain: $('#loc_editRemain').val(),
+                            loc_holding: $('#loc_editHolding').val(),
+                            loc_outgo: $('#loc_editOutgo').val(),
+                            wh_code: $('#wh_editCode').val(),
+                            flammable: $('#edit_flammable').is(":checked") ? 1 : 0
+                        };
+                        $.ajax({
+                            url: `api/locs/update/${$('#loc_editCode').val()}`,
+                            type: 'PUT',
+                            contentType: "application/json",
+                            data: JSON.stringify(location),
+                            success: function (res) {
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Edit new Location success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                    });
+                    
                 });
+
+                const editLoc = (id) => {
+                    $('#editModal').modal("show");
+                    console.log(id);
+                    $.ajax({
+                        url: `/api/locs/details/${id}`,
+                        type: 'GET',
+                        success: function (data) {
+                            console.log(data);
+                            $('#loc_editCode').val(data.loc_code);
+                            $('#loc_editType').val(data.loc_type);
+                            $('#loc_editRemain').val(data.loc_remain);
+                            $('#loc_editHolding').val(data.loc_holding);
+                            $('#loc_editOutgo').val(data.loc_outgo);
+                            $('#loc_editDesc').val(data.loc_desc);
+                            $('#loc_editCap').val(data.loc_cap);
+                            $('#wh_editCode').val(data.wh_code);
+                            if (data.loc_status === true) {
+                                $('#loc_editStatus').prop('checked', true);
+                            } else {
+                                $('#loc_editStatus').prop('checked', false);
+                            }
+
+                            if (data.flammable === true) {
+                                $('#edit_flammable').prop('checked', true);
+                            } else {
+                                $('#edit_flammable').prop('checked', false);
+                            }
+                        }
+                    })
+                }
             </script>
         </div>
     </body>

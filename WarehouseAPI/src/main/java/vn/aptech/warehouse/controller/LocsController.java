@@ -48,6 +48,6 @@ public class LocsController {
     @PutMapping(value="/update/{id}")
      public ResponseEntity updateLocation(@PathVariable("id") String loc_code,@RequestBody Location loc){
        Location location = service.save(loc);
-       return ResponseEntity.ok(location);
+       return ResponseEntity.ok(200);
     }
 }
