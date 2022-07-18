@@ -27,18 +27,8 @@ public class SupplierServiceImpl implements SupplierService{
     }
 
     @Override
-    public List<Supplier> findByTaxCode(String TaxCode) {
-        return repo.findByTaxCode(TaxCode);
-    }
-
-    @Override
-    public List<Supplier> findByName(String sup_name) {
-        return repo.findByName(sup_name);
-    }
-
-    @Override
-    public Optional<Supplier> findByCode(String sup_code) {
-        return repo.findByCode(sup_code);
+    public Optional<Supplier> findBySupCode(String sup_code) {
+        return repo.findBySupCode(sup_code);
     }
 
     @Override

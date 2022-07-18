@@ -16,11 +16,7 @@ public interface SupplierService {
     
     List<Supplier> findAll();
     
-    List<Supplier> findByTaxCode(String TaxCode);
-    
-    List<Supplier> findByName(String sup_name);
-    
-    Optional<Supplier> findByCode(String sup_code);
+    Optional<Supplier> findBySupCode(String sup_code);
     
     Supplier save(Supplier sup);
 }

@@ -16,12 +16,6 @@ import vn.aptech.warehouse.entity.Supplier;
  * @author thien
  */
 public interface SupplierRepository extends JpaRepository<Supplier, Object>{
-    @Query("SELECT o from Supplier o where o.TaxCode=:TaxCode")
-    List<Supplier> findByTaxCode(@Param("TaxCode")String TaxCode);
-    
-    @Query("SELECT a from Supplier a where a.sup_name=:sup_name")
-    List<Supplier> findByName(@Param("sup_name")String sup_name);
-    
-    @Query("SELECT b from Supplier b where b.sup_code=:sup_code")
-    Optional<Supplier> findByCode(@Param("sup_code")String sup_code);
+    @Query("SELECT b FROM Supplier b WHERE b.sup_code=:sup_code")
+    Optional<Supplier> findBySupCode(@Param("sup_code")String sup_code);
 }
