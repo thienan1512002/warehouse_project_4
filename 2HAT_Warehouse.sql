@@ -1,3 +1,10 @@
+use master 
+go
+
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'warehouse') 
+DROP DATABASE [warehouse] 
+GO
+
 create database warehouse
 go
 use warehouse
@@ -11,6 +18,7 @@ create table warehouses
 	wh_cmt varchar(max)
 )
 go
+
 create table [location]
 (
 	loc_code varchar(100) primary key ,
@@ -25,6 +33,7 @@ create table [location]
 	flammable bit
 )
 go
+
 create table supplier
 (
 	sup_code varchar(100) primary key,
@@ -35,39 +44,40 @@ create table supplier
 	TaxCode varchar(max),
 	active bit
 )
-create table users
+go
+
+create table [users]
 (
-	id int identity primary key , 
+	id int primary key identity , 
 	username varchar(20),
 	email varchar(50),
 	[password] varchar(120)
 )
 go
-create table role 
+
+create table roles
 (
-	role_id int primary key identity ,
-	role_name nvarchar(max),
-)
-go
-create table user_role
-(
-	id int primary key identity , 
-	role_id int foreign key references role,
-	user_id int foreign key references user
-)
-go
-create table permission(
-	id int primary key identity,
-	name varchar(20),
-)
-go
-create table role_permission(
-	id int primary key identity , 
-	role_id int foreign key references role,
-	permission_id int foreign key references permission
+	id int primary key identity ,
+	name nvarchar(max),
 )
 go
 
+create table customer
+(
+	cust_code varchar(50) primary key,
+	cust_name varchar(max),
+	address varchar(max),
+	city varchar(max),
+	country varchar(max),
+	email varchar(max),
+	phone varchar(max),
+	note varchar(max),
+	short_name varchar(500),
+	tax_code varchar(max),
+	active bit
+)
+
+------------------------------------
 create table goods_data
 (
 	goods_no varchar(100) primary key , 
@@ -78,9 +88,9 @@ create table goods_data
 	package varchar(100) --Loại đóng gói (thùng , bao bì),
 	qty_per_package --Số lượng trong 1 thùng
 	active bit
-	
 )
 go
+
 create table goods_master
 (
 	pt_id int primary key identity,

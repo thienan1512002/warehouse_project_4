@@ -29,19 +29,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="role")
+@Table(name="roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     
     @Column(length =20)
     private String name;
-    
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinTable(name="role_permission",
-            joinColumns = {@JoinColumn(name="role_id")}, 
-            inverseJoinColumns = {@JoinColumn(name="permission_id")})
-    private Set<Permission> permissions = new HashSet<>();
+
+//    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//    @JoinTable(name="role_permission",
+//            joinColumns = {@JoinColumn(name="role_id")}, 
+//            inverseJoinColumns = {@JoinColumn(name="permission_id")})
+//    private Set<Permission> permissions = new HashSet<>();
     
 }

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Warehouse</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Warehouses Lists</h1>
+
+
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <button  class="btn btn-primary" id="btnShow">
+                        <i class="fa-solid fa-plus"></i> Add New Warehouse
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Warehouse code</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="wh:${warehouses}">
+                                    <td><button th:text="${wh.wh_code}" class="btn btn-primary" th:id="${wh.wh_code}" th:onclick="editWarehouse([[${wh.wh_code}]])"></button></td>
+                                    <td th:text="${wh.wh_desc}"></td>
+                            <div th:if="${wh.wh_status}">
+                                <td><span class="badge badge-success">Active</span></td>
+                            </div>
+                            <div th:unless="${wh.wh_status}">
+                                <td><span class="badge badge-info">Inactive</span></td>
+                            </div>
+                            <td th:text="${wh.wh_cmt}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add new warehouse</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="wh_code">Warehouse code</label>
+                                    <input id="wh_code" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-8">
+                                    <label for="wh_desc">Description</label>
+                                    <input id="wh_desc" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="wh_cmt">Status</label>
+                                    <textarea class="form-control" id="wh_cmt">
+                                        
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit warehouse</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="hidden" id="wh_editCode" class="form-control" readonly/>
+                                <div class="form-group col-8">
+                                    <label for="wh_desc">Description</label>
+                                    <input id="wh_editDesc" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-4">
+                                    <label class="form-check-label" for="wh_editStatus">Active</label>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" id="wh_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="wh_editCmt">Comment</label>
+                                    <textarea class="form-control" id="wh_editCmt">
+                                        
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnEdit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $(document).ready(function () {
+                    $('.nav-warehouse').addClass('active');
+                    $('#tblWh').dataTable();
+                    $('#btnShow').click(function () {
+                        $('#exampleModal').modal('show');
+                    });
+                    $('#btnAdd').click(function () {
+                        const warehouse = {
+                            wh_code: $('#wh_code').val(),
+                            wh_desc: $('#wh_desc').val(),
+                            wh_status: 1,
+                            wh_cmt: $('#wh_cmt').val()
+                        };
+
+                        $.ajax({
+                            url: '/warehouse/save',
+                            type: 'POST',
+                            contentType: "application/json",
+                            data: JSON.stringify(warehouse),
+                            success: function (res) {
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Add new Warehouse success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                        console.log(warehouse);
+                        $('#exampleModal').modal('hide');
+                    });
+                    $('#btnEdit').click(function () {
+                        const warehouse = {
+                            wh_code: $('#wh_editCode').val(),
+                            wh_desc: $('#wh_editDesc').val(),
+                            wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
+                            wh_cmt: $('#wh_editCmt').val()
+                        };
+
+                        $.ajax({
+                            url: `api/warehouses/${$('#wh_editCode').val()}`,
+                            type: 'PUT',
+                            contentType: "application/json",
+                            data: JSON.stringify(warehouse),
+                            success: function (res) {
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Edit new Warehouse success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                        console.log(warehouse);
+
+                    });
+                });
+
+                const editWarehouse = (id) => {
+                    console.log(id);
+                    $.ajax({
+                        type: 'GET',
+                        url: `/api/warehouses/${id}`,
+                        success: function (data) {
+
+                            console.log(data);
+                            $('#wh_editCode').val(data.wh_code);
+                            $('#wh_editDesc').val(data.wh_desc);
+                            if (data.wh_status === true) {
+                                $('#wh_editStatus').prop('checked', true);
+                            } else {
+                                $('#wh_editStatus').prop('checked', false);
+                            }
+                            $('#wh_editCmt').val(data.wh_cmt);
+
+                        }
+                    });
+                    $('#editModal').modal('show');
+                };
+
+
+            </script>
+        </div>
+    </body>
+</html>

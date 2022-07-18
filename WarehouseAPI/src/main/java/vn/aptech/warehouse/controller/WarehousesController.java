@@ -42,6 +42,6 @@ public class WarehousesController {
     @PutMapping(value = "/{id}")
     public ResponseEntity updateWarehouse(@PathVariable("id") String wh_code , @RequestBody Warehouse warehouse){
         service.save(warehouse);
-        return ResponseEntity.ok(warehouse);
+        return ResponseEntity.ok(200);
     }
 }
