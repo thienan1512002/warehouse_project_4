@@ -20,7 +20,7 @@ import vn.aptech.warehouse.service.SupplierService;
  * @author nhta1
  */
 @Controller
-@RequestMapping("/supplier")
+@RequestMapping("/suppliers")
 public class SupplierController {
     
     @Autowired
@@ -33,8 +33,8 @@ public class SupplierController {
     }
     
     @PostMapping(value="/save")
-    public ResponseEntity save(@RequestBody Supplier sl){
-        Supplier supplier = service.save(sl);
+    public ResponseEntity save(@RequestBody Supplier supplier){
+        Supplier sl = service.save(supplier);
         return ResponseEntity.ok(200);
     } 
 }

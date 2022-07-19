@@ -39,17 +39,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="supplier:${suppliers}">
-                                    <td><button th:text="${supplier.sup_code}" class="btn btn-primary" th:id="${supplier.sup_code}" th:onclick="editWarehouse([[${supplier.sup_code}]])"></button></td>
-                                    <td th:text="${supplier.sup_name}"></td>
-                                    <td th:text="${supplier.sup_address}"></td>
-                                    <td th:text="${supplier.sup_email}"></td>
-                                    <td th:text="${supplier.city}"></td>
-                                    <td th:text="${supplier.TaxCode}"></td>
-                                    <div th:if="${supplier.active}">
+                                <tr th:each="sl:${suppliers}">
+                                    <td><button th:text="${sl.sup_code}" class="btn btn-primary" th:id="${sl.sup_code}" th:onclick="editSupplier([[${sl.sup_code}]])"></button></td>
+                                    <td th:text="${sl.sup_name}"></td>
+                                    <td th:text="${sl.sup_address}"></td>
+                                    <td th:text="${sl.sup_email}"></td>
+                                    <td th:text="${sl.city}"></td>
+                                    <td th:text="${sl.tax_code}"></td>
+                                    <div th:if="${sl.active}">
                                         <td><span class="badge badge-success">Active</span></td>
                                     </div>
-                                    <div th:unless="${supplier.active}">
+                                    <div th:unless="${sl.active}">
                                         <td><span class="badge badge-info">Inactive</span></td>
                                     </div>
                                 </tr>
@@ -99,14 +99,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>
                             <div class="row">
                                 <div class="form-group col-8">
-                                    <label for="TaxCode">Tax Code</label>
-                                    <input id="TaxCode" class="form-control"/> 
+                                    <label for="tax_code">Tax Code</label>
+                                    <input id="tax_code" class="form-control"/> 
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save</button>
                         </div>
                     </div>
                 </div>
@@ -124,19 +124,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row">
                                 <input type="hidden" id="sup_editCode" class="form-control" readonly/>
                                 <div class="form-group col-8">
-                                    <label for="sup_name">Supplier name</label>
+                                    <label for="sup_editName">Supplier name</label>
                                     <input id="sup_editName" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-8">
-                                    <label for="sup_address">Address</label>
+                                    <label for="sup_editAddress">Address</label>
                                     <input id="sup_editAddress" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-8">
-                                    <label for="sup_address">Email</label>
+                                    <label for="sup_editEmail">Email</label>
                                     <input id="sup_editEmail" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-8">
-                                    <label for="city">City</label>
+                                    <label for="editCity">City</label>
                                     <input id="editCity" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-8">
@@ -164,7 +164,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $(document).ready(function () {
-                    $('.nav-warehouse').addClass('active');
+                    $('.nav-supplier').addClass('active');
                     $('#tblSl').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
@@ -176,7 +176,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             sup_address: $('#sup_address').val(),
                             sup_email: $('#sup_email').val(),
                             city: $('#city').val(),
-                            TaxCode: $('#TaxCode').val(),
+                            tax_code: $('#tax_code').val(),
                             active: 1
                         };
 
@@ -207,12 +207,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             sup_address: $('#sup_editAddress').val(),
                             sup_email: $('#sup_editEmail').val(),
                             city: $('#editCity').val(),
-                            TaxCode: $('#editTaxCode').val(),
+                            tax_code: $('#editTaxCode').val(),
                             active: $('#sup_editStatus').prop("checked") ? 1 : 0
                         };
 
                         $.ajax({
-                            url: `api/suppliers/${$('#sup_editCode').val()}`,
+                            url: `api/suppliers/update/${$('#sup_editCode').val()}`,
                             type: 'PUT',
                             contentType: "application/json",
                             data: JSON.stringify(supplier),
@@ -237,7 +237,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     console.log(id);
                     $.ajax({
                         type: 'GET',
-                        url: `/api/warehouses/${id}`,
+                        url: `/api/suppliers/details/${id}`,
                         success: function (data) {
 
                             console.log(data);
@@ -246,7 +246,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             $('#sup_editAddress').val(data.sup_address);
                             $('#sup_editEmail').val(data.sup_email);
                             $('#editCity').val(data.city);
-                            $('#editTaxCode').val(data.TaxCode);
+                            $('#editTaxCode').val(data.tax_code);
                             if (data.active === true) {
                                 $('#sup_editStatus').prop('checked', true);
                             } else {

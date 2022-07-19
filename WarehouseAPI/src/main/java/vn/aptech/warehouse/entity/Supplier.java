@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -27,6 +28,6 @@ public class Supplier {
     private String sup_address;
     private String sup_email;
     private String city;
-    private String TaxCode;
+    private String tax_code;
     private Boolean active;
 }
