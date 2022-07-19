@@ -39,14 +39,14 @@ public class SuppliersController {
     }
     
     @PostMapping(value="")
-    public ResponseEntity addSupplier(@RequestBody Supplier sup){
-       Supplier supplier = service.save(sup);
-       return ResponseEntity.ok(supplier);
+    public ResponseEntity addSupplier(@RequestBody Supplier supplier){
+       Supplier sl = service.save(supplier);
+       return ResponseEntity.ok(sl);
     }
     
     @PutMapping(value="/update/{id}")
-     public ResponseEntity updateSupplier(@PathVariable("id") String sup_code,@RequestBody Supplier sup){
-       Supplier supplier = service.save(sup);
-       return ResponseEntity.ok(supplier);
+     public ResponseEntity updateSupplier(@PathVariable("id") String sup_code,@RequestBody Supplier supplier){
+       service.save(supplier);
+       return ResponseEntity.ok(200);
     }
 }
