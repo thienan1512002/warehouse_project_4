@@ -51,8 +51,14 @@
                         <span>Dashboard</span></a>
                 </li> 
                 <hr class="sidebar-divider my-0">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/suppliers}">
+                 <li class="nav-item nav-incoming">
+                    <a class="nav-link nav-incoming" th:href="@{/Incoming}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Incoming List</span></a>
+                </li> 
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item nav-supplier">
+                    <a class="nav-link nav-supplier" th:href="@{/suppliers}">
                         <i class="fa-solid fa-user-tie"></i>
                         <span>Supplier</span></a>
                 </li>
