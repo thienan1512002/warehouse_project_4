@@ -13,7 +13,7 @@ import vn.aptech.warehouse.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController {
+public class CustomerClientController {
     @Autowired
     private CustomerService service;
     
