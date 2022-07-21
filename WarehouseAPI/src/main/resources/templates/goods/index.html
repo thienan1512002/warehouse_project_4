@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Goods List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Goods List</h1>
+        <a th:href="@{/goods/create}">Create new Goods</a>
+        <table border="1" style="margin-left: auto; margin-right: auto" width="60%">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Active</th>
+                    <th>Package</th>
+                    <th>Qty/Package</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item: ${goods}">
+                    <td th:text="${item.goods_no}">1</td>
+                    <td><img th:src="@{${item.photosImagePath}}" width="50px" /></td>
+                    <td th:text="${item.goods_name}">1</td>
+                    <td th:text="${item.price}">1</td>
+                    <td th:text="${item.active} ? 'Yes': 'No'">1</td>
+                    <td th:text="${item.goods_package}">1</td>
+                    <td th:text="${item.qty_per_package}">1</td>
+                    <td><a >Update</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Create</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Create new Goods</h1>
+        <form th:action="@{/goods/save}" method="post" enctype="multipart/form-data" th:object="${good}">
+            <div>
+                <label>Good No. </label>
+                <input type="text" th:field="*{goods_no}"/>
+            </div>
+            <div>
+                <label>Photos: </label>
+                <input type="file" name="image" accept="image/png, image/jpeg" />
+            </div>
+<!--            <div>
+                <label>Goods Image: </label>
+                <input type="text" th:field="*{image}"/>
+            </div>-->
+            <div>
+                <label>Goods Name: </label>
+                <input type="text" th:field="*{goods_name}"/>
+            </div>
+            <div>
+                <label>Price: </label>
+                <input type="text" th:field="*{price}"/>
+            </div>
+            <div>
+                <label>Active?</label>
+                <input type="checkbox" th:field="*{active}" />
+            </div>
+            <div>
+                <label>Package: </label>
+                <input type="text" th:field="*{goods_package}"/>
+            </div>
+            <div>
+                <label>Qty/Package: </label>
+                <input type="text" th:field="*{qty_per_package}"/>
+            </div>
+            <input type="submit" value="Create">
+        </form>
+    </body>
+</html>
