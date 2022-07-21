@@ -80,30 +80,29 @@ create table customer
 ------------------------------------
 create table goods_data
 (
-	goods_no varchar(100) primary key , 
+	goods_no varchar(200) primary key , 
 	image varchar(max),
 	goods_name nvarchar(max),
 	price int,
 	active bit,
-	goods_package varchar(100) --Loại đóng gói (thùng , bao bì),
-	qty_per_package --Số lượng trong 1 thùng
-	active bit
+	goods_package varchar(100), --Loại đóng gói (thùng , bao bì),
+	qty_per_package int, --Số lượng trong 1 thùng
 )
 go
 
 create table goods_master
 (
 	pt_id int primary key identity,
-	goods_no varchar(100) foreign key references goods_data,
-	pt_qty double, --số lượng nhập vào
-	accepted_qty double --số lượng đã được QC kiểm tra chất lượng (vd : nhập vào 50000 , QC pass 30000)
-	qc varchar(100) -- tên nhân viên QC
-	pt_hold double
-	loc_code varchar(100) foreign key references location
+	goods_no varchar(255) foreign key references goods_data,
+	pt_qty float,
+	accepted_qty float , --số lượng đã được QC kiểm tra chất lượng (vd : nhập vào 50000 , QC pass 30000)
+	qc varchar(100), -- tên nhân viên QC
+	pt_hold float,
+	loc_code varchar(100) foreign key references location,
 	pt_date_in datetime,
-	sup_code varchar(100) foreign key references supplier
-	ic_id int foreign key incomging_lists,
+	sup_code varchar(100) foreign key references supplier,
+	patch_no varchar(100),
 	passed bit ,
-	wh_code varchar(100) foreign key warehouse
+	wh_code varchar(100) foreign key references warehouses
 )
 
