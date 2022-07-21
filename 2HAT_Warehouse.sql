@@ -85,7 +85,7 @@ create table goods_data
 	goods_name nvarchar(max),
 	price int,
 	active bit,
-	package varchar(100) --Loại đóng gói (thùng , bao bì),
+	goods_package varchar(100) --Loại đóng gói (thùng , bao bì),
 	qty_per_package --Số lượng trong 1 thùng
 	active bit
 )
