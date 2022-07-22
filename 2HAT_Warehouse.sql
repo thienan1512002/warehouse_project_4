@@ -90,6 +90,16 @@ create table goods_data
 )
 go
 
+create table incomings
+(
+	ic_id int primary key identity,
+	sup_code varchar(100) foreign key references supplier,
+	vehicle varchar(100),
+	driver varchar(100),
+	delivery_date datetime,
+	closed bit,
+)
+
 create table goods_master
 (
 	pt_id int primary key identity,
@@ -103,6 +113,9 @@ create table goods_master
 	sup_code varchar(100) foreign key references supplier,
 	patch_no varchar(100),
 	passed bit ,
+	ic_id int foreign key references incomings,
 	wh_code varchar(100) foreign key references warehouses
 )
+
+
 

@@ -32,19 +32,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Warehouse code</th>
-                                    <th>Description</th>
+                                    <th>Incoming Id</th>
+                                    <th>Supplier</th>
+                                    <th>Vehicle</th>
+                                    <th>Driver</th>
+                                    <th>Delivery Date</th>
                                     <th>Status</th>
-                                    <th>Comment</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Warehouse code</td>
-                                    <td>Description</td>
-                                    <td>Status</td>
-                                    <td>Comment</td>        
-                                </tr>
+                                <tr th:each="item: ${incomings}">
+                                    <td th:text="${item.ic_id}">Warehouse code</td>
+                                    <td th:text="${item.supplier.sup_name}">Description</td>
+                                    <td th:text="${item.vehicle}">Status</td>
+                                    <td th:text="${item.driver}">Comment</td>
+                                    <td th:text="${item.delivery_date}">Comment</td> 
+                            <div th:if="${item.closed}">
+                                <td><span class="badge badge-success">Wait for QC check</span></td>
+                            </div>
+                            <div th:unless="${item.closed}">
+                                <td><span class="badge badge-warning">Pending</span></td>
+                            </div> 
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -128,95 +137,95 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--            <script>
-                $(document).ready(function () {
-                    $('.nav-warehouse').addClass('active');
-                    $('#tblWh').dataTable();
-                    $('#btnShow').click(function () {
-                        $('#exampleModal').modal('show');
-                    });
-                    $('#btnAdd').click(function () {
-                        const warehouse = {
-                            wh_code: $('#wh_code').val(),
-                            wh_desc: $('#wh_desc').val(),
-                            wh_status: 1,
-                            wh_cmt: $('#wh_cmt').val()
-                        };
-
-                        $.ajax({
-                            url: '/warehouse/save',
-                            type: 'POST',
-                            contentType: "application/json",
-                            data: JSON.stringify(warehouse),
-                            success: function (res) {
-                                if (res === 200) {
-                                    Swal.fire(
-                                            'Good job!',
-                                            'Add new Warehouse success',
-                                            'success'
-                                            ).then(function () {
-                                        window.location.reload();
+            <!--            <script>
+                            $(document).ready(function () {
+                                $('.nav-warehouse').addClass('active');
+                                $('#tblWh').dataTable();
+                                $('#btnShow').click(function () {
+                                    $('#exampleModal').modal('show');
+                                });
+                                $('#btnAdd').click(function () {
+                                    const warehouse = {
+                                        wh_code: $('#wh_code').val(),
+                                        wh_desc: $('#wh_desc').val(),
+                                        wh_status: 1,
+                                        wh_cmt: $('#wh_cmt').val()
+                                    };
+            
+                                    $.ajax({
+                                        url: '/warehouse/save',
+                                        type: 'POST',
+                                        contentType: "application/json",
+                                        data: JSON.stringify(warehouse),
+                                        success: function (res) {
+                                            if (res === 200) {
+                                                Swal.fire(
+                                                        'Good job!',
+                                                        'Add new Warehouse success',
+                                                        'success'
+                                                        ).then(function () {
+                                                    window.location.reload();
+                                                });
+                                            }
+                                        }
                                     });
-                                }
-                            }
-                        });
-                        console.log(warehouse);
-                        $('#exampleModal').modal('hide');
-                    });
-                    $('#btnEdit').click(function () {
-                        const warehouse = {
-                            wh_code: $('#wh_editCode').val(),
-                            wh_desc: $('#wh_editDesc').val(),
-                            wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
-                            wh_cmt: $('#wh_editCmt').val()
-                        };
-
-                        $.ajax({
-                            url: `api/warehouses/${$('#wh_editCode').val()}`,
-                            type: 'PUT',
-                            contentType: "application/json",
-                            data: JSON.stringify(warehouse),
-                            success: function (res) {
-                                if (res === 200) {
-                                    Swal.fire(
-                                            'Good job!',
-                                            'Edit new Warehouse success',
-                                            'success'
-                                            ).then(function () {
-                                        window.location.reload();
+                                    console.log(warehouse);
+                                    $('#exampleModal').modal('hide');
+                                });
+                                $('#btnEdit').click(function () {
+                                    const warehouse = {
+                                        wh_code: $('#wh_editCode').val(),
+                                        wh_desc: $('#wh_editDesc').val(),
+                                        wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
+                                        wh_cmt: $('#wh_editCmt').val()
+                                    };
+            
+                                    $.ajax({
+                                        url: `api/warehouses/${$('#wh_editCode').val()}`,
+                                        type: 'PUT',
+                                        contentType: "application/json",
+                                        data: JSON.stringify(warehouse),
+                                        success: function (res) {
+                                            if (res === 200) {
+                                                Swal.fire(
+                                                        'Good job!',
+                                                        'Edit new Warehouse success',
+                                                        'success'
+                                                        ).then(function () {
+                                                    window.location.reload();
+                                                });
+                                            }
+                                        }
                                     });
-                                }
-                            }
-                        });
-                        console.log(warehouse);
-
-                    });
-                });
-
-                const editWarehouse = (id) => {
-                    console.log(id);
-                    $.ajax({
-                        type: 'GET',
-                        url: `/api/warehouses/${id}`,
-                        success: function (data) {
-
-                            console.log(data);
-                            $('#wh_editCode').val(data.wh_code);
-                            $('#wh_editDesc').val(data.wh_desc);
-                            if (data.wh_status === true) {
-                                $('#wh_editStatus').prop('checked', true);
-                            } else {
-                                $('#wh_editStatus').prop('checked', false);
-                            }
-                            $('#wh_editCmt').val(data.wh_cmt);
-
-                        }
-                    });
-                    $('#editModal').modal('show');
-                };
-
-
-            </script>-->
+                                    console.log(warehouse);
+            
+                                });
+                            });
+            
+                            const editWarehouse = (id) => {
+                                console.log(id);
+                                $.ajax({
+                                    type: 'GET',
+                                    url: `/api/warehouses/${id}`,
+                                    success: function (data) {
+            
+                                        console.log(data);
+                                        $('#wh_editCode').val(data.wh_code);
+                                        $('#wh_editDesc').val(data.wh_desc);
+                                        if (data.wh_status === true) {
+                                            $('#wh_editStatus').prop('checked', true);
+                                        } else {
+                                            $('#wh_editStatus').prop('checked', false);
+                                        }
+                                        $('#wh_editCmt').val(data.wh_cmt);
+            
+                                    }
+                                });
+                                $('#editModal').modal('show');
+                            };
+            
+            
+                        </script>-->
         </div>
     </body>
 </html>
