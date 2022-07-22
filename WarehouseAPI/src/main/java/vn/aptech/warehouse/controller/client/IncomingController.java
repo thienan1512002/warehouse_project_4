@@ -4,10 +4,12 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import vn.aptech.warehouse.service.IncomingService;
 
 /**
  *
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/Incoming")
 public class IncomingController {
     
+    @Autowired
+    private IncomingService service;
     
     @GetMapping(value="")
     public String index(Model model){
+        model.addAttribute("incomings", service.findAll());
         return "incoming/index";
     }
 }

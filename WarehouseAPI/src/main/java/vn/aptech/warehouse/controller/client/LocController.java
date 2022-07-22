@@ -34,8 +34,9 @@ public class LocController {
     
     
     @GetMapping(value="")
-    public String index(Model model){
-        model.addAttribute("locs", service.findByWhCode("WH001"));
+    public String index(Model model,HttpServletRequest request){
+        request.getSession().setAttribute("workspace", "WH001");
+        model.addAttribute("locs", service.findByWhCode((String) request.getSession().getAttribute("workspace")));
         model.addAttribute("warehouses", whService.findAll());
         return "locs/index";
     }
