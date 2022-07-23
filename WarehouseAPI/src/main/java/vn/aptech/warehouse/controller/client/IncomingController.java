@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.Incoming;
+import vn.aptech.warehouse.entity.Supplier;
+import vn.aptech.warehouse.entity.vm.IncomingVm;
 import vn.aptech.warehouse.service.IncomingService;
 import vn.aptech.warehouse.service.SupplierService;
 
@@ -37,8 +39,17 @@ public class IncomingController {
     }
     
     @PostMapping(value="/save")
-    public ResponseEntity save(@RequestBody Incoming incoming){
-        Incoming newIncome = service.save(incoming);
+    public ResponseEntity save(@RequestBody IncomingVm incoming){
+        Supplier sup = supService.findBySupCode(incoming.getSup_code());
+        Incoming newIncome = new Incoming();
+        newIncome.setDelivery_date(incoming.getDelivery_date());
+        newIncome.setSupplier(sup);
+        newIncome.setDriver(incoming.getDriver());
+        newIncome.setVehicle(incoming.getVehicle());
+        newIncome.setClosed(incoming.isClosed());
+        
+        Incoming add = service.save(newIncome);
+        
         return ResponseEntity.ok(200);
     }
     

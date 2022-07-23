@@ -16,7 +16,7 @@ public interface SupplierService {
     
     List<Supplier> findAll();
     
-    Optional<Supplier> findBySupCode(String sup_code);
+    Supplier findBySupCode(String sup_code);
     
     Supplier save(Supplier sup);
 }
