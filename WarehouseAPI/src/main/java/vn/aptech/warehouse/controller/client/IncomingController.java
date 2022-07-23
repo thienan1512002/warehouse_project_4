@@ -5,11 +5,16 @@
 package vn.aptech.warehouse.controller.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import vn.aptech.warehouse.entity.Incoming;
 import vn.aptech.warehouse.service.IncomingService;
+import vn.aptech.warehouse.service.SupplierService;
 
 /**
  *
@@ -21,10 +26,21 @@ public class IncomingController {
     
     @Autowired
     private IncomingService service;
+    @Autowired
+    private SupplierService supService;
     
     @GetMapping(value="")
     public String index(Model model){
+        model.addAttribute("sups", supService.findAll());
         model.addAttribute("incomings", service.findAll());
         return "incoming/index";
     }
+    
+    @PostMapping(value="/save")
+    public ResponseEntity save(@RequestBody Incoming incoming){
+        Incoming newIncome = service.save(incoming);
+        return ResponseEntity.ok(200);
+    }
+    
+    
 }
