@@ -25,5 +25,10 @@ public class GoodsMasterServiceImpl implements GoodsMasterService {
     public List<GoodsMaster> findAll(String wh) {
        return service.findAll();
     }
+
+    @Override
+    public List<GoodsMaster> findByIcId(int ic_id) {
+       return service.findByIcId(ic_id);
+    }
     
 }

@@ -13,4 +13,6 @@ import vn.aptech.warehouse.entity.GoodsMaster;
  */
 public interface GoodsMasterService {
     List<GoodsMaster> findAll(String wh);
+    
+    List<GoodsMaster> findByIcId(int ic_id);
 }
