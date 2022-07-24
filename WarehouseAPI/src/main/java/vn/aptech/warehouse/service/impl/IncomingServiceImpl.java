@@ -22,8 +22,8 @@ public class IncomingServiceImpl implements IncomingService{
     private IncomingRepo repo;
     
     @Override
-    public List<Incoming> findAll() {
-        return repo.findAll();
+    public List<Incoming> findByClosed(boolean closed) {
+        return repo.findByClosed(closed);
     }
 
     @Override

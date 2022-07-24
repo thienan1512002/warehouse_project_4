@@ -30,5 +30,10 @@ public class GoodsMasterServiceImpl implements GoodsMasterService {
     public List<GoodsMaster> findByIcId(int ic_id) {
        return service.findByIcId(ic_id);
     }
+
+    @Override
+    public GoodsMaster save(GoodsMaster goodsMaster) {
+        return service.save(goodsMaster);
+    }
     
 }

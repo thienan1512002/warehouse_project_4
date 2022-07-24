@@ -15,4 +15,6 @@ public interface GoodsMasterService {
     List<GoodsMaster> findAll(String wh);
     
     List<GoodsMaster> findByIcId(int ic_id);
+    
+    GoodsMaster save(GoodsMaster goodsMaster);
 }

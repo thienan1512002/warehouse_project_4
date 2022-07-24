@@ -11,5 +11,7 @@ public interface WarehouseService {
      Optional<Warehouse> findByWhCode(String whCode);
 
      Warehouse save(Warehouse warehouse);
+     
+     Warehouse findWHByWhCode(String wh_code);
 
 }

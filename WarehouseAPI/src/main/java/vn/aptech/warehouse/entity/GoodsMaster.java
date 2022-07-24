@@ -24,38 +24,36 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="goods_master")
+@Table(name = "goods_master")
 public class GoodsMaster {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pt_id;
-    
+
     private float pt_qty;
-    
+
     private float accepted_qty;
-    
+
     private float pt_hold;
-    
+
     private LocalDate pt_date_in;
-    
+
     private String patch_no;
-    
+
     private String qc;
-    
+
     private boolean passed;
-    
+
     private int ic_id;
-    
+    private String loc_code;
     @ManyToOne
-    @JoinColumn(name="goods_no",nullable = false)
+    @JoinColumn(name = "goods_no", nullable = false)
     private GoodData good_data;
     @ManyToOne
-    @JoinColumn(name="loc_code",nullable = false)
-    private Location location;
-    @ManyToOne
-    @JoinColumn(name="sup_code",nullable = false)
+    @JoinColumn(name = "sup_code", nullable = false)
     private Supplier supplier;
     @ManyToOne
-    @JoinColumn(name="wh_code",nullable = false)
+    @JoinColumn(name = "wh_code", nullable = false)
     private Warehouse warehouse;
 }
