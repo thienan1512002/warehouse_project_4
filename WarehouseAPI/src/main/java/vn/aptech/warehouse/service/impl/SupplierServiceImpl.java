@@ -27,7 +27,7 @@ public class SupplierServiceImpl implements SupplierService{
     }
 
     @Override
-    public Optional<Supplier> findBySupCode(String sup_code) {
+    public Supplier findBySupCode(String sup_code) {
         return repo.findBySupCode(sup_code);
     }
 

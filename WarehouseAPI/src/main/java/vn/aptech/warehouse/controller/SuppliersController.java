@@ -34,7 +34,7 @@ public class SuppliersController {
     }
 
     @GetMapping(value="/details/{id}")
-    public Optional<Supplier> findBySupCode(@PathVariable("id") String sup_code){
+    public Supplier findBySupCode(@PathVariable("id") String sup_code){
         return service.findBySupCode(sup_code);
     }
     

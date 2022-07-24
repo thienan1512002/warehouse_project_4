@@ -33,7 +33,7 @@ public class Incoming {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ic_id;
     @ManyToOne
-    @JoinColumn(name="sup_code",nullable = false)
+    @JoinColumn(name="sup_code",nullable = false, insertable=true, updatable=true)
     private Supplier supplier;
     private String vehicle;
     private String driver;

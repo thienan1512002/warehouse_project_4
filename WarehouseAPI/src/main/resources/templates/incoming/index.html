@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
     <head>
-        <title>Warehouse</title>
+        <title>Incoming</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Warehouses Lists</h1>
+            <h1 class="h3 mb-2 text-gray-800">Incoming Lists</h1>
 
 
             <!-- DataTales Example -->
@@ -38,6 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <th>Driver</th>
                                     <th>Delivery Date</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +54,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div th:unless="${item.closed}">
                                 <td><span class="badge badge-warning">Pending</span></td>
                             </div> 
+                            <td><a th:href="@{'/Incoming/details/'+${item.ic_id}}" class="btn btn-outline-primary">Details</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -64,26 +66,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add new warehouse</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add new Incoming list</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="form-group col-4">
-                                    <label for="wh_code">Warehouse code</label>
-                                    <input id="wh_code" class="form-control"/> 
+                                    <label for="wh_code">Supplier</label>
+                                    <select class="form-control" id="sup_code">
+                                        <option th:each="sup:${sups}" th:value="${sup.sup_code}" th:text="${sup.sup_name}"></option>
+                                    </select> 
                                 </div>
                                 <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
-                                    <input id="wh_desc" class="form-control"/> 
+                                    <label for="wh_desc">Delivery Date</label>
+                                    <input type="date" id="date" class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="wh_cmt">Status</label>
-                                    <textarea class="form-control" id="wh_cmt">
-                                        
-                                    </textarea>
+                                <div class="form-group col-6">
+                                    <label for="vehicle">Vehicle</label>
+                                    <input id="vehicle" class="form-control"/>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="driver">Driver</label>
+                                    <input id="driver" class="form-control"/>
                                 </div>
                             </div>
                         </div>
@@ -137,95 +143,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <!--            <script>
-                            $(document).ready(function () {
-                                $('.nav-warehouse').addClass('active');
-                                $('#tblWh').dataTable();
-                                $('#btnShow').click(function () {
-                                    $('#exampleModal').modal('show');
-                                });
-                                $('#btnAdd').click(function () {
-                                    const warehouse = {
-                                        wh_code: $('#wh_code').val(),
-                                        wh_desc: $('#wh_desc').val(),
-                                        wh_status: 1,
-                                        wh_cmt: $('#wh_cmt').val()
-                                    };
-            
-                                    $.ajax({
-                                        url: '/warehouse/save',
-                                        type: 'POST',
-                                        contentType: "application/json",
-                                        data: JSON.stringify(warehouse),
-                                        success: function (res) {
-                                            if (res === 200) {
-                                                Swal.fire(
-                                                        'Good job!',
-                                                        'Add new Warehouse success',
-                                                        'success'
-                                                        ).then(function () {
-                                                    window.location.reload();
-                                                });
-                                            }
-                                        }
+            <script>
+                $(document).ready(function () {
+                    $('.nav-incoming').addClass('active');
+                    $('#tblWh').dataTable();
+                    $('#btnShow').click(function () {
+                        $('#exampleModal').modal('show');
+                    });
+
+                    $('#btnAdd').click(function () {
+                        const incoming = {
+                            sup_code: $('#sup_code :selected').val(),
+                            vehicle: $('#vehicle').val(),
+                            driver: $('#driver').val(),
+                            delivery_date: $('#date').val(),
+                            closed: 0
+                        };
+                        console.log(incoming);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Incoming/save',
+                            contentType: "application/json",
+                            data: JSON.stringify(incoming),
+                            success: function (data) {
+                                if(data===200){
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Add new Incoming success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
                                     });
-                                    console.log(warehouse);
-                                    $('#exampleModal').modal('hide');
-                                });
-                                $('#btnEdit').click(function () {
-                                    const warehouse = {
-                                        wh_code: $('#wh_editCode').val(),
-                                        wh_desc: $('#wh_editDesc').val(),
-                                        wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
-                                        wh_cmt: $('#wh_editCmt').val()
-                                    };
-            
-                                    $.ajax({
-                                        url: `api/warehouses/${$('#wh_editCode').val()}`,
-                                        type: 'PUT',
-                                        contentType: "application/json",
-                                        data: JSON.stringify(warehouse),
-                                        success: function (res) {
-                                            if (res === 200) {
-                                                Swal.fire(
-                                                        'Good job!',
-                                                        'Edit new Warehouse success',
-                                                        'success'
-                                                        ).then(function () {
-                                                    window.location.reload();
-                                                });
-                                            }
-                                        }
-                                    });
-                                    console.log(warehouse);
-            
-                                });
-                            });
-            
-                            const editWarehouse = (id) => {
-                                console.log(id);
-                                $.ajax({
-                                    type: 'GET',
-                                    url: `/api/warehouses/${id}`,
-                                    success: function (data) {
-            
-                                        console.log(data);
-                                        $('#wh_editCode').val(data.wh_code);
-                                        $('#wh_editDesc').val(data.wh_desc);
-                                        if (data.wh_status === true) {
-                                            $('#wh_editStatus').prop('checked', true);
-                                        } else {
-                                            $('#wh_editStatus').prop('checked', false);
-                                        }
-                                        $('#wh_editCmt').val(data.wh_cmt);
-            
-                                    }
-                                });
-                                $('#editModal').modal('show');
-                            };
-            
-            
-                        </script>-->
+                                }
+                            }
+                        });
+                    });
+                });
+                
+            </script>
         </div>
     </body>
 </html>

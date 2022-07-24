@@ -12,7 +12,7 @@ import vn.aptech.warehouse.entity.Incoming;
  * @author nhta1
  */
 public interface IncomingService {
-    public List<Incoming> findAll();
+    public List<Incoming> findByClosed(boolean closed);
     
     public Incoming findByIcId(int id);
     

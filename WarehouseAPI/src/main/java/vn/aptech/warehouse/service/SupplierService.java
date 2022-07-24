@@ -5,7 +5,6 @@
 package vn.aptech.warehouse.service;
 
 import java.util.List;
-import java.util.Optional;
 import vn.aptech.warehouse.entity.Supplier;
 
 /**
@@ -16,7 +15,7 @@ public interface SupplierService {
     
     List<Supplier> findAll();
     
-    Optional<Supplier> findBySupCode(String sup_code);
+    Supplier findBySupCode(String sup_code);
     
     Supplier save(Supplier sup);
 }
