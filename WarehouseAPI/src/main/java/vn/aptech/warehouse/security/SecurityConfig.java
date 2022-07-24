@@ -8,20 +8,16 @@ package vn.aptech.warehouse.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import vn.aptech.warehouse.filter.CustomAuthenticationFilter;
 
 /**
  *
@@ -53,8 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeHttpRequests();
         http.authorizeHttpRequests()
-                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
                 .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
 //                .antMatchers("/login","/logout","/403","/","/static/**").permitAll()
 //                .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
 //                .antMatchers("/delete/**").hasAuthority("ADMIN")

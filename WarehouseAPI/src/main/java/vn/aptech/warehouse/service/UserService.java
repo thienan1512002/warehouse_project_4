@@ -6,6 +6,8 @@ package vn.aptech.warehouse.service;
 
 
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.User;
 
@@ -19,5 +21,8 @@ public interface UserService {
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
     List<User> getUsers();
-    //UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    User getUserById(int id);
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+//    public void saveUser(UserForm user);
 }
