@@ -32,7 +32,7 @@ public class SupplierEHelper {
             try (Workbook workbook = new XSSFWorkbook(is)) {
                 Sheet sheet = workbook.getSheet(SHEET);
                 Iterator<Row> rows = sheet.iterator();
-                suppliers = new ArrayList<>();
+                suppliers = new ArrayList<Supplier>();
                 int rowNumber = 0;
                 while (rows.hasNext()) {
                     Row currentRow = rows.next();
