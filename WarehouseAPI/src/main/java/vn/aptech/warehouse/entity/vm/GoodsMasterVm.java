@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsMasterVm {
-    
+    private int pt_id;
     private float pt_qty;
     private LocalDate pt_date_in;
     private String patch_no;

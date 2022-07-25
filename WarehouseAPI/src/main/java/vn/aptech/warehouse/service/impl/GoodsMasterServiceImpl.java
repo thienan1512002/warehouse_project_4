@@ -35,5 +35,10 @@ public class GoodsMasterServiceImpl implements GoodsMasterService {
     public GoodsMaster save(GoodsMaster goodsMaster) {
         return service.save(goodsMaster);
     }
+
+    @Override
+    public GoodsMaster findByPtId(int pt_id) {
+        return service.findByPtId(pt_id);
+    }
     
 }
