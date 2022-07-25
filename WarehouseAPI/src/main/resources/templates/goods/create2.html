@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="form-group">
                     <label>Photo</label>
                     <input type="file" onchange="document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0])"  name="image" accept="image/png, image/jpeg" class="form-control" required>
-                    <p><img id="thumbnail" src="#" width="100px" alt="Image Preview"/></p>
+                    <p><img id="thumbnail" th:src="@{/img/sample.png}" width="100px" alt="Image Preview"/></p>
                 </div>
                 <div class="form-group">
                     <label>Goods Name</label>

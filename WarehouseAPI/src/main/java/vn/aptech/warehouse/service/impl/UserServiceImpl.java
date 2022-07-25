@@ -87,6 +87,11 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userRepo.findAll(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public User getUserById(int id) {
+        return userRepo.findById(id).get(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
     
 }

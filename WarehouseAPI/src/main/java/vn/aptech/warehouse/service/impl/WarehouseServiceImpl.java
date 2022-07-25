@@ -29,4 +29,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Warehouse save(Warehouse warehouse) {
         return repo.save(warehouse);
     }
+
+    @Override
+    public Warehouse findWHByWhCode(String wh_code) {
+        return repo.findByWhCode(wh_code);
+    }
 }

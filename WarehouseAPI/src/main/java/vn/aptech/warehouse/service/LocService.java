@@ -18,4 +18,6 @@ public interface LocService {
     Optional<Location> findById(String wh_code);
     
     Location save(Location loc);
+    
+    Location findByLocCode(String loc_code);
 }

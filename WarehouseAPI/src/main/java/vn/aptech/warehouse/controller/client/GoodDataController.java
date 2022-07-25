@@ -61,9 +61,35 @@ public class GoodDataController {
         ra.addFlashAttribute("message", "The goods has been save successfully!");
         return "redirect:/goods";
     }
+    //luu kho thay doi hinh
+    @PostMapping(value="/save2")
+    public String save2(Model model, @ModelAttribute(name="good") GoodData good,
+            BindingResult bindingResult,
+            @RequestParam(name="image", required = false) MultipartFile multipartFile,
+            @RequestParam String image2,
+            RedirectAttributes ra) throws IOException{
+        if(multipartFile.isEmpty()){
+            good.setImage(image2);
+            service.save(good);
+            ra.addFlashAttribute("message", "The goods has been updated successfully!");
+            return "redirect:/goods";
+        }else{
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        good.setImage(fileName);
+         
+        GoodData savedGood = service.save(good);
+ 
+        String uploadDir = "goods-photos/" + savedGood.getGoods_no();
+ 
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        ra.addFlashAttribute("message", "The goods has been updated successfully!");
+        return "redirect:/goods";
+        }
+        
+    }
     @GetMapping(value="/update/{no}")
     public ModelAndView update(@PathVariable("no")String no){
-        ModelAndView mav = new ModelAndView("goods/create2");
+        ModelAndView mav = new ModelAndView("goods/update");
         GoodData good = service.findByNo(no);
         mav.addObject("good", good);
         return mav;

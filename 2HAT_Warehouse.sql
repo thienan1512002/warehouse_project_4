@@ -90,6 +90,16 @@ create table goods_data
 )
 go
 
+create table incomings
+(
+	ic_id int primary key identity,
+	sup_code varchar(100) foreign key references supplier,
+	vehicle varchar(100),
+	driver varchar(100),
+	delivery_date datetime,
+	closed bit,
+)
+
 create table goods_master
 (
 	pt_id int primary key identity,
@@ -98,11 +108,14 @@ create table goods_master
 	accepted_qty float , --số lượng đã được QC kiểm tra chất lượng (vd : nhập vào 50000 , QC pass 30000)
 	qc varchar(100), -- tên nhân viên QC
 	pt_hold float,
-	loc_code varchar(100) foreign key references location,
+	loc_code varchar(100),
 	pt_date_in datetime,
 	sup_code varchar(100) foreign key references supplier,
 	patch_no varchar(100),
 	passed bit ,
+	ic_id int foreign key references incomings,
 	wh_code varchar(100) foreign key references warehouses
 )
+
+
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Update GoodsData</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Update GoodsData</h1>
+
+            <form  th:action="@{/goods/save2}" method="post" enctype="multipart/form-data" th:object="${good}">
+                
+                <input type="hidden" th:field="*{goods_no}">
+                <div class="form-group">
+                    <label>Photo</label>
+                    <input type="file" onchange="document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0])"  name="image" accept="image/png, image/jpeg" class="form-control">
+                    <p><img id="thumbnail" th:src="@{${good.photosImagePath}}" width="100px" alt="Image Preview"/></p>
+                    <input type="hidden" name="image2" th:value="${good.image}">
+                </div>
+                <div class="form-group">
+                    <label>Goods Name</label>
+                    <input type="text" class="form-control" th:field="*{goods_name}"  placeholder="Enter Goods Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" th:field="*{price}"  placeholder="Enter Price" required>
+                </div>
+                <div class="form-group">
+                    <label>Package</label>
+                    <input type="text" class="form-control" th:field="*{goods_package}"  placeholder="Enter Package Type" required>
+                </div>
+                <div class="form-group">
+                    <label>Qty/Package</label>
+                    <input type="number" class="form-control" th:field="*{qty_per_package}"  placeholder="Enter Qty/Package" required>
+                </div>
+                
+                <div class="form-check">
+                    <input type="checkbox" th:field="*{active}"  class="form-check-input">
+                    <label class="form-check-label" >Active?</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            </div>
+        
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            
+        </div>
+    </body>
+</html>

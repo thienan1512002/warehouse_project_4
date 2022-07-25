@@ -36,5 +36,10 @@ public class LocServiceImpl implements LocService{
     public Location save(Location loc) {
         return repo.save(loc);
     }
+
+    @Override
+    public Location findByLocCode(String loc_code) {
+        return repo.findLocByLocCode(loc_code);
+    }
     
 }

@@ -26,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="tblGood" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -53,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                     <td th:text="${item.goods_package}">1</td>
                                     <td <td th:text="${item.qty_per_package}">1</td>
-                                    <td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>
+                                    <td><a class="btn btn-primary" th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -66,7 +66,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
-                document.getElementById("btnCreate").onclick = function() {location.href = "/goods/create";};
+//                document.getElementById("btnCreate").onclick = function() {location.href = "/goods/create";};
+                $(document).ready(function () {
+                    $('.nav-goods').addClass('active');
+                    $('#tblGood').dataTable();
+                    $('#btnAdd').click(function () {
+                        location.href = "/user/create";
+                        });
+                    });
+
             </script>
         </div>
     </body>

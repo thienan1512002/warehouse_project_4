@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Incoming</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+
+
+
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3 class="card-title">Incoming details</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Incoming Id</dt>
+                        <dd class="col-sm-9" th:text="${incoming.ic_id}">A description list is perfect for defining terms.</dd>
+                        <input type="hidden" th:value="${incoming.ic_id}" id="ic_id"/>
+
+                        <dt class="col-sm-3">Supplier</dt>
+                        <dd class="col-sm-9" th:text="${incoming.supplier.sup_name}">
+
+                        </dd>
+
+                        <dt class="col-sm-3">Delivery Date</dt>
+                        <dd class="col-sm-9" th:text="${incoming.delivery_date}">This definition is short, so no extra paragraphs or anything.</dd>
+
+                        <dt class="col-sm-3 text-truncate">Vehicle</dt>
+                        <dd class="col-sm-9" th:text="${incoming.vehicle}">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+                        <dt class="col-sm-3">Driver</dt>
+                        <dd class="col-sm-9" th:text="${incoming.driver}">
+
+                        </dd>
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9" th:if="${incoming.closed}">
+                            <span class="badge badge-info">Wait for QC</span>
+                        </dd>
+                        <dd class="col-sm-9" th:unless="${incoming.closed}">
+                            <span class="badge badge-warning">Pending</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3 class="card-title">Goods details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div th:if="${#lists.isEmpty(goodsMasters)}">
+                            <h3 class="text-center">There isn't any goods yet</h3>
+                        </div>
+                        <div th:unless="${#lists.isEmpty(goodsMasters)}">
+                            <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Date In</th>
+                                        <th>Quantity</th>
+                                        <th>Accepted</th>
+                                        <th>Status</th>
+                                        <th>Supplier</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item: ${goodsMasters}">
+                                        <td th:text="${item.pt_id}">1</td>
+                                        <td><img th:src="@{${item.good_data.photosImagePath}}" width="50px" /></td>
+                                        <td th:text="${item.good_data.goods_name}">1</td>
+                                        <td th:text="${item.pt_date_in}">1</td>
+                                        <td th:text="${item.pt_qty}">1</td>
+                                        <td th:text="${item.accepted_qty}">1</td>
+                                <div th:if="${item.passed}">
+                                    <td><span class="badge badge-success">Passed</span></td>
+                                </div>
+                                <div th:unless="${item.passed}">
+                                    <td><span class="badge badge-info">Wait for Qc Check</span></td>
+                                </div>
+                                <td th:text="${item.supplier.sup_name}">1</td>
+                                <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12" th:if="${!incoming.closed}">
+                            <div class="text-center">
+                                <span class="col-auto">
+                                    <button class="btn btn-sm btn-outline-primary" id="new-list">
+                                        <span class="fa fa-add"></span>
+                                        <span>Add item</span>
+                                    </button>
+                                </span>
+                                <span class="col-auto">
+                                    <button class="btn btn-sm btn-outline-success" id="close-list">
+                                        <span class="fa fa-check"></span>
+                                        <span>Close and submit</span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add new item</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="wh_code">Goods</label>
+                                    <select class="form-control" id="goods_no">
+                                        <option th:each="item : ${goodsData}" th:value="${item.goods_no}" th:text="${item.goods_name}"></option>
+                                    </select> 
+                                </div>
+                                <div class="form-group col-8">
+                                    <label for="wh_desc">Quantity</label>
+                                    <input type="number" id="quantity" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="sup_code">Supplier</label>
+                                    <input type="hidden" th:value="${incoming.supplier.sup_code}" class="form-control" id="sup_code"/>
+                                    <input type="hidden" th:value="${incoming.delivery_date}" class="form-control" id="pt_date_in"/>
+                                    <input th:value="${incoming.supplier.sup_name}" class="form-control" readonly/>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="wh_code">Warehouse</label>
+                                    <input class="form-control" id="wh_code" readonly value="WH001"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="patch_no">Patch no</label>
+                                    <input type="text" class="form-control" id="patch_no"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $(document).ready(function () {
+                    $('.nav-incoming').addClass('active');
+                    $('#tblWh').dataTable();
+                    $('#new-list').click(function () {
+                        $('#exampleModal').modal('show');
+                    });
+                    $('#btnAdd').click(function () {
+                        const goodsMaster = {
+                            goods_no: $('#goods_no :selected').val(),
+                            pt_date_in: $('#pt_date_in').val(),
+                            patch_no: $('#patch_no').val(),
+                            ic_id: $('#ic_id').val(),
+                            sup_code: $('#sup_code').val(),
+                            wh_code: $('#wh_code').val(),
+                            pt_qty: $('#quantity').val()
+                        };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Incoming/add-item',
+                            contentType: "application/json",
+                            data: JSON.stringify(goodsMaster),
+                            success: function (res) {
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Add new item success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    Swal.fire(
+                                            'Error',
+                                            'Something has wrong',
+                                            'error'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                        console.log(goodsMaster);
+                    });
+
+                    $('#close-list').click(function () {
+                        Swal.fire({
+                            title: 'Do you want to save the changes?',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: 'Save',
+                            denyButtonText: `Don't save`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                const incoming = {
+                                    ic_id: $('#ic_id').val()
+                                };
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Incoming/close',
+                                    contentType: "application/json",
+                                    data: JSON.stringify(incoming),
+                                    success: function (data) {
+                                        if (data === 200) {
+                                            Swal.fire(
+                                                    'Good job!',
+                                                    'Submit Incoming success',
+                                                    'success'
+                                                    ).then(function () {
+                                                window.location.reload();
+                                            });
+                                        }
+                                    }
+                                });
+                                Swal.fire('Saved!', '', 'success');
+                            } else if (result.isDenied) {
+                                Swal.fire('Changes are not saved', '', 'info')
+                            }
+                        })
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>
