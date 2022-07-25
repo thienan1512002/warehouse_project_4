@@ -41,7 +41,7 @@ create table supplier
 	sup_address varchar(max),
 	sup_email varchar(max),
 	city varchar(max),
-	TaxCode varchar(max),
+	tax_code varchar(max),
 	active bit
 )
 go
@@ -93,7 +93,7 @@ go
 create table goods_master
 (
 	pt_id int primary key identity,
-	goods_no varchar(255) foreign key references goods_data,
+	goods_no varchar(200) foreign key references goods_data,
 	pt_qty float,
 	accepted_qty float , --số lượng đã được QC kiểm tra chất lượng (vd : nhập vào 50000 , QC pass 30000)
 	qc varchar(100), -- tên nhân viên QC
