@@ -117,5 +117,16 @@ create table goods_master
 	wh_code varchar(100) foreign key references warehouses
 )
 
+create table allocate_request
+(
+	alc_id int primary key identity , 
+	pt_id int foreign key references goods_master,
+	alc_moved_qty int,
+	loc_code varchar(100) foreign key references location , 
+	confirm bit,
+	si_code varchar(100) foreign key references warehouses,
+	movement_time datetime
+)
+
 
 
