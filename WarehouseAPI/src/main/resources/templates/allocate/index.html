@@ -60,46 +60,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add new supplier</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Pick Lists</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="form-group col-4">
-                                    <label for="sup_code">Supplier Code</label>
-                                    <input id="sup_code" class="form-control"/> 
+                                    <label for="loc_code">Select locations</label>
+                                    <select class="form-control" id="loc_code">
+                                        <option th:each="item : ${locs}" th:value="${item.loc_code}" th:text="${item.loc_desc}"></option>
+                                    </select> 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="sup_name">Supplier Name</label>
-                                    <input id="sup_name" class="form-control"/> 
+                                <div class="form-group col-6">
+                                    <label for="sup_name">Input quantity</label>
+                                    <input type="number" id="quantity" class="form-control"/> 
+                                </div>
+                                 <div class="form-group col-6">
+                                    <label for="date">Delivery Date</label>
+                                    <input type="date" id="date" class="form-control"/> 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="sup_address">Address</label>
-                                    <input id="sup_address" class="form-control"/> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="sup_email">Email</label>
-                                    <input id="sup_email" class="form-control"/> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="city">City</label>
-                                    <input id="city" class="form-control"/> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="tax_code">Tax Code</label>
-                                    <input id="tax_code" class="form-control"/> 
-                                </div>
-                            </div>
+                           
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
