@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Unallocated Item</h1>
+
+            <!--            <h4 th:text="${message}"></h4>-->
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Date In</th>
+                                    <th>Quantity</th>
+                                    <th>Accepted</th>
+                                    <th>Incoming id</th>
+                                    <th>Supplier</th>
+                                    <th>Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${unallocates}">
+                                    <td th:text="${item.pt_id}">1</td>
+                                    <td><img th:src="@{${item.good_data.photosImagePath}}" width="50px" /></td>
+                                    <td th:text="${item.good_data.goods_name}">1</td>
+                                    <td th:text="${item.pt_date_in}">1</td>
+                                    <td th:text="${item.pt_qty}">1</td>
+                                    <td th:text="${item.accepted_qty}">1</td>
+                                    <td th:text="${item.ic_id}"></td>
+                            <td th:text="${item.supplier.sup_name}">1</td>
+                            <td><button class="btn btn-outline-info" th:onclick="pickList([[${item.pt_id}]])">Pick List</button></td>
+                            <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add new supplier</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="sup_code">Supplier Code</label>
+                                    <input id="sup_code" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="sup_name">Supplier Name</label>
+                                    <input id="sup_name" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="sup_address">Address</label>
+                                    <input id="sup_address" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="sup_email">Email</label>
+                                    <input id="sup_email" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="city">City</label>
+                                    <input id="city" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="tax_code">Tax Code</label>
+                                    <input id="tax_code" class="form-control"/> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+               $(document).ready(function () {
+                   $('#tblWh').dataTable();
+                   $('.nav-unallocate').addClass('active');
+               });
+               
+               const pickList = (id) =>{
+                   console.log(id);
+                   $('#exampleModal').modal('show');
+               };
+               
+            </script>
+        </div>
+    </body>
+</html>

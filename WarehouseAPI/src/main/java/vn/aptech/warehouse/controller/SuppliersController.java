@@ -47,8 +47,7 @@ public class SuppliersController {
         return service.findAll();
     }
 
-    @GetMapping(value = "/details/{id}")
-    public Optional<Supplier> findBySupCode(@PathVariable("id") String sup_code) {
+
     @GetMapping(value="/details/{id}")
     public Supplier findBySupCode(@PathVariable("id") String sup_code){
         return service.findBySupCode(sup_code);

@@ -40,5 +40,10 @@ public class GoodsMasterServiceImpl implements GoodsMasterService {
     public GoodsMaster findByPtId(int pt_id) {
         return service.findByPtId(pt_id);
     }
+
+    @Override
+    public List<GoodsMaster> findUnallocated(boolean closed, String loc_code) {
+        return service.findUnallocated(closed, loc_code);
+    }
     
 }
