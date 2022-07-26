@@ -33,7 +33,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <th>Incoming id</th>
                                     <th>Supplier</th>
                                     <th>Action</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,8 +45,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <td th:text="${item.pt_qty}">1</td>
                                     <td th:text="${item.accepted_qty}">1</td>
                                     <td th:text="${item.ic_id}"></td>
-                            <td th:text="${item.supplier.sup_name}">1</td>
-                            <td><button class="btn btn-outline-info" th:onclick="pickList([[${item.pt_id}]])">Pick List</button></td>
+                                    <td th:text="${item.supplier.sup_name}">1</td>
+                            <div th:if="${item.pt_hold<item.pt_qty}">
+                                <td><button class="btn btn-outline-info" th:onclick="pickList([[${item.pt_id}]])">Pick List</button></td>
+                            </div>
+                            <div th:unless="${item.pt_hold<item.pt_qty}">
+                                <td><span class="badge badge-success">Finished Picking</span></td>
+                            </div>
                             <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
                             </tr>
                             </tbody>
@@ -54,8 +59,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                 </div>
             </div>
-            
-             <!-- Modal -->
+
+            <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -67,6 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label for="loc_code">Select locations</label>
+                                    <input type="hidden" id="pt_id">
                                     <select class="form-control" id="loc_code">
                                         <option th:each="item : ${locs}" th:value="${item.loc_code}" th:text="${item.loc_desc}"></option>
                                     </select> 
@@ -77,12 +83,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <label for="sup_name">Input quantity</label>
                                     <input type="number" id="quantity" class="form-control"/> 
                                 </div>
-                                 <div class="form-group col-6">
+                                <div class="form-group col-6">
                                     <label for="date">Delivery Date</label>
                                     <input type="date" id="date" class="form-control"/> 
                                 </div>
                             </div>
-                           
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -96,16 +102,55 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
-               $(document).ready(function () {
-                   $('#tblWh').dataTable();
-                   $('.nav-unallocate').addClass('active');
-               });
-               
-               const pickList = (id) =>{
-                   console.log(id);
-                   $('#exampleModal').modal('show');
-               };
-               
+                $(document).ready(function () {
+                    $('#tblWh').dataTable();
+                    $('.nav-unallocate').addClass('active');
+
+                    $('#btnAdd').click(function () {
+                        const jsObj = {
+                            pt_id: $('#pt_id').val(),
+                            loc_code: $('#loc_code :selected').val(),
+                            qty: $('#quantity').val(),
+                            date: $('#date').val()
+                        };
+                        console.log(jsObj);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/allocated/pick-list',
+                            contentType: "application/json",
+                            data: JSON.stringify(jsObj),
+                            success: function (res) {
+                                console.log(res);
+                                if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Pick list success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                                if (res === 400) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!'
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+
+                const pickList = (id) => {
+                    console.log(id);
+                    $('#pt_id').val(id);
+                    $('#exampleModal').modal('show');
+                };
+
+
+
             </script>
         </div>
     </body>
