@@ -80,7 +80,7 @@ create table customer
 ------------------------------------
 create table goods_data
 (
-	goods_no varchar(200) primary key , 
+	goods_no varchar(255) primary key , 
 	image varchar(max),
 	goods_name nvarchar(max),
 	price int,
@@ -103,7 +103,7 @@ create table incomings
 create table goods_master
 (
 	pt_id int primary key identity,
-	goods_no varchar(200) foreign key references goods_data,
+	goods_no varchar(255) foreign key references goods_data,
 	pt_qty float,
 	accepted_qty float , --số lượng đã được QC kiểm tra chất lượng (vd : nhập vào 50000 , QC pass 30000)
 	qc varchar(100), -- tên nhân viên QC
@@ -126,6 +126,29 @@ create table allocate_request
 	confirm bit,
 	si_code varchar(100) foreign key references warehouses,
 	movement_time datetime
+)
+
+create table sale_order
+(
+	so_id varchar(100) primary key , 
+	cust_code varchar(50) foreign key references customer(cust_code),
+	order_date datetime,
+	req_date datetime,
+	ship varchar(100),
+	confirm bit, 
+	closed bit,
+	currency varchar(100),
+	address varchar(300),
+	complete bit
+)
+
+create table so_detial
+(
+	id int primary key identity,
+	so_id varchar(100) foreign key references sale_order,
+	goods_no varchar(255) foreign key references goods_data,
+	quantity int , 
+	discount int,
 )
 
 
