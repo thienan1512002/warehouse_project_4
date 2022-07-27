@@ -32,5 +32,10 @@ public class AllocateRequestServiceImpl implements AllocateRequestService{
     public AllocateRequest save(AllocateRequest allocateRequest) {
         return repo.save(allocateRequest);
     }
+
+    @Override
+    public AllocateRequest findById(int id) {
+        return repo.findById(id);
+    }
     
 }

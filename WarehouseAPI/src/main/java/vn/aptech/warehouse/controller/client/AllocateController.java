@@ -48,6 +48,13 @@ public class AllocateController {
         return "allocate/index";
     }
     
+    @GetMapping("")
+    public String allocated(Model model){
+        Warehouse warehouse = whService.findWHByWhCode("WH001");
+        model.addAttribute("allocates", aloService.findbyConfirm(false, warehouse));
+        return "allocate/request";
+    }
+    
     @PostMapping("/pick-list")
     public ResponseEntity pickList(@RequestBody JsObj jsObj){
         int responseCode;

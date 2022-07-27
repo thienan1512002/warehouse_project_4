@@ -57,17 +57,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
             </div>
 
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $(document).ready(function () {
+                    $('.nav-qc').addClass('active');
+                    $('#tblWh').dataTable();                
+                });
+            </script>
         </div>
-        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            $(document).ready(function () {
-                $('.nav-qc').addClass('active');
-                $('#tblWh').dataTable();                
-            });
-        </script>
     </div>
 </body>
 </html>

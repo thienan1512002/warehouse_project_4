@@ -17,4 +17,6 @@ public interface AllocateRequestService {
     public List<AllocateRequest> findbyConfirm(boolean confirm , Warehouse warehouse);
     
     public AllocateRequest save(AllocateRequest allocateRequest);
+    
+    public AllocateRequest findById(int id);
 }

@@ -19,4 +19,7 @@ public interface AllocateRequestRepo extends JpaRepository<AllocateRequest, Inte
     
     @Query("SELECT o FROM AllocateRequest o WHERE o.confirm=:confirm and o.warehouse =:warehouse")
     public List<AllocateRequest> findByConfirm(@Param("confirm") boolean confirm , @Param("warehouse") Warehouse warehouse);
+    
+    @Query("SELECT o FROM AllocateRequest o WHERE o.alc_id=:id")
+    public AllocateRequest findById(@Param("id") int id);
 }
