@@ -37,5 +37,10 @@ public class AllocateRequestServiceImpl implements AllocateRequestService{
     public AllocateRequest findById(int id) {
         return repo.findById(id);
     }
+
+    @Override
+    public void delete(AllocateRequest allocateRequest) {
+        repo.delete(allocateRequest);
+    }
     
 }

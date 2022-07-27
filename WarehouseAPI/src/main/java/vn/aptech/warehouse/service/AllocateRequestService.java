@@ -19,4 +19,6 @@ public interface AllocateRequestService {
     public AllocateRequest save(AllocateRequest allocateRequest);
     
     public AllocateRequest findById(int id);
+    
+    public void delete(AllocateRequest allocateRequest);
 }

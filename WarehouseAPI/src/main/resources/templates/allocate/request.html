@@ -44,8 +44,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <td th:text="${item.location.loc_desc}"></td>
                             <div th:if="${!item.confirm}">
                                 <td>
-                                    <button class="btn btn-outline-info">Post Order</button>
-                                    <button class="btn btn-outline-danger">Cancle</button>
+                                    <button class="btn btn-outline-info" th:onclick="postOrder([[${item.alc_id}]])">Post Order</button>
+                                    <button class="btn btn-outline-danger" th:onclick="declineOrder([[${item.alc_id}]])">Cancle</button>
                                 </td>
                             </div>
                             <div th:unless="${!item.confirm}">
@@ -70,6 +70,80 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     $('.nav-allocate').addClass('active');
                     $('#tblWh').dataTable();
                 });
+
+                const declineOrder = (id) => {
+                    console.log(id);
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const jsObj = {
+                                id: id
+                            };
+                            $.ajax({
+                                type: 'POST',
+                                url: '/allocated/decline-order',
+                                contentType: "application/json",
+                                data: JSON.stringify(jsObj),
+                                success: function (res) {
+                                    console.log(res);
+                                    if (res === 200) {
+                                        Swal.fire(
+                                                'Good job!',
+                                                'Your action has been saved!',
+                                                'success'
+                                                ).then(function () {
+                                            window.location.reload();
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                };
+
+                const postOrder = (id) => {
+                    console.log(id);
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const jsObj = {
+                                id: id
+                            };
+                            $.ajax({
+                                type: 'POST',
+                                url: '/allocated/confirm-order',
+                                contentType: "application/json",
+                                data: JSON.stringify(jsObj),
+                                success: function (res) {
+                                    console.log(res);
+                                    if (res === 200) {
+                                        Swal.fire(
+                                                'Good job!',
+                                                'Your action has been saved!',
+                                                'success'
+                                                ).then(function () {
+                                            window.location.reload();
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                };
             </script>
         </div>
     </div>
