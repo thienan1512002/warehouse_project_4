@@ -74,7 +74,7 @@ public class UserController {
     public String updateRole(User user){
         User saveUser = service.getUserById(user.getId());
         saveUser.setRoles(user.getRoles());
-        service.saveUser(saveUser);
+        service.saveUserNoPass(saveUser);
 
         return "redirect:/user";
     }
@@ -87,15 +87,15 @@ public class UserController {
         return "redirect:/user";
     }
     @PostMapping(value="/save2")
-    public String saveUpdate(User user,String newPassword){
+    public String saveUpdate(User user){
         User updateUser = service.getUser(user.getUsername());
-        if(newPassword!=null){
-            updateUser.setPassword(newPassword);
-        }
         updateUser.setEmail(user.getEmail());
-        service.saveUser(updateUser);
-//        service.addRoleToUser(user.getUsername(), role);
-//        return ResponseEntity.ok(200);
+        if(user.getPassword()!=null){
+            updateUser.setPassword(user.getPassword());
+            service.saveUser(updateUser);
+            return "redirect:/user";
+        }
+        service.saveUserNoPass(updateUser);
         return "redirect:/user";
     } 
 

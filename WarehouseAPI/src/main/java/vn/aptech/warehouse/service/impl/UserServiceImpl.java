@@ -92,6 +92,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userRepo.findById(id).get(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public User saveUserNoPass(User user) {
+        log.info("Update user {} without password", user.getUsername());
+        return userRepo.save(user); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
 
     

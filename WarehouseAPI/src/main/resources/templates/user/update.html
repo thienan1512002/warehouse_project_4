@@ -28,17 +28,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="newPassword"  placeholder="leave blank if you dont want to change" >
+                    <input type="password" class="form-control" th:field="*{password}"  placeholder="leave blank if you dont want to change" >
                 </div>
-                
-                <!-- <div class="form-group">
-                    <label>Role</label>
-                    <select name="role" class="form-select">
-                        <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}"></option>
-                    </select>
-                </div>-->
-                <!--<input type="hidden" th:field="*{password}">-->
-                <input type="hidden" th:field="*{roles}">
+
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             </div>

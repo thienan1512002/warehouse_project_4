@@ -52,10 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc","/allocated").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
                 .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**","/allocated/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
-//                .antMatchers("/login","/logout","/403","/","/static/**").permitAll()
-//                .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-//                .antMatchers("/delete/**").hasAuthority("ADMIN")
-//                .antMatchers("/login","/logout","/403","/","/static/**").permitAll()
                 .anyRequest().permitAll();
         http.authorizeHttpRequests()
                 .and()//login
