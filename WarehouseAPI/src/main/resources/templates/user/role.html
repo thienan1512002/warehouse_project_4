@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
     <head>
-        <title>Update User</title>
+        <title>Update User Role</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -14,31 +14,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Update User</h1>
+            <h1 class="h3 mb-2 text-gray-800">Update User Role</h1>
 
-            <form  th:action="@{/user/save2}" method="post" th:object="${user}">
-                <input type="hidden" th:field="*{id}">
+            <form  th:action="@{/user/save3}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" class="form-control" th:field="*{username}" readonly>
                 </div>
+                <input type="hidden" th:field="*{id}">
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" th:field="*{email}"  placeholder="Enter Email" required>
+                    <label>Roles:</label>
+                    <div class="col-8">
+                        <th:block th:each="role: ${listRoles}">
+                            <input type="checkbox" th:field="*{roles}"
+                                   th:value="${role.id}"
+                                   th:text="${role.name}"
+                                   />    
+                        </th:block>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="newPassword"  placeholder="leave blank if you dont want to change" >
-                </div>
+
+
                 
-                <!-- <div class="form-group">
-                    <label>Role</label>
-                    <select name="role" class="form-select">
-                        <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}"></option>
-                    </select>
-                </div>-->
-                <!--<input type="hidden" th:field="*{password}">-->
-                <input type="hidden" th:field="*{roles}">
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             </div>
