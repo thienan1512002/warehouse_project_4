@@ -5,17 +5,16 @@
 package vn.aptech.warehouse.service;
 
 import java.util.List;
-import java.util.Optional;
-import vn.aptech.warehouse.entity.Customer;
+import vn.aptech.warehouse.entity.SaleOrderDet;
 
 /**
  *
  * @author nhta1
  */
-public interface CustomerService {
-    List<Customer> findAll();
+public interface SaleOrderDetService {
+    List<SaleOrderDet> findBySoId(String so_id);
     
-    Customer findByCustomerCode(String customerCode);
+    SaleOrderDet save(SaleOrderDet saleOrderDet);
     
-    Customer save(Customer customer);
+    void delete(SaleOrderDet det);
 }

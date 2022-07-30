@@ -4,17 +4,18 @@
  */
 package vn.aptech.warehouse.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import vn.aptech.warehouse.entity.Customer;
+import vn.aptech.warehouse.entity.SaleOrderDet;
 
 /**
  *
  * @author nhta1
  */
-public interface CustomerRepository extends JpaRepository<Customer, String> {
-    
-    @Query("SELECT o FROM Customer o WHERE o.cust_code =:cust_code")
-    public Customer findByCustCode(@Param("cust_code") String cust_code);
+public interface SaleOrderDetRepo extends JpaRepository<SaleOrderDet, Integer> {
+
+    @Query("SELECT o FROM SaleOrderDet o WHERE o.so_id=:id")
+    public List<SaleOrderDet> findBySoId(@Param("id") String so_id);
 }

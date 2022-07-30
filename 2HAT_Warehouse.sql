@@ -142,7 +142,7 @@ create table sale_order
 	complete bit
 )
 
-create table so_detial
+create table so_detail
 (
 	id int primary key identity,
 	so_id varchar(100) foreign key references sale_order,
