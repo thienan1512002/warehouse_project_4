@@ -4,7 +4,6 @@
  */
 package vn.aptech.warehouse.entity.vm;
 
-import java.time.LocalDate;
 import lombok.Data;
 
 /**
@@ -12,11 +11,10 @@ import lombok.Data;
  * @author nhta1
  */
 @Data
-public class JsObj {
-    private String loc_code;
-    private int pt_id;
-    private int qty;
-    private LocalDate date;
+public class SaleOrderDetVm {
     private int id;
     private String so_id;
+    private String goods_no;
+    private int quantity;
+    private int discount;
 }

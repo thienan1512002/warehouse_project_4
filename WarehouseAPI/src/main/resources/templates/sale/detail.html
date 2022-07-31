@@ -149,22 +149,90 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                     <script>
                         $(document).ready(function () {
-                            $('.nav-incoming').addClass('active');
+                            $('.nav-sale').addClass('active');
                             $('#tblWh').dataTable();
                             $('#new-list').click(function () {
                                 $('#exampleModal').modal('show');
                             });
-                            
-                            $('#btnAdd').click(function(){
-                               const det = {
-                                   so_id:$('#so_id').val(),
-                                   goods_no : $('#goods_no :selected').val(),
-                                   quantity: $('#quantity').val(),
-                                   discount: $('#discount').val()
-                               }; 
-                               console.log(det);
+
+                            $('#btnAdd').click(function () {
+                                const det = {
+                                    so_id: $('#so_id').val(),
+                                    goods_no: $('#goods_no :selected').val(),
+                                    quantity: $('#quantity').val(),
+                                    discount: $('#discount').val()
+                                };
+                                console.log(det);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/sale/add-item',
+                                    contentType: "application/json",
+                                    data: JSON.stringify(det),
+                                    success: function (res) {
+                                        if (res === 200) {
+                                            Swal.fire(
+                                                    'Good job!',
+                                                    'Add new item success',
+                                                    'success'
+                                                    ).then(function () {
+                                                window.location.reload();
+                                            });
+                                        }
+                                        if (res === 500) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Something went wrong!'
+                                            });
+                                        }
+                                    }
+                                });
                             });
 
+                            $('#close-list').click(function () {
+                                const jsObj = {
+                                    so_id: $('#so_id').val(),
+                                };
+                                console.log(jsObj);
+                                Swal.fire({
+                                    title: 'Do you want to save the changes?',
+                                    showDenyButton: true,
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Save',
+                                    denyButtonText: `Don't save`,
+                                }).then((result) => {
+                                    /* Read more about isConfirmed, isDenied below */
+                                    if (result.isConfirmed) {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/sale/close',
+                                            contentType: "application/json",
+                                            data: JSON.stringify(jsObj),
+                                            success: function (res) {
+                                                if (res === 200) {
+                                                    Swal.fire(
+                                                            'Good job!',
+                                                            'Close sale order success',
+                                                            'success'
+                                                            ).then(function () {
+                                                        window.location.reload();
+                                                    });
+                                                }
+                                                if (res === 500) {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Something went wrong!'
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    } else if (result.isDenied) {
+                                        Swal.fire('Changes are not saved', '', 'info')
+                                    }
+                                });
+
+                            });
                         });
 
                     </script>
