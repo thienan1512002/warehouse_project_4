@@ -18,4 +18,5 @@ public class JsObj {
     private int qty;
     private LocalDate date;
     private int id;
+    private String so_id;
 }

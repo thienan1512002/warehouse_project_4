@@ -151,5 +151,24 @@ create table so_detail
 	discount int,
 )
 
+create table issue_order
+(
+	id int primary key identity ,
+	locations varchar(200),
+	quantity int,
+	goods_name varchar(200),
+	so_id varchar(100),
+)
+
+create table transactions
+(
+	id int primary key identity ,
+	type varchar(100),
+	goods_name varchar(200),
+	fromLoc varchar (100),
+	toLoc varchar(100),
+	quantity int
+)
+
 
 
