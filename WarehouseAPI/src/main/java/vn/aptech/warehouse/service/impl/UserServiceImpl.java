@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.User;
+import vn.aptech.warehouse.entity.vm.UserVm;
 import vn.aptech.warehouse.repository.RoleRepository;
 import vn.aptech.warehouse.repository.UserRepository;
 import vn.aptech.warehouse.service.UserService;
@@ -96,6 +97,15 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public User saveUserNoPass(User user) {
         log.info("Update user {} without password", user.getUsername());
         return userRepo.save(user); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public UserVm getUserAndroid(UserVm user) {
+        User currentUser = userRepo.findByUsername(user.getUsername());
+        if(currentUser==null){
+            return null;
+        }
+        return user;
     }
 
 
