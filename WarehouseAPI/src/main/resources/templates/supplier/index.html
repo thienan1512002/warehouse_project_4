@@ -23,12 +23,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <button  class="btn btn-primary" id="btnShow">
                         <i class="fa-solid fa-plus"></i> Add New Supplier
                     </button>
-                </div>
-                <div class="card-header py-3">
-                    <form th:action="@{/api/suppliers/import}" method="post" enctype="multipart/form-data">
+                     <form th:action="@{/api/suppliers/import}" method="post" enctype="multipart/form-data">
                         <input type="file" th:name="file" />
                         <input th:type="submit" value="Import" />
                     </form>
+                </div>
+                <div class="card-header py-3">
+                    <a th:href="@{/api/suppliers/export}">Export to Excel</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

@@ -1,5 +1,6 @@
 package vn.aptech.warehouse.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,10 @@ public class ExcelService {
     public List<Supplier> getAllSuppliers() {
         return repository.findAll();
     }
+    
+//    public ByteArrayInputStream load() {
+//        List<Supplier> suppliers = repository.findAll();
+//        ByteArrayInputStream in = SupplierEHelper.suppliersToExcel(suppliers);
+//        return in;
+//    }
 }

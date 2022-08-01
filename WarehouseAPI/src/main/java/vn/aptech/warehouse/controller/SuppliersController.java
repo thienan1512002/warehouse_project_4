@@ -5,22 +5,19 @@
 package vn.aptech.warehouse.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.aspectj.weaver.ast.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +27,15 @@ import vn.aptech.warehouse.excelhelper.SupplierEHelper;
 import vn.aptech.warehouse.message.ResponseMessage;
 import vn.aptech.warehouse.service.ExcelService;
 import vn.aptech.warehouse.service.SupplierService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 /**
  *
@@ -48,9 +54,7 @@ public class SuppliersController {
     }
 
     @GetMapping(value = "/details/{id}")
-    public Optional<Supplier> findBySupCode(@PathVariable("id") String sup_code) {
-    @GetMapping(value="/details/{id}")
-    public Supplier findBySupCode(@PathVariable("id") String sup_code){
+    public Supplier findBySupCode(@PathVariable("id") String sup_code) {
         return service.findBySupCode(sup_code);
     }
 
@@ -69,20 +73,37 @@ public class SuppliersController {
     @Autowired
     ExcelService fileService;
 
-    @RequestMapping(value="/import", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
         if (SupplierEHelper.hasExcelFormat(file)) {
-//            try {
+            try {
                 fileService.save(file);
-//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-//                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-//            } catch (Exception e) {
-//                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-//            }
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            } catch (Exception e) {
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            }
         }
         message = "Please upload an excel file!";
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+    }
+    
+    @GetMapping(value = "/export")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=suppliers_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+         
+        List<Supplier> suppliers = service.findAll();
+         
+        SupplierEHelper excelExporter = new SupplierEHelper(suppliers);
+         
+        excelExporter.export(response);    
     }
 }
