@@ -4,7 +4,11 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.Supplier;
+import vn.aptech.warehouse.service.ExcelService;
 import vn.aptech.warehouse.service.SupplierService;
 
 /**
@@ -26,7 +31,7 @@ public class SupplierController {
     @Autowired
     private SupplierService service;
     
-     @GetMapping(value="")
+    @GetMapping(value="")
     public String index(Model model){
         model.addAttribute("suppliers", service.findAll());
         return "supplier/index";
@@ -36,5 +41,5 @@ public class SupplierController {
     public ResponseEntity save(@RequestBody Supplier supplier){
         Supplier sl = service.save(supplier);
         return ResponseEntity.ok(200);
-    } 
+    }
 }
