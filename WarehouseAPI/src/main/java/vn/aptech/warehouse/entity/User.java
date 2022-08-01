@@ -45,17 +45,17 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @NotBlank
-    @Size(max = 20)
+//    @NotBlank
+//    @Size(max = 20)
     private String username;
     
-    @NotBlank
-    @Size(max = 50)
-    @Email
+//    @NotBlank
+//    @Size(max = 50)
+//    @Email
     private String email;
     
-    @NotBlank
-    @Size(max = 120)
+//    @NotBlank
+//    @Size(max = 120)
     private String password;
 
 

@@ -23,6 +23,6 @@ public interface UserService {
     List<User> getUsers();
     User getUserById(int id);
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
-
-//    public void saveUser(UserForm user);
+    User saveUserNoPass(User user);
+//    boolean checkPassword(String oldPass, String newPass);
 }

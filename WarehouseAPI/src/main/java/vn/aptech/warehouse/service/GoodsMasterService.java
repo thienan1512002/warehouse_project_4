@@ -17,4 +17,8 @@ public interface GoodsMasterService {
     List<GoodsMaster> findByIcId(int ic_id);
     
     GoodsMaster save(GoodsMaster goodsMaster);
+    
+    GoodsMaster findByPtId(int pt_id);
+    
+    List<GoodsMaster> findUnallocated(boolean closed , String loc_code);
 }

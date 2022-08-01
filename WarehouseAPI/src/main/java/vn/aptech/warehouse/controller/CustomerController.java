@@ -35,7 +35,7 @@ public class CustomerController {
     }
     
     @GetMapping(value="/{id}")
-    public Optional<Customer> findByCustomerCode(@PathVariable("id")String customerCode){
+    public Customer findByCustomerCode(@PathVariable("id")String customerCode){
         return service.findByCustomerCode(customerCode);
     }
     

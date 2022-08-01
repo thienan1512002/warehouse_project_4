@@ -49,13 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeHttpRequests();
         http.authorizeHttpRequests()
-                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
-                .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc","/allocated","/sale").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**","/allocated/**","/sale/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
-//                .antMatchers("/login","/logout","/403","/","/static/**").permitAll()
-//                .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-//                .antMatchers("/delete/**").hasAuthority("ADMIN")
-//                .antMatchers("/login","/logout","/403","/","/static/**").permitAll()
                 .anyRequest().permitAll();
         http.authorizeHttpRequests()
                 .and()//login

@@ -15,7 +15,7 @@ import vn.aptech.warehouse.entity.Customer;
 public interface CustomerService {
     List<Customer> findAll();
     
-    Optional<Customer> findByCustomerCode(String customerCode);
+    Customer findByCustomerCode(String customerCode);
     
     Customer save(Customer customer);
 }

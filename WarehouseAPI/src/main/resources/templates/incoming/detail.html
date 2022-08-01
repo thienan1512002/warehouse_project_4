@@ -45,7 +45,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </dd>
                         <dt class="col-sm-3">Status</dt>
                         <dd class="col-sm-9" th:if="${incoming.closed}">
-                            <span class="badge badge-info">Wait for QC</span>
+                            <span class="badge badge-info">QC check</span>
                         </dd>
                         <dd class="col-sm-9" th:unless="${incoming.closed}">
                             <span class="badge badge-warning">Pending</span>
@@ -72,10 +72,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Date In</th>
                                         <th>Quantity</th>
                                         <th>Accepted</th>
-                                        <th>Status</th>
                                         <th>Supplier</th>
-
-
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,13 +84,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <td th:text="${item.pt_date_in}">1</td>
                                         <td th:text="${item.pt_qty}">1</td>
                                         <td th:text="${item.accepted_qty}">1</td>
-                                <div th:if="${item.passed}">
-                                    <td><span class="badge badge-success">Passed</span></td>
+                                        <td th:text="${item.supplier.sup_name}">1</td>
+                                <div th:if="${!incoming.closed}">
+                                    <div th:if="${item.passed}">
+                                        <td><span class="badge badge-success">Passed</span></td>
+                                    </div>
+                                    <div th:unless="${item.passed}">
+                                        <td><span class="badge badge-info">Wait for Qc Check</span></td>
+                                    </div>
                                 </div>
-                                <div th:unless="${item.passed}">
-                                    <td><span class="badge badge-info">Wait for Qc Check</span></td>
+                                <div th:unless="${!incoming.closed}">
+                                     <div th:if="${item.passed}">
+                                        <td><span class="badge badge-success">Passed</span></td>
+                                    </div>
+                                     <div th:unless="${item.passed}">
+                                        <!--<td><span class="badge badge-info">Wait for Qc Check</span></td>-->
+                                        <td><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button></td>
+                                    </div>
                                 </div>
-                                <td th:text="${item.supplier.sup_name}">1</td>
                                 <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
                                 </tr>
                                 </tbody>
@@ -189,7 +198,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             wh_code: $('#wh_code').val(),
                             pt_qty: $('#quantity').val()
                         };
-
                         $.ajax({
                             type: 'POST',
                             url: '/Incoming/add-item',
@@ -217,7 +225,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         });
                         console.log(goodsMaster);
                     });
-
                     $('#close-list').click(function () {
                         Swal.fire({
                             title: 'Do you want to save the changes?',
@@ -255,6 +262,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         })
                     });
                 });
+                const checkQc = (id) => {
+                    const goodsMaster = {
+                        pt_id: id
+                    };
+                    console.log(goodsMaster);
+                    $.ajax({
+                        type: 'post',
+                        url: '/qc/qc-check',
+                        contentType: "application/json",
+                        data: JSON.stringify(goodsMaster),
+                        success: function (data) {
+                            if (data === 200) {
+                                Swal.fire(
+                                        'Good job!',
+                                        'Submit Incoming success',
+                                        'success'
+                                        ).then(function () {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                };
             </script>
         </div>
     </body>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <head>
+        <title>Inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid" layout:fragment="contents">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Sale Order Lists</h1>
+
+            <!--            <h4 th:text="${message}"></h4>-->
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <button  class="btn btn-primary" id="btnShow">
+                        <i class="fa-solid fa-plus"></i> Add Sale Order
+                    </button>
+                    <button  class="btn btn-primary" id="btnShow">
+                        <i class="fa-solid fa-plus"></i> Upload By Excel
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Sold to</th>
+                                    <th>Order date</th>
+                                    <th>Require Date</th>
+                                    <th>Ship via</th>
+                                    <th>Currency</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                    <th>Action</th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${sales}">
+                                    <td th:text="${item.so_id}">1</td>
+                                    <td th:text="${item.customer.cust_name}"></td>
+                                    <td th:text="${item.order_date}">1</td>
+                                    <td th:text="${item.req_date}">1</td>
+                                    <td th:text="${item.ship}">1</td>
+                                    <td th:text="${item.currency}">1</td>
+                                    <td th:text="${item.address}">1</td>
+                            <div th:if="${item.confirm}">
+                                <td><span class="badge badge-success">Wait for picking goods</span></td>
+                            </div>
+                            <div th:if="${!item.confirm && item.closed}">
+                                <td><span class="badge badge-info">Wait for approval</span></td>
+                            </div>
+                            <div th:if="${!item.closed}">
+                                <td><span class="badge badge-warning">Pending</span></td>
+                            </div>
+                            <!--<td>Detail</td>-->
+                            <td><a th:href="@{/sale/details/{no}(no=${item.so_id})}" class="btn btn-outline-primary">Details</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add new Sale Order</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="so_id">No</label>
+                                        <input class="form-control" id="so_id"/>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="currency">Currency</label>
+                                        <input class="form-control" id="currency"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label for="cust_code">Customer</label>
+                                        <select class="form-control" id="cust_code">
+                                            <option th:each="customer:${customers}" th:value="${customer.cust_code}" th:text="${customer.cust_name}"></option>
+                                        </select> 
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="order_date">Order Date</label>
+                                        <input type="date" id="order_date" class="form-control"/> 
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="req_date">Delivery Date</label>
+                                        <input type="date" id="req_date" class="form-control"/> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="vehicle">Ship via</label>
+                                        <input id="ship" class="form-control"/>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="driver">Address</label>
+                                        <input id="address" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#tblWh').dataTable();
+                    $('.nav-sale').addClass('active');
+                    $('#btnShow').click(function(){
+                       $('#exampleModal').modal('show'); 
+                    });
+                    
+                    $('#btnAdd').click(function(){
+                        const saleOrder = {
+                            so_id:$('#so_id').val(),
+                            cust_code : $('#cust_code :selected').val(),
+                            order_date : $('#order_date').val(),
+                            req_date:$('#req_date').val(),
+                            ship : $('#ship').val(),
+                            address:$('#address').val(),
+                            currency : $('#currency').val()
+                        };
+                        $.ajax({
+                           type:'POST',
+                           url:'/sale/save',
+                           contentType: "application/json",
+                           data: JSON.stringify(saleOrder),
+                           success:function(res){
+                               if (res === 200) {
+                                    Swal.fire(
+                                            'Good job!',
+                                            'Add new order success',
+                                            'success'
+                                            ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                                if (res === 500) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!'
+                                    });
+                                }
+                           }
+                        });
+                        console.log(saleOrder);
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>

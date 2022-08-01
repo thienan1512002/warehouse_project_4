@@ -52,24 +52,46 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li> 
-                 <li class="nav-item nav-goodsMaster">
+                <li class="nav-item nav-goodsMaster">
                     <a class="nav-link nav-goodsMaster" th:href="@{/inventory}">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <span>Inventory</span></a>
-                </li> 
+                </li>
+
+
                 <hr class="sidebar-divider my-0">
-                 <li class="nav-item nav-qc">
+                <li class="nav-item nav-sale">
+                    <a class="nav-link nav-sale" th:href="@{/sale/browse}">
+                        <i class="fa-solid fa-money-bill"></i>
+                        <span>Sale Order</span></a>
+                </li>
+                <li class="nav-item nav-allocate">
+                    <a class="nav-link nav-allocate" th:href="@{/allocated}">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Allocate Request</span></a>
+                </li>
+                <li class="nav-item nav-unallocate">
+                    <a class="nav-link nav-unallocate" th:href="@{/allocated/browse}">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Unallocate</span></a>
+                </li>
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item nav-qc">
                     <a class="nav-link nav-qc" th:href="@{/qc}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>QC</span></a>
                 </li>
-                 <li class="nav-item nav-incoming">
+                <li class="nav-item nav-incoming">
                     <a class="nav-link nav-incoming" th:href="@{/Incoming}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Incoming List</span></a>
                 </li>
                 <hr class="sidebar-divider my-0">
-                
+                <li class="nav-item nav-goods">
+                    <a class="nav-link nav-goods" th:href="@{/goods}">
+                        <i class="fa-solid fa-cookie-bite"></i>
+                        <span>Goods Infomation</span></a>
+                </li>
                 <li class="nav-item nav-warehouse">
                     <a class="nav-link nav-warehouse" th:href="@{/warehouse}">
                         <i class="fa-solid fa-warehouse"></i>
@@ -90,10 +112,11 @@
                         <i class="fa-solid fa-person-walking-luggage"></i></i>
                         <span>Customer</span></a>
                 </li>
-                 <li class="nav-item nav-goods">
-                    <a class="nav-link nav-goods" th:href="@{/goods}">
-                       <i class="fa-solid fa-cookie-bite"></i>
-                        <span>Goods Infomation</span></a>
+
+                <li class="nav-item nav-user" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')">
+                    <a class="nav-link nav-user" th:href="@{/user}">
+                        <i class="fa-solid fa-user"></i>
+                        <span>User</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
@@ -294,7 +317,7 @@
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                         <div sec:authorize="isAuthenticated()">
-                                    Welcome <span sec:authentication="name"></span></div></span>
+                                            Welcome <span sec:authentication="name"></span></div></span>
                                     <img class="img-profile rounded-circle"
                                          th:src="@{/img/undraw_profile.svg}">
                                 </a>
@@ -308,11 +331,11 @@
                                     </a>
                                     <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')">
                                         <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Settings
-                                    </a>
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Settings
+                                        </a>
                                     </div>
-                                    
+
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Activity Log
@@ -324,7 +347,7 @@
                                     </a>
                                 </div>
                             </li>
-                            
+
 
                         </ul>
 
@@ -383,7 +406,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
     <!-- Core plugin JavaScript-->
     <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
