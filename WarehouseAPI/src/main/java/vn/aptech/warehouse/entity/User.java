@@ -57,7 +57,7 @@ public class User implements Serializable {
 //    @NotBlank
 //    @Size(max = 120)
     private String password;
-
+    private Boolean active;
 
     
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

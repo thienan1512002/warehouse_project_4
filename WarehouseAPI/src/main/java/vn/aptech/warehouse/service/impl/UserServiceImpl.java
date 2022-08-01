@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         if(user== null){
             log.error("User not found in DB");
             throw new UsernameNotFoundException("User not found in DB");
-        }else{
+        }else if(user!=null && user.getActive()==true){
             log.info("User found in DB: {}", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
