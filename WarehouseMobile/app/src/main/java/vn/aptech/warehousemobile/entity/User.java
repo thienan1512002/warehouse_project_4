@@ -1,22 +1,24 @@
 package vn.aptech.warehousemobile.entity;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
-    private int id;
+    @SerializedName("email")
+    @Expose
     private String email;
+    @SerializedName("password")
+    @Expose
     private String password;
+    @SerializedName("username")
+    @Expose
     private String username;
 
     public User(){
 
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -40,5 +42,10 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString(){
+        return email + " " + username;
     }
 }
