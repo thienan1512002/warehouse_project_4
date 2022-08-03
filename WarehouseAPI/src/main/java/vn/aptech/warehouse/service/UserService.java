@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.User;
+import vn.aptech.warehouse.entity.vm.UserVm;
 
 /**
  *
@@ -24,5 +25,6 @@ public interface UserService {
     User getUserById(int id);
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     User saveUserNoPass(User user);
+    UserVm getUserAndroid(UserVm user); 
 //    boolean checkPassword(String oldPass, String newPass);
 }

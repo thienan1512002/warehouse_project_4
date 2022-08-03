@@ -5,6 +5,7 @@
 package vn.aptech.warehouse.controller.client;
 
 import java.util.List;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class UserController {
     private RoleService serviceRole;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private Logger log;
     @GetMapping(value="")
     public String getUsers(Model model) {
         List<User> users = service.getUsers();
@@ -79,10 +81,10 @@ public class UserController {
         return "redirect:/user";
     }
     @PostMapping(value="/save")
-    public String save(User user,String role){
+    //public String save(User user,String role){
+    public String save(User user){
 //        Warehouse wh = service.save(warehouse);
         service.saveUser(user);
-        service.addRoleToUser(user.getUsername(), role);
 //        return ResponseEntity.ok(200);
         return "redirect:/user";
     }
@@ -90,13 +92,28 @@ public class UserController {
     public String saveUpdate(User user){
         User updateUser = service.getUser(user.getUsername());
         updateUser.setEmail(user.getEmail());
-        if(user.getPassword()!=null){
-            updateUser.setPassword(user.getPassword());
+        updateUser.setActive(user.getActive());
+        String password = user.getPassword();
+        if(password!=null && password!=""){
+            updateUser.setPassword(password);
             service.saveUser(updateUser);
             return "redirect:/user";
+            
+            
+        }else{
+            service.saveUserNoPass(updateUser);
+            return "redirect:/user";
         }
-        service.saveUserNoPass(updateUser);
-        return "redirect:/user";
+//        if(user.getPassword()==null){
+//            service.saveUserNoPass(updateUser);
+//            return "redirect:/user";
+//            
+//        }else{
+//            updateUser.setPassword(user.getPassword());
+//            service.saveUser(updateUser);
+//            return "redirect:/user";
+//        }
+        
     } 
 
 }
