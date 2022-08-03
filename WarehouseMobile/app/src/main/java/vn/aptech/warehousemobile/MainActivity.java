@@ -2,6 +2,8 @@ package vn.aptech.warehousemobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,26 +40,31 @@ public class MainActivity extends AppCompatActivity {
                 User user = new User();
                 user.setUsername(edName.getText().toString());
                 user.setPassword(edPass.getText().toString());
-                User login = checkLogin(user);
-                if(login!=null){
-                    Toast.makeText(MainActivity.this, "Hello "+MainActivity.this.user.toString(), Toast.LENGTH_SHORT).show();
-                }
+
+               checkLogin(user);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username","");
+
+                Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
 
-    public User checkLogin(User user){
-        User logUser = new User();
+    public void checkLogin(User user){
+
       service.login(user).enqueue(new Callback<User>() {
 
           @Override
           public void onResponse(Call<User> call, Response<User> response) {
 
               if(response.isSuccessful()) {
-                  MainActivity.this.user.setPassword(response.body().getPassword());
-                  MainActivity.this.user.setUsername(response.body().getUsername());
+                  SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
+                  SharedPreferences.Editor editor = sharedPreferences.edit();
+                  editor.putString("username",response.body().getUsername());
+                  editor.apply();
                   Log.i( "login","post submitted to API." + response.body().getUsername());
               }
           }
@@ -67,6 +74,6 @@ public class MainActivity extends AppCompatActivity {
               Log.e("login failed", "Unable to submit post to API."+t.toString());
           }
       });
-      return logUser;
+
     }
 }
