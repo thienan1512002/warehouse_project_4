@@ -11,12 +11,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import vn.aptech.warehouse.entity.Supplier;
 
@@ -46,6 +48,9 @@ public class SupplierEHelper {
                     // skip header
                     if (rowNumber == 0) {
                         rowNumber++;
+                        continue;
+                    }
+                    if (isRowEmpty(currentRow)) {
                         continue;
                     }
                     Iterator<Cell> cellsInRow = currentRow.iterator();
@@ -199,4 +204,12 @@ public class SupplierEHelper {
          
     }
 
+    public static boolean isRowEmpty(Row row) {
+        for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+            Cell cell = row.getCell(c);
+            if (cell != null && cell.getCellType() != CellType.BLANK)
+                return false;
+        }
+        return true;
+    }
 }
