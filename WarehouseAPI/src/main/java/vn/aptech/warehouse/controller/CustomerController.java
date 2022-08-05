@@ -47,6 +47,6 @@ public class CustomerController {
     @PutMapping(value = "/{id}")
     public ResponseEntity updateCustomer(@PathVariable("id") String customerCode , @RequestBody Customer customer){
         service.save(customer);
-        return ResponseEntity.ok(customer);
+        return ResponseEntity.ok(200);
     }
 }

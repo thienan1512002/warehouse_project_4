@@ -41,6 +41,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.RoleToUserForm;
 import vn.aptech.warehouse.entity.User;
+import vn.aptech.warehouse.entity.vm.UserVm;
 import vn.aptech.warehouse.service.UserService;
 
 /**
@@ -56,6 +57,12 @@ public class UsersController {
     @GetMapping(value="/users")
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
+    }
+    
+    @PostMapping(value="/user/android")
+    public UserVm getUserAndroid(@RequestBody UserVm user){
+        UserVm userAndroid = userService.getUserAndroid(user);
+        return userAndroid;
     }
     
     @PostMapping(value="/user/save")
