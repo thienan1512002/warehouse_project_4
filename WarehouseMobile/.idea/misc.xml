@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/FPT_APTECH/Sem4/Android/WarehouseMobile/app/src/main/res/layout/activity_main.xml" value="0.2988679352838745" />
+        <entry key="..\:/T1.2009.A0/warehouse_project_4/WarehouseMobile/app/src/main/res/layout/activity_view.xml" value="0.22826086956521738" />
+        <entry key="..\:/T1.2009.A0/warehouse_project_4/WarehouseMobile/app/src/main/res/layout/activity_warehouse.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/nhta1/OneDrive/Documents/warehouse_project_4/WarehouseMobile/app/src/main/res/layout/activity_main.xml" value="0.1716485507246377" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

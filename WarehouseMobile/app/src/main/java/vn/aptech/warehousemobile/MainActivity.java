@@ -3,6 +3,7 @@ package vn.aptech.warehousemobile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,12 +42,24 @@ public class MainActivity extends AppCompatActivity {
                 user.setUsername(edName.getText().toString());
                 user.setPassword(edPass.getText().toString());
 
-               checkLogin(user);
+                checkLogin(user);
 
                 SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
                 String username = sharedPreferences.getString("username","");
+                if(!username.equalsIgnoreCase(""))
+                {
+                    Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
+                    Intent it = new Intent(MainActivity.this, ViewActivity.class );
+                    startActivity(it);
 
-                Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Wrong username or password ", Toast.LENGTH_SHORT).show();
+                    edName.setText("");
+                    edPass.setText("");
+                    edName.setFocusable(true);
+                }
+
+
             }
         });
 
@@ -66,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                   editor.putString("username",response.body().getUsername());
                   editor.apply();
                   Log.i( "login","post submitted to API." + response.body().getUsername());
+
               }
           }
 
@@ -73,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
           public void onFailure(Call<User> call, Throwable t) {
               Log.e("login failed", "Unable to submit post to API."+t.toString());
           }
+
       });
 
     }
