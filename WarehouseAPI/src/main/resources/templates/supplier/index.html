@@ -23,9 +23,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <button  class="btn btn-primary" id="btnShow">
                         <i class="fa-solid fa-plus"></i> Add New Supplier
                     </button>
-                     <form th:action="@{/api/suppliers/import}" method="post" enctype="multipart/form-data">
-                        <input type="file" th:name="file" />
-                        <input th:type="submit" value="Import" />
+                     
+                </div>
+                <div class="card-header py-3">
+                    <form th:action="@{/api/suppliers/import}" method="post" enctype="multipart/form-data">
+<!--                        <input type="file" th:name="file" />
+                        
+                        <button  class="btn btn-primary" id="btnShow">
+                            <input th:type="submit" value="Import" />
+                        </button>-->
+                        <div class="mb-3">
+                            <div class="col-4 mb-2">
+                                <label for="formFile" class="form-label"><strong>Upload by Excel</strong></label>
+                                <input class="form-control" type="file" id="formFile" th:name="file">
+                            </div>
+                            <br>
+                            <div class="col-4">
+                                <button class="btn btn-primary" type="submit">Upload</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="card-header py-3">
