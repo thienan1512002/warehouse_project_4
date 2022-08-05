@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewActivity extends AppCompatActivity {
     private ImageView imgGoods, imgAllocate, imgMoment, imgIssue;
@@ -20,11 +21,20 @@ public class ViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
+        btnLogout = findViewById(R.id.btnLogout);
+        txtUser = findViewById(R.id.txtUser);
+        imgGoods = findViewById(R.id.goodsImage);
         SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
         String welcome = "Welcome "+ username.toString();
-        //txtUser.setText(welcome);
+        txtUser.setText(welcome);
         //imgGoods.setOnClickListener();
+        imgGoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ViewActivity.this, "Click", Toast.LENGTH_SHORT).show();
+            }
+        });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
