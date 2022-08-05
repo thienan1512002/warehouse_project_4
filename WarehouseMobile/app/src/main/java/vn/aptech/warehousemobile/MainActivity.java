@@ -3,6 +3,7 @@ package vn.aptech.warehousemobile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 String username = sharedPreferences.getString("username","");
 
                 Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(MainActivity.this, ViewActivity.class );
+                startActivity(it);
+
             }
         });
 
