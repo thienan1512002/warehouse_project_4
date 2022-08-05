@@ -73,39 +73,39 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="cust_code">Customer code</label>
-                                    <input id="cust_code" class="form-control"/> 
+                                    <label for="cust_code">Customer code *</label>
+                                    <input id="cust_code" class="form-control" required/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="cust_name">Customer name</label>
-                                    <input id="cust_name" class="form-control"/> 
+                                    <label for="cust_name">Customer name *</label>
+                                    <input id="cust_name" class="form-control" required /> 
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="address">Address</label>
-                                    <input id="address" class="form-control"/> 
+                                    <label for="address">Address *</label>
+                                    <input id="address" class="form-control" required/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="city">City</label>
-                                    <input id="city" class="form-control"/> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="country">Country</label>
-                                    <input id="country" class="form-control"/> 
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control"/> 
+                                    <label for="city">City *</label>
+                                    <input id="city" class="form-control" required/> 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="phone">Phone</label>
-                                    <input id="phone" class="form-control"/> 
+                                    <label for="country">Country *</label>
+                                    <input id="country" class="form-control" required/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="email">Email *</label>
+                                    <input id="email" type="email" class="form-control" required/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="phone">Phone *</label>
+                                    <input id="phone" class="form-control" type="tel" required/> 
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="note">Note</label>
@@ -118,10 +118,11 @@
                                     <input id="short_name" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="tax_code">Tax code</label>
+                                    <label for="tax_code">Tax code </label>
                                     <input id="tax_code"  class="form-control"/> 
                                 </div>
                             </div>
+                            <span><i>Fields marked with * are required.</i></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -144,35 +145,35 @@
                             <div class="row">
                                 <input type="hidden" id="e_cust_code" class="form-control" readonly/>
                                 <div class="form-group col-6">
-                                    <label for="e_cust_name">Customer name</label>
-                                    <input id="e_cust_name" class="form-control"/> 
+                                    <label for="e_cust_name">Customer name *</label>
+                                    <input id="e_cust_name" class="form-control" required/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="e_address">Address</label>
-                                    <input id="e_address" class="form-control"/> 
+                                    <label for="e_address">Address *</label>
+                                    <input id="e_address" class="form-control" required/> 
                                 </div>
                             </div>
                             
                             <div class="row">
                                 
                                 <div class="form-group col-6">
-                                    <label for="e_city">City</label>
-                                    <input id="e_city" class="form-control"/> 
+                                    <label for="e_city">City *</label>
+                                    <input id="e_city" class="form-control" required/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="e_country">Country</label>
-                                    <input id="e_country" class="form-control"/> 
+                                    <label for="e_country">Country *</label>
+                                    <input id="e_country" class="form-control" required/> 
                                 </div>
                             </div>
                             <div class="row">
                                 
                                 <div class="form-group col-6">
-                                    <label for="e_email">Email</label>
-                                    <input id="e_email" type="email" class="form-control"/> 
+                                    <label for="e_email">Email *</label>
+                                    <input id="e_email" type="email" class="form-control" required/> 
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="e_phone">Phone</label>
-                                    <input id="e_phone" class="form-control"/> 
+                                    <label for="e_phone">Phone *</label>
+                                    <input id="e_phone" class="form-control" type="tel" required/> 
                                 </div>
                             </div>
                             <div class="row">
@@ -198,6 +199,7 @@
                                         <input type="checkbox" id="e_status" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
                                     </div>
                                 </div>
+                                <span><i>Fields marked with * are required.</i></span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -230,7 +232,7 @@
                             note: $('#note').val(),
                             tax_code: $('#tax_code').val(),
                             short_name: $('#short_name').val(),
-                            status: 1
+                            active: 1
                         };
 
                         $.ajax({
@@ -265,7 +267,7 @@
                             note: $('#e_note').val(),
                             tax_code: $('#e_tax_code').val(),
                             short_name: $('#e_short_name').val(),
-                            status: $('#e_status').prop("checked") ? 1 : 0
+                            active: $('#e_status').prop("checked") ? 1 : 0
                             
                         };
 
