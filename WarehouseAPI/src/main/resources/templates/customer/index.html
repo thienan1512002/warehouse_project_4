@@ -72,28 +72,60 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="form-group col-4">
+                                <div class="form-group col-6">
                                     <label for="cust_code">Customer code</label>
                                     <input id="cust_code" class="form-control"/> 
                                 </div>
-                                <div class="form-group col-8">
+                                <div class="form-group col-6">
                                     <label for="cust_name">Customer name</label>
                                     <input id="cust_name" class="form-control"/> 
                                 </div>
                             </div>
                             
                             <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="wh_cmt">Status</label>
-                                    <textarea class="form-control" id="wh_cmt">
-                                        
-                                    </textarea>
+                                <div class="form-group col-6">
+                                    <label for="address">Address</label>
+                                    <input id="address" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="city">City</label>
+                                    <input id="city" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="country">Country</label>
+                                    <input id="country" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="phone">Phone</label>
+                                    <input id="phone" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="note">Note</label>
+                                    <input id="note" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="short_name">Short name</label>
+                                    <input id="short_name" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="tax_code">Tax code</label>
+                                    <input id="tax_code"  class="form-control"/> 
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnAdd">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd">Save</button>
                         </div>
                     </div>
                 </div>
@@ -104,29 +136,67 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit warehouse</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            
                             <div class="row">
-                                <input type="hidden" id="wh_editCode" class="form-control" readonly/>
-                                <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
-                                    <input id="wh_editDesc" class="form-control"/> 
+                                <input type="hidden" id="e_cust_code" class="form-control" readonly/>
+                                <div class="form-group col-6">
+                                    <label for="e_cust_name">Customer name</label>
+                                    <input id="e_cust_name" class="form-control"/> 
                                 </div>
-                                <div class="form-group col-4">
-                                    <label class="form-check-label" for="wh_editStatus">Active</label>
-                                    <div class="form-check form-switch">
-                                        <input type="checkbox" id="wh_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
-                                    </div>
+                                <div class="form-group col-6">
+                                    <label for="e_address">Address</label>
+                                    <input id="e_address" class="form-control"/> 
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                
+                                <div class="form-group col-6">
+                                    <label for="e_city">City</label>
+                                    <input id="e_city" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="e_country">Country</label>
+                                    <input id="e_country" class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="wh_editCmt">Comment</label>
-                                    <textarea class="form-control" id="wh_editCmt">
-                                        
-                                    </textarea>
+                                
+                                <div class="form-group col-6">
+                                    <label for="e_email">Email</label>
+                                    <input id="e_email" type="email" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="e_phone">Phone</label>
+                                    <input id="e_phone" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="form-group col-6">
+                                    <label for="e_note">Note</label>
+                                    <input id="e_note" class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="e_short_name">Short name</label>
+                                    <input id="e_short_name" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="form-group col-6">
+                                    <label for="e_tax_code">Tax code</label>
+                                    <input id="e_tax_code"  class="form-control"/> 
+                                </div>
+                                <div class="form-group col-6">
+                                    <label class="form-check-label" for="e_status">Active</label>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" id="e_status" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -141,31 +211,38 @@
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--            <script>
+              <script>
                 $(document).ready(function () {
-                    $('.nav-warehouse').addClass('active');
+                    $('.nav-customer').addClass('active');
                     $('#tblWh').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
                     });
                     $('#btnAdd').click(function () {
-                        const warehouse = {
-                            wh_code: $('#wh_code').val(),
-                            wh_desc: $('#wh_desc').val(),
-                            wh_status: 1,
-                            wh_cmt: $('#wh_cmt').val()
+                        const customer = {
+                            cust_code: $('#cust_code').val(),
+                            cust_name: $('#cust_name').val(),
+                            city: $('#city').val(),
+                            country: $('#country').val(),
+                            address: $('#address').val(),
+                            email: $('#email').val(),
+                            phone: $('#phone').val(),
+                            note: $('#note').val(),
+                            tax_code: $('#tax_code').val(),
+                            short_name: $('#short_name').val(),
+                            status: 1
                         };
 
                         $.ajax({
-                            url: '/warehouse/save',
+                            url: '/customer/save',
                             type: 'POST',
                             contentType: "application/json",
-                            data: JSON.stringify(warehouse),
+                            data: JSON.stringify(customer),
                             success: function (res) {
                                 if (res === 200) {
                                     Swal.fire(
                                             'Good job!',
-                                            'Add new Warehouse success',
+                                            'Add new Customer success',
                                             'success'
                                             ).then(function () {
                                         window.location.reload();
@@ -173,27 +250,35 @@
                                 }
                             }
                         });
-                        console.log(warehouse);
+                        console.log(customer);
                         $('#exampleModal').modal('hide');
                     });
                     $('#btnEdit').click(function () {
-                        const warehouse = {
-                            wh_code: $('#wh_editCode').val(),
-                            wh_desc: $('#wh_editDesc').val(),
-                            wh_status: $('#wh_editStatus').prop("checked") ? 1 : 0,
-                            wh_cmt: $('#wh_editCmt').val()
+                        const customer = {
+                            cust_code: $('#e_cust_code').val(),
+                            cust_name: $('#e_cust_name').val(),
+                            city: $('#e_city').val(),
+                            country: $('#e_country').val(),
+                            address:$('#e_address').val(),
+                            email: $('#e_email').val(),
+                            phone: $('#e_phone').val(),
+                            note: $('#e_note').val(),
+                            tax_code: $('#e_tax_code').val(),
+                            short_name: $('#e_short_name').val(),
+                            status: $('#e_status').prop("checked") ? 1 : 0
+                            
                         };
 
                         $.ajax({
-                            url: `api/warehouses/${$('#wh_editCode').val()}`,
+                            url: `api/customers/${$('#e_cust_code').val()}`,
                             type: 'PUT',
                             contentType: "application/json",
-                            data: JSON.stringify(warehouse),
+                            data: JSON.stringify(customer),
                             success: function (res) {
                                 if (res === 200) {
                                     Swal.fire(
                                             'Good job!',
-                                            'Edit new Warehouse success',
+                                            'Edit new Customer success',
                                             'success'
                                             ).then(function () {
                                         window.location.reload();
@@ -201,7 +286,7 @@
                                 }
                             }
                         });
-                        console.log(warehouse);
+                        console.log(customer);
 
                     });
                 });
@@ -210,18 +295,26 @@
                     console.log(id);
                     $.ajax({
                         type: 'GET',
-                        url: `/api/customer/${id}`,
+                        url: `/api/customers/${id}`,
                         success: function (data) {
 
                             console.log(data);
-                            $('#wh_editCode').val(data.wh_code);
-                            $('#wh_editDesc').val(data.wh_desc);
-                            if (data.wh_status === true) {
-                                $('#wh_editStatus').prop('checked', true);
+                            $('#e_cust_code').val(data.cust_code);
+                            $('#e_cust_name').val(data.cust_name);
+                            $('#e_address').val(data.address);
+                            $('#e_city').val(data.city);
+                            $('#e_country').val(data.country);
+                            $('#e_email').val(data.email);
+                            $('#e_phone').val(data.phone);
+                            $('#e_note').val(data.note);
+                            $('#e_short_name').val(data.short_name);
+                            $('#e_tax_code').val(data.tax_code);
+                            if (data.status === true) {
+                                $('#e_status').prop('checked', true);
                             } else {
-                                $('#wh_editStatus').prop('checked', false);
+                                $('#e_status').prop('checked', false);
                             }
-                            $('#wh_editCmt').val(data.wh_cmt);
+                            
 
                         }
                     });
@@ -229,7 +322,7 @@
                 };
 
 
-            </script>-->
+            </script>
         </div>
     </body>
 </html>
