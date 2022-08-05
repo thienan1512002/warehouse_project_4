@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.User;
+import vn.aptech.warehouse.entity.vm.UserVm;
 import vn.aptech.warehouse.repository.RoleRepository;
 import vn.aptech.warehouse.repository.UserRepository;
 import vn.aptech.warehouse.service.UserService;
@@ -29,30 +30,33 @@ import vn.aptech.warehouse.service.UserService;
 @Service
 @Transactional
 @Slf4j
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
+
     @Autowired
-    private  UserRepository userRepo;
+    private UserRepository userRepo;
     @Autowired
-    private  RoleRepository roleRepo;
+    private RoleRepository roleRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
-        if(user== null){
+        if (user == null) {
             log.error("User not found in DB");
             throw new UsernameNotFoundException("User not found in DB");
-        }else if(user!=null && user.getActive()==true){
+        } else if (user != null && user.getActive() == true) {
             log.info("User found in DB: {}", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role-> 
-        {authorities.add(new SimpleGrantedAuthority(role.getName()));
+        user.getRoles().forEach(role
+                -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), authorities);
     }
+
     @Override
     public User saveUser(User user) {
         log.info("Save new user {} to database", user.getUsername());
@@ -68,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-        log.info("Adding role {} to user {}",roleName, username );
+        log.info("Adding role {} to user {}", roleName, username);
         User user = userRepo.findByUsername(username); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         Role role = roleRepo.findByName(roleName);
         user.getRoles().add(role);
@@ -98,8 +102,20 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userRepo.save(user); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public UserVm getUserAndroid(UserVm user) {
 
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User currentUser = userRepo.findByUsername(user.getUsername());
+        user.setEmail(currentUser.getEmail());
+        if (currentUser == null) {
+            return null;
+        } 
+        if(!passwordEncoder.matches(user.getPassword(),currentUser.getPassword())){
+            return null;
+        }
+        
+        return user;
+    }
 
-    
-    
 }
