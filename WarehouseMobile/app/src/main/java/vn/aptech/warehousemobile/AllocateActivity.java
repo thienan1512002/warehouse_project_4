@@ -1,6 +1,7 @@
 package vn.aptech.warehousemobile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,8 @@ public class AllocateActivity extends AppCompatActivity {
 
         rvAllocate.setAdapter(adapter);
         rvAllocate.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        rvAllocate.addItemDecoration(itemDecoration);
 
         service = ApiUtil.getAllocateService();
 
