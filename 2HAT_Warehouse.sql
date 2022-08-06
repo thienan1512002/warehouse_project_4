@@ -10,12 +10,14 @@ go
 use warehouse
 go
 
+
 create table warehouses
 (
 	wh_code varchar(100) primary key,
 	wh_desc varchar(max),
 	wh_status bit , 
-	wh_cmt varchar(max)
+	wh_cmt varchar(max),
+	si_code varchar(100)
 )
 go
 
@@ -58,7 +60,7 @@ go
 create table roles
 (
 	id int primary key identity ,
-	name nvarchar(max),
+	name nvarchar(max)
 )
 go
 
@@ -86,7 +88,7 @@ create table goods_data
 	price int,
 	active bit,
 	goods_package varchar(100), --Loại đóng gói (thùng , bao bì),
-	qty_per_package int, --Số lượng trong 1 thùng
+	qty_per_package int --Số lượng trong 1 thùng
 )
 go
 
@@ -97,7 +99,7 @@ create table incomings
 	vehicle varchar(100),
 	driver varchar(100),
 	delivery_date datetime,
-	closed bit,
+	closed bit
 )
 
 create table goods_master
@@ -148,7 +150,7 @@ create table so_detail
 	so_id varchar(100) foreign key references sale_order,
 	goods_no varchar(255) foreign key references goods_data,
 	quantity int , 
-	discount int,
+	discount int
 )
 
 create table issue_order
@@ -157,7 +159,7 @@ create table issue_order
 	locations varchar(200),
 	quantity int,
 	goods_name varchar(200),
-	so_id varchar(100),
+	so_id varchar(100)
 )
 
 create table transactions
@@ -169,6 +171,10 @@ create table transactions
 	toLoc varchar(100),
 	quantity int
 )
+
+
+
+
 
 
 
