@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class ViewActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         txtUser = findViewById(R.id.txtUser);
         imgGoods = findViewById(R.id.goodsImage);
+        imgAllocate = findViewById(R.id.imgAllocate);
         SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
         String welcome = "Welcome "+ username.toString();
@@ -33,6 +35,13 @@ public class ViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(ViewActivity.this, "Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+        imgAllocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(ViewActivity.this, AllocateActivity.class );
+                startActivity(it);
             }
         });
         btnLogout.setOnClickListener(new View.OnClickListener() {

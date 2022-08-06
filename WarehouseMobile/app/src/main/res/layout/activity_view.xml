@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/goods" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imgAllocate"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginStart="40dp"
@@ -51,7 +51,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButton3"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:layout_constraintTop_toBottomOf="@+id/imgAllocate"
         app:srcCompat="@drawable/issue" />
 
     <TextView
@@ -82,7 +82,7 @@
         android:layout_marginEnd="76dp"
         android:text="Allocate Report"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/imgAllocate" />
 
     <TextView
         android:id="@+id/textView4"
