@@ -3,9 +3,10 @@ package vn.aptech.warehousemobile.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class AllocateRequest {
+public class AllocateRequest  {
     @SerializedName("alc_id")
     @Expose
     private int alc_id;
@@ -20,7 +21,7 @@ public class AllocateRequest {
     private String movement_time;
     @SerializedName("goods_masters")
     @Expose
-    private GoodsMaster goods_masters;
+    private  GoodsMaster goods_masters;
 
     @SerializedName("warehouse")
     @Expose

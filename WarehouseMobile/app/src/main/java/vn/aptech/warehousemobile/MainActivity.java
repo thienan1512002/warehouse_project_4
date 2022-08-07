@@ -35,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
         service = ApiUtil.getUserService();
 
+
+        SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+
+        if(!username.equalsIgnoreCase(""))
+        {
+            Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
+            Intent it = new Intent(MainActivity.this, ViewActivity.class );
+            startActivity(it);
+
+        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

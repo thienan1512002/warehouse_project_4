@@ -1,22 +1,32 @@
 package vn.aptech.warehousemobile.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import vn.aptech.warehousemobile.AllocateDetailActivity;
 import vn.aptech.warehousemobile.R;
 import vn.aptech.warehousemobile.entity.AllocateRequest;
 
 
 public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.AllocateHolder> {
     private List<AllocateRequest> data;
-    public AllocateAdapter(List<AllocateRequest> data){
+
+    private Context mContext;
+    public AllocateAdapter(List<AllocateRequest> data , Context context){
+        this.mContext = context;
         this.data = data;
     }
     @NonNull
@@ -29,7 +39,23 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
 
     @Override
     public void onBindViewHolder(@NonNull AllocateHolder holder, int position) {
-        holder.dataBind(data.get(position));
+
+        final AllocateRequest allocateRequest = data.get(position);
+
+        holder.dataBind(allocateRequest);
+
+        holder.layoutItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               onClickGoToDetail(allocateRequest);
+            }
+        });
+    }
+    private void onClickGoToDetail(AllocateRequest alo){
+        Intent intent = new Intent(mContext, AllocateDetailActivity.class);
+        intent.putExtra("alc_id",alo.getAlc_id());
+        mContext.startActivity(intent);
+        Toast.makeText(mContext, alo.getGoods_masters().getGood_data().getGoods_name(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -39,18 +65,23 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
 
     public class AllocateHolder extends RecyclerView.ViewHolder{
 
+        private RelativeLayout layoutItem;
         private TextView tvId, tvName, tvLoc;
+        private ImageView img_avatar;
         public AllocateHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tvId);
             tvName = itemView.findViewById(R.id.tvGoodsName);
             tvLoc = itemView.findViewById(R.id.tvLoc);
+            img_avatar = itemView.findViewById(R.id.img_avatar);
+            layoutItem = itemView.findViewById(R.id.layout_item);
         }
 
         public void dataBind(AllocateRequest alo){
             tvId.setText(Integer.toString(alo.getAlc_id()));
             tvName.setText(alo.getGoods_masters().getGood_data().getGoods_name());
             tvLoc.setText(Integer.toString(alo.getAlc_moved_qty()));
+            img_avatar.setImageResource(R.mipmap.ic_launcher);
         }
     }
 }

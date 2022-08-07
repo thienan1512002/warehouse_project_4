@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.aptech.warehouse.entity.AllocateRequest;
@@ -35,5 +36,10 @@ public class AllocateApiController {
     public List<AllocateRequest> findAll(){
         Warehouse wh = whService.findWHByWhCode("WH001");
         return service.findbyConfirm(true,wh);
+    }
+    
+    @GetMapping(value="/allocate/{id}")
+    public AllocateRequest findById(@PathVariable("id") int id){
+        return service.findById(id);
     }
 }

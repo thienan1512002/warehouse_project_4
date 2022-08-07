@@ -34,7 +34,7 @@ public class AllocateActivity extends AppCompatActivity {
 
         rvAllocate = findViewById(R.id.rvAllocate);
 
-        adapter = new AllocateAdapter(requests);
+        adapter = new AllocateAdapter(requests,this);
 
         rvAllocate.setAdapter(adapter);
         rvAllocate.setLayoutManager(new LinearLayoutManager(this));

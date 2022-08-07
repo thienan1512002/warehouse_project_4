@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Location {
+
+
     @SerializedName("loc_desc")
     @Expose
     private String loc_desc;
