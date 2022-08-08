@@ -1,6 +1,7 @@
 package vn.aptech.warehousemobile.api;
 
 import vn.aptech.warehousemobile.api.service.AllocateService;
+import vn.aptech.warehousemobile.api.service.IssueOrderService;
 import vn.aptech.warehousemobile.api.service.LocationService;
 import vn.aptech.warehousemobile.api.service.UserService;
 
@@ -17,5 +18,9 @@ public class ApiUtil {
 
     public static LocationService getLocationService(){
         return RetroFitClient.getClient(BASE_URL).create(LocationService.class);
+    }
+
+    public static IssueOrderService getIssueOrderService(){
+        return RetroFitClient.getClient(BASE_URL).create(IssueOrderService.class);
     }
 }
