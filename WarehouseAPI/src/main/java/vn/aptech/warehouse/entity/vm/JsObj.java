@@ -19,4 +19,6 @@ public class JsObj {
     private LocalDate date;
     private int id;
     private String so_id;
+    private int alc_id;
+    private String loc_desc;
 }

@@ -19,4 +19,6 @@ public interface LocRepository extends JpaRepository<Location, String>{
     List<Location> findLocbyWhCode(@Param("wh_code")String whCode);
     @Query("SELECT o FROM Location o WHERE o.loc_code=:loc_code")
     Location findLocByLocCode(@Param("loc_code")String loc_code);
+    @Query("SELECT o FROM Location o WHERE o.loc_desc=:loc_desc")
+    Location findLocByLocDesc(@Param("loc_desc")String loc_desc);
 }

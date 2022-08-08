@@ -53,7 +53,8 @@ create table [users]
 	id int primary key identity , 
 	username varchar(20),
 	email varchar(50),
-	[password] varchar(120)
+	[password] varchar(120),
+	active bit
 )
 go
 

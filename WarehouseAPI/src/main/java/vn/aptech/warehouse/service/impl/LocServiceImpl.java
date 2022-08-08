@@ -41,5 +41,11 @@ public class LocServiceImpl implements LocService{
     public Location findByLocCode(String loc_code) {
         return repo.findLocByLocCode(loc_code);
     }
-    
+
+    @Override
+    public Location findByLocDesc(String loc_desc) {
+        return repo.findLocByLocDesc(loc_desc); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+ 
 }

@@ -47,7 +47,12 @@ public class ViewActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences sharedpreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Intent it = new Intent(ViewActivity.this, MainActivity.class );
+                startActivity(it);
             }
         });
     }

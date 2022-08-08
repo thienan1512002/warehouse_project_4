@@ -20,4 +20,6 @@ public interface LocService {
     Location save(Location loc);
     
     Location findByLocCode(String loc_code);
+    Location findByLocDesc(String loc_desc);
+    
 }

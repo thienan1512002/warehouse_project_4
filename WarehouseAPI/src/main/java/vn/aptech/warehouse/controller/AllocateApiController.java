@@ -6,14 +6,22 @@ package vn.aptech.warehouse.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.aptech.warehouse.entity.AllocateRequest;
+import vn.aptech.warehouse.entity.GoodsMaster;
+import vn.aptech.warehouse.entity.Location;
 import vn.aptech.warehouse.entity.Warehouse;
+import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.service.AllocateRequestService;
+import vn.aptech.warehouse.service.GoodsMasterService;
+import vn.aptech.warehouse.service.LocService;
 import vn.aptech.warehouse.service.WarehouseService;
 
 /**
@@ -28,9 +36,14 @@ public class AllocateApiController {
     
     @Autowired
     private AllocateRequestService service;
-    
+    @Autowired
+    private LocService serviceLoc;
     @Autowired
     private WarehouseService whService;
+    
+    @Autowired
+    private GoodsMasterService serviceGM;
+    
     
     @GetMapping(value="/allocate")
     public List<AllocateRequest> findAll(){
@@ -42,4 +55,22 @@ public class AllocateApiController {
     public AllocateRequest findById(@PathVariable("id") int id){
         return service.findById(id);
     }
+    @PostMapping(value="/allocate/update")
+    public ResponseEntity confirmOrder(@RequestBody JsObj jsObj) {
+        AllocateRequest ar = service.findById(jsObj.getId());
+        ar.setConfirm(true);
+        AllocateRequest edit = service.save(ar);
+        Location loc = serviceLoc.findByLocDesc(jsObj.getLoc_desc());
+        loc.setLoc_cap(loc.getLoc_cap() + jsObj.getQty());
+        loc.setLoc_holding(loc.getLoc_holding() - jsObj.getQty());
+        Location editLoc = serviceLoc.save(loc);
+        GoodsMaster gm = serviceGM.findByPtId(ar.getGoods_masters().getPt_id());
+        gm.setLoc_code(loc.getLoc_code());
+        gm.setPt_hold(gm.getPt_hold() - jsObj.getQty());
+
+        GoodsMaster gm1 = serviceGM.save(gm);
+
+        return ResponseEntity.ok(200);
+    }
+    
 }

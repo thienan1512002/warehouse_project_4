@@ -57,7 +57,7 @@ public class User implements Serializable {
 //    @NotBlank
 //    @Size(max = 120)
     private String password;
-    private Boolean active;
+    
 
     
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -66,6 +66,10 @@ public class User implements Serializable {
 //            inverseJoinColumns = @JoinColumn(name="role_id"))
 //    private Set<Role> roles = new HashSet<>();
     private Collection<Role> roles = new ArrayList<>();
+    private Boolean active;
+//    public User(int i, String along, String longgmailcom, String string, ArrayList<Object> arrayList) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
     
     
