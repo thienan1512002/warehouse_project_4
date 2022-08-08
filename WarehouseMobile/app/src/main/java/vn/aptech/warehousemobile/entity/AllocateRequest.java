@@ -26,6 +26,9 @@ public class AllocateRequest  {
     @SerializedName("warehouse")
     @Expose
     private Warehouse warehouse;
+    @SerializedName("location")
+    @Expose
+    private Location location;
 
     public int getAlc_id() {
         return alc_id;
@@ -74,5 +77,26 @@ public class AllocateRequest  {
 
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "AllocateRequest{" +
+                "alc_id=" + alc_id +
+                ", alc_moved_qty=" + alc_moved_qty +
+                ", confirm=" + confirm +
+                ", movement_time='" + movement_time + '\'' +
+                ", goods_masters=" + goods_masters +
+                ", warehouse=" + warehouse +
+                ", location=" + location +
+                '}';
     }
 }

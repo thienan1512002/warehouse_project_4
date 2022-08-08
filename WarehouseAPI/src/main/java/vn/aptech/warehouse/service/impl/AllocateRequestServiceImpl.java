@@ -42,5 +42,16 @@ public class AllocateRequestServiceImpl implements AllocateRequestService{
     public void delete(AllocateRequest allocateRequest) {
         repo.delete(allocateRequest);
     }
+
+    @Override
+    public boolean deleteAndroid(AllocateRequest allocateRequest) {
+       boolean result = false;
+       AllocateRequest request = repo.findById(allocateRequest.getAlc_id());
+       if(request.getAlc_id()!=0){
+           repo.delete(request);
+           result = true;
+       }
+       return result;
+    }
     
 }

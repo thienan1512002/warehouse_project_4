@@ -21,4 +21,6 @@ public interface AllocateRequestService {
     public AllocateRequest findById(int id);
     
     public void delete(AllocateRequest allocateRequest);
+    
+    public boolean deleteAndroid(AllocateRequest allocateRequest);
 }

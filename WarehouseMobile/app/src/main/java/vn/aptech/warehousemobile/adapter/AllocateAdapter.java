@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import vn.aptech.warehousemobile.AllocateDetailActivity;
@@ -68,6 +70,7 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
         private RelativeLayout layoutItem;
         private TextView tvId, tvName, tvLoc;
         private ImageView img_avatar;
+        private final String URL ="http://192.168.1.4:8080/goods-photos/";
         public AllocateHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tvId);
@@ -81,7 +84,7 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
             tvId.setText(Integer.toString(alo.getAlc_id()));
             tvName.setText(alo.getGoods_masters().getGood_data().getGoods_name());
             tvLoc.setText(Integer.toString(alo.getAlc_moved_qty()));
-            img_avatar.setImageResource(R.mipmap.ic_launcher);
+            Glide.with(mContext).load(URL+alo.getGoods_masters().getGood_data().getGoods_no()+"/"+alo.getGoods_masters().getGood_data().getImage()).into(img_avatar);
         }
     }
 }

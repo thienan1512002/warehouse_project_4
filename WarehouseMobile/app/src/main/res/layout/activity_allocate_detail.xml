@@ -11,10 +11,10 @@
 
     <ImageView
         android:id="@+id/img_ava_detail"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
         app:srcCompat="@mipmap/ic_launcher"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="42dp" />
@@ -23,11 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:layout_toEndOf="@+id/img_ava_detail"
-        android:layout_marginStart="40dp"
-        >
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_detail_GoodsName"
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:text="1" />
 
         <TextView
-            android:id="@+id/tv_detail_good"
+            android:id="@+id/tv_detail_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -95,41 +95,35 @@
         android:layout_centerHorizontal="true">
 
 
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical" >
 
-    <EditText
-            android:id="@+id/edQuantity"
+        <Button
+            android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Input Quantity"/>
+            android:layout_marginLeft="10dp"
+            android:backgroundTint ="@color/green"
+            android:text="Submit" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <Spinner
-            android:id="@+id/sp_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-       <Button
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/btnSubmit"
-           android:text="Submit"
-           android:layout_marginLeft="10dp"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDecline"
+                android:backgroundTint ="@color/red"
+                android:text="Decline"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

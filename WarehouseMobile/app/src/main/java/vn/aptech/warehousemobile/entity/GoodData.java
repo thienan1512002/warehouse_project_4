@@ -19,6 +19,9 @@ public class GoodData {
     @SerializedName("active")
     @Expose
     private boolean active;
+    @SerializedName("image")
+    @Expose
+    private String image;
 
     public String getGoods_no() {
         return goods_no;
@@ -58,5 +61,13 @@ public class GoodData {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
