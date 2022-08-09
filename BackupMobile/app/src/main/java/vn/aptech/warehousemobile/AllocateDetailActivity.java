@@ -37,7 +37,7 @@ public class AllocateDetailActivity extends AppCompatActivity {
     private ImageView imgView;
     private LocationService locService;
     private Button btnSubmit , btnDecline;
-    private final String URL ="http://192.168.1.4:8080/goods-photos/";
+    private final String URL ="http://10.0.0.18:8080/goods-photos/";
     JsObj jsObj = new JsObj();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

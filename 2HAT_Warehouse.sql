@@ -160,7 +160,10 @@ create table issue_order
 	locations varchar(200),
 	quantity int,
 	goods_name varchar(200),
-	so_id varchar(100)
+	so_id varchar(100), 
+	closed bit,
+	pt_id int foreign key references goods_master,
+	si_code varchar(200)
 )
 
 create table transactions

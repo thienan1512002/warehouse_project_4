@@ -70,7 +70,7 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
         private RelativeLayout layoutItem;
         private TextView tvId, tvName, tvLoc;
         private ImageView img_avatar;
-        private final String URL ="http://192.168.1.4:8080/goods-photos/";
+        private final String URL ="http://10.0.0.18:8080/goods-photos/";
         public AllocateHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tvId);

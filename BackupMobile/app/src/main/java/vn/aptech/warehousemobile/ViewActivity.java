@@ -26,11 +26,19 @@ public class ViewActivity extends AppCompatActivity {
         txtUser = findViewById(R.id.txtUser);
         imgGoods = findViewById(R.id.goodsImage);
         imgAllocate = findViewById(R.id.imgAllocate);
+        imgIssue = findViewById(R.id.imgIssue);
         SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
         String welcome = "Welcome "+ username.toString();
         txtUser.setText(welcome);
         //imgGoods.setOnClickListener();
+        imgIssue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(ViewActivity.this , IssueOrderActivity.class);
+                startActivity(it);
+            }
+        });
         imgGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
