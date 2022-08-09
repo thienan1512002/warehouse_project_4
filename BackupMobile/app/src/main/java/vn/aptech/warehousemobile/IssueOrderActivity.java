@@ -37,7 +37,7 @@ public class IssueOrderActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         rvIssueOrder.addItemDecoration(itemDecoration);
 
-        service.findByClosed(false,"WH001").enqueue(new Callback<List<IssueOrder>>() {
+        service.findByClosed().enqueue(new Callback<List<IssueOrder>>() {
             @Override
             public void onResponse(Call<List<IssueOrder>> call, Response<List<IssueOrder>> response) {
                 List<IssueOrder> results = response.body();

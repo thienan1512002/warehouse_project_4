@@ -10,7 +10,7 @@ import vn.aptech.warehousemobile.entity.IssueOrder;
 public interface IssueOrderService {
 
     @GET("issue")
-    Call<List<IssueOrder>> findByClosed(boolean closed , String si_code);
+    Call<List<IssueOrder>> findByClosed();
 
     @GET("issue/{id}")
     Call<IssueOrder> findById(@Path("id") int id);

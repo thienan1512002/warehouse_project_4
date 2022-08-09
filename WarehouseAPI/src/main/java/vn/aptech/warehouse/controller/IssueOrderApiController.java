@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.aptech.warehouse.entity.IssueOrder;
@@ -27,11 +28,11 @@ public class IssueOrderApiController {
     
     @GetMapping(value="/issue")
     public List<IssueOrder> findByClosed(boolean closed , String si_code){
-        return service.findByConfirm(closed, si_code);
+        return service.findByConfirm(false, "WH001");
     }
     
     @GetMapping(value="/issue/{id}")
-    public IssueOrder findById(int id){
+    public IssueOrder findById(@PathVariable("id") int id){
         return service.findById(id);
     }
     
