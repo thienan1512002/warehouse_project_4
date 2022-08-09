@@ -80,7 +80,7 @@ public class AllocateDetailActivity extends AppCompatActivity {
         service.findById(id).enqueue(new Callback<AllocateRequest>() {
             @Override
             public void onResponse(Call<AllocateRequest> call, Response<AllocateRequest> response) {
-              tvDetailGoods.setText(response.body().getGoods_masters().getGood_data().getGoods_name());
+              tvDetailGoods.setText(tvDetailGoods.getText().toString()+" "+response.body().getGoods_masters().getGood_data().getGoods_name());
               tvDetailsDate.setText(response.body().getMovement_time());
               tvDetailsId.setText(response.body().getLocation().getLoc_desc());
               tvDetailQuantity.setText(Integer.toString(response.body().getAlc_moved_qty()));

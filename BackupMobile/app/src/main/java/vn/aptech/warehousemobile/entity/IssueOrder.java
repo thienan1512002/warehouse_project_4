@@ -7,7 +7,7 @@ public class IssueOrder {
     @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("location")
+    @SerializedName("locations")
     @Expose
     private String location;
     @SerializedName("quantity")

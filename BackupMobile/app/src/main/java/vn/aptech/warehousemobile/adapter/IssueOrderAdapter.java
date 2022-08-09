@@ -1,6 +1,7 @@
 package vn.aptech.warehousemobile.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import vn.aptech.warehousemobile.IssueOrderDetailActivity;
 import vn.aptech.warehousemobile.R;
 import vn.aptech.warehousemobile.entity.IssueOrder;
 
@@ -41,6 +43,19 @@ public class IssueOrderAdapter extends RecyclerView.Adapter<IssueOrderAdapter.Is
         final IssueOrder issueOrder = data.get(position);
 
         holder.dataBind(issueOrder);
+
+        holder.layoutItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickGoToDetail(issueOrder);
+            }
+        });
+    }
+
+    private void onClickGoToDetail(IssueOrder issueOrder) {
+        Intent it = new Intent(mContext, IssueOrderDetailActivity.class);
+        it.putExtra("issue_id",issueOrder.getId());
+        mContext.startActivity(it);
     }
 
     @Override
@@ -50,13 +65,13 @@ public class IssueOrderAdapter extends RecyclerView.Adapter<IssueOrderAdapter.Is
 
     public class IssueOrderHolder extends RecyclerView.ViewHolder{
 
-        private RelativeLayout issueItem;
+        private RelativeLayout layoutItem;
         private TextView tvIssueGoodsName , tvIssueLocation , tvIssueQty;
         private ImageView issue_ava;
-        private final String IMG_URL ="http://192.168.1.4:8080/goods-photos/";
+        private final String IMG_URL ="http://10.0.0.18:8080/goods-photos/";
         public IssueOrderHolder(@NonNull View itemView) {
             super(itemView);
-            issueItem = itemView.findViewById(R.id.issue_item);
+            layoutItem = itemView.findViewById(R.id.issue_item);
             tvIssueGoodsName = itemView.findViewById(R.id.tvIssueGoodsName);
             tvIssueLocation = itemView.findViewById(R.id.tvIssueLocation);
             tvIssueQty = itemView.findViewById(R.id.tvIssueQty);

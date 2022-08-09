@@ -29,7 +29,7 @@ public class IssueOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String location;
+    private String locations;
     private int quantity;
     private String goods_name;
     @ManyToOne
