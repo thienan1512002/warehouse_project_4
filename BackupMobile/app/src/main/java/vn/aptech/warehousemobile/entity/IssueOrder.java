@@ -26,6 +26,10 @@ public class IssueOrder {
     @Expose
     private String si_code;
 
+    @SerializedName("loc_code")
+    @Expose
+    private String loc_code;
+
     public int getId() {
         return id;
     }
@@ -80,5 +84,13 @@ public class IssueOrder {
 
     public void setSi_code(String si_code) {
         this.si_code = si_code;
+    }
+
+    public String getLoc_code() {
+        return loc_code;
+    }
+
+    public void setLoc_code(String loc_code) {
+        this.loc_code = loc_code;
     }
 }
