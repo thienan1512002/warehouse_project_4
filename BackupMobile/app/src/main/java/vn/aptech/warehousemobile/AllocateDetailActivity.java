@@ -2,7 +2,7 @@ package vn.aptech.warehousemobile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import static vn.aptech.warehousemobile.api.ApiUtil.IMG_URL;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,20 +37,14 @@ public class AllocateDetailActivity extends AppCompatActivity {
     private ImageView imgView;
     private LocationService locService;
     private Button btnSubmit , btnDecline;
-    private final String URL ="http://10.0.0.18:8080/goods-photos/";
+    private String URL = IMG_URL;
     JsObj jsObj = new JsObj();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allocate_detail);
+        initUi();
 
-        tvDetailGoods = findViewById(R.id.tv_detail_GoodsName);
-        tvDetailsDate = findViewById(R.id.tv_detail_date);
-        tvDetailsId = findViewById(R.id.tv_detail_id);
-        tvDetailQuantity = findViewById(R.id.tv_detail_quantity);
-        imgView = findViewById(R.id.img_ava_detail);
-        btnSubmit = findViewById(R.id.btnSubmit);
-        btnDecline = findViewById(R.id.btnDecline);
 
         service = ApiUtil.getAllocateService();
         locService = ApiUtil.getLocationService();
@@ -153,4 +147,16 @@ public class AllocateDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initUi() {
+        tvDetailGoods = findViewById(R.id.tv_detail_GoodsName);
+        tvDetailsDate = findViewById(R.id.tv_detail_date);
+        tvDetailsId = findViewById(R.id.tv_detail_id);
+        tvDetailQuantity = findViewById(R.id.tv_detail_quantity);
+        imgView = findViewById(R.id.img_ava_detail);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnDecline = findViewById(R.id.btnDecline);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 }

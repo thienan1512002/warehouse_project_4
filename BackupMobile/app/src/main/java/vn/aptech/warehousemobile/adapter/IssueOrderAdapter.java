@@ -1,5 +1,7 @@
 package vn.aptech.warehousemobile.adapter;
 
+import static vn.aptech.warehousemobile.api.ApiUtil.IMG_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -68,7 +70,7 @@ public class IssueOrderAdapter extends RecyclerView.Adapter<IssueOrderAdapter.Is
         private RelativeLayout layoutItem;
         private TextView tvIssueGoodsName , tvIssueLocation , tvIssueQty;
         private ImageView issue_ava;
-        private final String IMG_URL ="http://10.0.0.18:8080/goods-photos/";
+        private String good_url =IMG_URL;
         public IssueOrderHolder(@NonNull View itemView) {
             super(itemView);
             layoutItem = itemView.findViewById(R.id.issue_item);
@@ -79,7 +81,7 @@ public class IssueOrderAdapter extends RecyclerView.Adapter<IssueOrderAdapter.Is
         }
 
         public void dataBind(IssueOrder issueOrder){
-            Glide.with(mContext).load(IMG_URL+issueOrder.getGoods_master().getGood_data().getGoods_no()+"/"+issueOrder.getGoods_master().getGood_data().getImage()).into(issue_ava);
+            Glide.with(mContext).load(good_url+issueOrder.getGoods_master().getGood_data().getGoods_no()+"/"+issueOrder.getGoods_master().getGood_data().getImage()).into(issue_ava);
             tvIssueQty.setText(Integer.toString(issueOrder.getQuantity()));
             tvIssueLocation.setText(issueOrder.getLocation());
             tvIssueGoodsName.setText(issueOrder.getGoods_name());

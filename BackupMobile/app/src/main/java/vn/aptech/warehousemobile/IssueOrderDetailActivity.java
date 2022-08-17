@@ -1,5 +1,7 @@
 package vn.aptech.warehousemobile;
 
+import static vn.aptech.warehousemobile.api.ApiUtil.IMG_URL;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,23 +30,16 @@ public class IssueOrderDetailActivity extends AppCompatActivity {
     private TextView tvIssueDetailName , tvIssueDetailLocation , tvIssueDetailRef , tvIssueDetailQuantity;
     private ImageView imgDetailIssue;
     private Button btnIssueSubmit;
-    private final String IMG_URL = "http://10.0.0.18:8080/goods-photos/";
+    private String img = IMG_URL;
     private JsObj jsObj = new JsObj();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue_order_detail);
-
+        initUi();
         service = ApiUtil.getIssueOrderService();
 
-        tvIssueDetailName = findViewById(R.id.tv_issue_detail_GoodsName);
-        tvIssueDetailLocation = findViewById(R.id.tv_issue_detail_location);
-        tvIssueDetailRef = findViewById(R.id.tv_detail_ref);
-        tvIssueDetailQuantity = findViewById(R.id.tv_issue_detail_quantity);
 
-        imgDetailIssue = findViewById(R.id.img_ava_issue_detail);
-
-        btnIssueSubmit = findViewById(R.id.btnIssueSubmit);
 
         int id = getIntent().getIntExtra("issue_id",0);
 
@@ -55,7 +50,7 @@ public class IssueOrderDetailActivity extends AppCompatActivity {
                 tvIssueDetailLocation.setText(response.body().getLocation());
                 tvIssueDetailRef.setText(response.body().getGoods_master().getPatch_no());
                 tvIssueDetailQuantity.setText(Integer.toString(response.body().getQuantity()));
-                Glide.with(IssueOrderDetailActivity.this).load(IMG_URL+response.body().getGoods_master().getGood_data().getGoods_no()+"/"+response.body().getGoods_master().getGood_data().getImage()).into(imgDetailIssue);
+                Glide.with(IssueOrderDetailActivity.this).load(img+response.body().getGoods_master().getGood_data().getGoods_no()+"/"+response.body().getGoods_master().getGood_data().getImage()).into(imgDetailIssue);
                 jsObj.setId(response.body().getId());
                 jsObj.setLoc_code(response.body().getGoods_master().getLoc_code());
                 jsObj.setQty(response.body().getQuantity());
@@ -94,5 +89,17 @@ public class IssueOrderDetailActivity extends AppCompatActivity {
                 }).setNegativeButton("Cancle",null).create().show();
             }
         });
+    }
+
+    private void initUi() {
+        tvIssueDetailName = findViewById(R.id.tv_issue_detail_GoodsName);
+        tvIssueDetailLocation = findViewById(R.id.tv_issue_detail_location);
+        tvIssueDetailRef = findViewById(R.id.tv_detail_ref);
+        tvIssueDetailQuantity = findViewById(R.id.tv_issue_detail_quantity);
+
+        imgDetailIssue = findViewById(R.id.img_ava_issue_detail);
+
+        btnIssueSubmit = findViewById(R.id.btnIssueSubmit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

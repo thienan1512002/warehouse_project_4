@@ -17,23 +17,41 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".IssueOrderDetailActivity"
+            android:name=".MovementActivity"
+            android:exported="false"
+            android:parentActivityName=".ViewActivity"
+            android:label="Movement Report"/>
+        <activity
+            android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".IssueOrderDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".IssueOrderActivity"
+            android:label="Issue Order Detail"/>
         <activity
             android:name=".IssueOrderActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ViewActivity"
+            android:label="Issue Order"/>
         <activity
             android:name=".AllocateDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AllocateActivity"
+            android:label="Allocate Detail"
+            />
         <activity
             android:name=".AllocateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ViewActivity"
+            android:label="Allocate Report"/>
         <activity
             android:name=".ViewActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
