@@ -21,4 +21,5 @@ public class JsObj {
     private String so_id;
     private int alc_id;
     private String loc_desc;
+    private String note;
 }
