@@ -62,70 +62,90 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     $('.nav-issue').addClass('active');
                     $('#tblWh').dataTable();
 
-                    $('#btnSubmit').click(function(){
-                       const jsObj ={
-                           id:$('#id').val(),
-                           pt_id:$('#pt_id').val(),
-                           loc_code:$('#loc_code').val(),
-                           qty:$('#qty').val()
-                       }; 
-                       console.log(jsObj);
-                       Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            console.log(jsObj);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/Issue/confirm',
-                                contentType: "application/json",
-                                data: JSON.stringify(jsObj),
-                                success: function (res) {
-                                    if (res === 200) {
-                                        Swal.fire(
-                                                'Good job!',
-                                                'Closed Issue Order',
-                                                'success'
-                                                ).then(function () {
-                                            window.location.href="/Issue";
-                                        });
+                    $('#btnSubmit').click(function () {
+                        const jsObj = {
+                            id: $('#id').val(),
+                            pt_id: $('#pt_id').val(),
+                            loc_code: $('#loc_code').val(),
+                            qty: $('#qty').val()
+                        };
+                        console.log(jsObj);
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                console.log(jsObj);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Issue/confirm',
+                                    contentType: "application/json",
+                                    data: JSON.stringify(jsObj),
+                                    success: function (res) {
+                                        if (res === 200) {
+                                            Swal.fire(
+                                                    'Good job!',
+                                                    'Closed Issue Order',
+                                                    'success'
+                                                    ).then(function () {
+                                                window.location.href = "/Issue";
+                                            });
+                                        }
                                     }
-                                }
-                            });
-                        }
+                                });
+                            }
+                        });
                     });
-                    });
-                    
-                    $('#btnSendMail').click(function(){
-                        const jsObj ={
-                           note: "Note"
-                       }; 
-                         $.ajax({
-                                type: 'POST',
-                                url: '/Issue/send-email',
-                                contentType: "application/json",
-                                data: JSON.stringify(jsObj),
-                                success: function (res) {
-                                    if (res === 200) {
-                                        Swal.fire(
-                                                'Good job!',
-                                                'Send email success',
-                                                'success'
-                                                ).then(function () {
-                                            window.location.reload();
-                                        });
-                                    }
+
+                    $('#btnSendMail').click(function () {
+                        Swal.fire({
+                            title: 'Submit your message',
+                            input: 'text',
+                            inputAttributes: {
+                                autocapitalize: 'off'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Look up',
+                            showLoaderOnConfirm: true,
+                            preConfirm: (note) => {
+                                if (note === '') {
+                                    swal.showValidationMessage("Please enter your message"); // Show error when validation fails.
+                                    swal.enableConfirmButton();
+                                } else {
+                                    const jsObj = {
+                                        note: note
+                                    };
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/Issue/send-email',
+                                        contentType: "application/json",
+                                        data: JSON.stringify(jsObj),
+                                        success: function (res) {
+                                            if (res === 200) {
+                                                Swal.fire(
+                                                        'Good job!',
+                                                        'Send email success',
+                                                        'success'
+                                                        ).then(function () {
+                                                    window.location.reload();
+                                                });
+                                            }
+                                        }
+                                    });
                                 }
-                            });
+
+                            },
+                          
+                        });
+
                     });
                 });
-                
+
             </script>
         </div>
     </body>
