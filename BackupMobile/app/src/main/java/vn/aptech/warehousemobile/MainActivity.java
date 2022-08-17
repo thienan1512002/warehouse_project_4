@@ -35,47 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         service = ApiUtil.getUserService();
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username","");
-
-        if(!username.equalsIgnoreCase(""))
-        {
-            Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
-            Intent it = new Intent(MainActivity.this, ViewActivity.class );
-            startActivity(it);
-
-        }
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 User user = new User();
                 user.setUsername(edName.getText().toString());
                 user.setPassword(edPass.getText().toString());
-
                 checkLogin(user);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
-                String username = sharedPreferences.getString("username","");
-                if(!username.equalsIgnoreCase(""))
-                {
-                    Toast.makeText(MainActivity.this, "Hello "+username, Toast.LENGTH_SHORT).show();
-                    Intent it = new Intent(MainActivity.this, ViewActivity.class );
-                    startActivity(it);
-
-                }else{
-                    Toast.makeText(MainActivity.this, "Wrong username or password ", Toast.LENGTH_SHORT).show();
-                    edName.setText("");
-                    edPass.setText("");
-                    edName.setFocusable(true);
-                }
-
-
             }
         });
-
-
     }
 
     public void checkLogin(User user){
@@ -90,8 +58,16 @@ public class MainActivity extends AppCompatActivity {
                   SharedPreferences.Editor editor = sharedPreferences.edit();
                   editor.putString("username",response.body().getUsername());
                   editor.apply();
-                  Log.i( "login","post submitted to API." + response.body().getUsername());
 
+                  Log.i( "login","post submitted to API." + response.body().getUsername());
+                  Toast.makeText(MainActivity.this, "Hello "+response.body().getUsername(), Toast.LENGTH_SHORT).show();
+                  Intent it = new Intent(MainActivity.this, ViewActivity.class );
+                  startActivity(it);
+              }else{
+                  Toast.makeText(MainActivity.this, "Wrong username or password ", Toast.LENGTH_SHORT).show();
+                  edName.setText("");
+                  edPass.setText("");
+                  edName.setFocusable(true);
               }
           }
 

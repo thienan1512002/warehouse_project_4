@@ -49,9 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeHttpRequests();
         http.authorizeHttpRequests()
-                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc","/allocated","/sale","/Issue").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
-                .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**","/allocated/**","/sale/**","/Issue/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
-                .antMatchers("/user/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
+                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc","/allocated","/sale").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**","/allocated/**","/sale/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                .antMatchers("/user/update-profile/**").authenticated()
+                .antMatchers("/user/update/**","/user/update-role/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
                 .anyRequest().permitAll();
         http.authorizeHttpRequests()
                 .and()//login
