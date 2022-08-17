@@ -1,0 +1,101 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="vn.aptech.warehousemobile"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="28"
+8-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:6:5-67
+11-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:6:22-64
+12
+13    <application
+13-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:8:5-37:19
+14        android:allowBackup="true"
+14-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:9:9-35
+15        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+15-->[androidx.core:core:1.7.0] C:\Users\Jack\.gradle\caches\transforms-3\d8338c189490aee58604e111af57865f\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+16        android:dataExtractionRules="@xml/data_extraction_rules"
+16-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:10:9-65
+17        android:debuggable="true"
+18        android:extractNativeLibs="false"
+19        android:fullBackupContent="@xml/backup_rules"
+19-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:11:9-54
+20        android:icon="@mipmap/ic_launcher"
+20-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:12:9-43
+21        android:label="2HAT Warehouse"
+21-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:13:9-39
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:14:9-54
+23        android:supportsRtl="true"
+23-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:15:9-35
+24        android:testOnly="true"
+25        android:theme="@style/Theme.WarehouseMobile"
+25-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:16:9-53
+26        android:usesCleartextTraffic="true" >
+26-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:17:9-44
+27        <activity
+27-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:19:9-21:40
+28            android:name="vn.aptech.warehousemobile.AllocateDetailActivity"
+28-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:20:13-51
+29            android:exported="false" />
+29-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:21:13-37
+30        <activity
+30-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:22:9-24:40
+31            android:name="vn.aptech.warehousemobile.AllocateActivity"
+31-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:23:13-45
+32            android:exported="false" />
+32-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:24:13-37
+33        <activity
+33-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:25:9-27:40
+34            android:name="vn.aptech.warehousemobile.ViewActivity"
+34-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:26:13-41
+35            android:exported="false" />
+35-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:27:13-37
+36        <activity
+36-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:28:9-36:20
+37            android:name="vn.aptech.warehousemobile.MainActivity"
+37-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:29:13-41
+38            android:exported="true" >
+38-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:30:13-36
+39            <intent-filter>
+39-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:31:13-35:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:32:17-69
+40-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:32:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:34:17-77
+42-->D:\T1.2009.A0\warehouse_project_4\WarehouseMobile\app\src\main\AndroidManifest.xml:34:27-74
+43            </intent-filter>
+44        </activity>
+45
+46        <provider
+46-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+47            android:name="androidx.startup.InitializationProvider"
+47-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:27:13-67
+48            android:authorities="vn.aptech.warehousemobile.androidx-startup"
+48-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:28:13-68
+49            android:exported="false" >
+49-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:29:13-37
+50            <meta-data
+50-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+51                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+51-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:32:17-75
+52                android:value="androidx.startup" />
+52-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Jack\.gradle\caches\transforms-3\db233f3ba8947fb0f91cd701b83dfe6a\transformed\emoji2-1.0.0\AndroidManifest.xml:33:17-49
+53            <meta-data
+53-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Jack\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+54                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+54-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Jack\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+55                android:value="androidx.startup" />
+55-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Jack\.gradle\caches\transforms-3\45759b04922bc547a81513b82a38ba1e\transformed\lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+56        </provider>
+57    </application>
+58
+59</manifest>
