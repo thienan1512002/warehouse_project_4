@@ -38,7 +38,7 @@ public class SupplierEHelper {
     public static List<Supplier> excelToSuppliers(InputStream is) {
         try {
             List<Supplier> suppliers;
-            try (Workbook workbook = new XSSFWorkbook(is)) {
+            Workbook workbook = new XSSFWorkbook(is);
                 Sheet sheet = workbook.getSheet(SHEET);
                 Iterator<Row> rows = sheet.iterator();
                 suppliers = new ArrayList<Supplier>();
@@ -88,7 +88,7 @@ public class SupplierEHelper {
                     suppliers.add(supplier);
                 }
                 workbook.close();
-            }
+        
             return suppliers;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());

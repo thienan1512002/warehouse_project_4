@@ -4,7 +4,14 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import vn.aptech.warehouse.entity.Customer;
+import vn.aptech.warehouse.entity.Supplier;
+import vn.aptech.warehouse.excelhelper.CustomerEHelper;
+import vn.aptech.warehouse.excelhelper.SupplierEHelper;
+import vn.aptech.warehouse.message.ResponseMessage;
 import vn.aptech.warehouse.service.CustomerService;
+import vn.aptech.warehouse.service.ExcelService;
 
 @Controller
 @RequestMapping("/customer")
