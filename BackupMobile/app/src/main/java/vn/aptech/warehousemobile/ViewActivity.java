@@ -36,7 +36,8 @@ public class ViewActivity extends AppCompatActivity {
         rltGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ViewActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(ViewActivity.this , GoodsActivity.class);
+                startActivity(it);
             }
         });
         rltAllocate.setOnClickListener(new View.OnClickListener() {

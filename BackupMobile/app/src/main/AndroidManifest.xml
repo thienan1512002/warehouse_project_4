@@ -4,6 +4,11 @@
     package="vn.aptech.warehousemobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -17,34 +22,46 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GoodsDetailActivity"
+            android:exported="false"
+            android:label="Goods Details"
+            android:parentActivityName=".GoodsActivity" />
+        <activity
+            android:name=".GoodsActivity"
+            android:exported="false"
+            android:label="Goods List"
+            android:parentActivityName=".ViewActivity" />
+        <activity
             android:name=".MovementActivity"
             android:exported="false"
-            android:parentActivityName=".ViewActivity"
-            android:label="Movement Report"/>
+            android:label="Movement Report"
+            android:parentActivityName=".ViewActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".IssueOrderDetailActivity"
             android:exported="false"
-            android:parentActivityName=".IssueOrderActivity"
-            android:label="Issue Order Detail"/>
+            android:label="Issue Order Detail"
+            android:parentActivityName=".IssueOrderActivity" />
         <activity
             android:name=".IssueOrderActivity"
             android:exported="false"
-            android:parentActivityName=".ViewActivity"
-            android:label="Issue Order"/>
+            android:label="Issue Order"
+            android:parentActivityName=".ViewActivity" />
         <activity
             android:name=".AllocateDetailActivity"
             android:exported="false"
-            android:parentActivityName=".AllocateActivity"
             android:label="Allocate Detail"
-            />
+            android:parentActivityName=".AllocateActivity" />
         <activity
             android:name=".AllocateActivity"
             android:exported="false"
-            android:parentActivityName=".ViewActivity"
-            android:label="Allocate Report"/>
+            android:label="Allocate Report"
+            android:parentActivityName=".ViewActivity" />
         <activity
             android:name=".ViewActivity"
             android:exported="false" />
@@ -58,6 +75,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".service.MyFirebaseMessageService"
             android:exported="false">

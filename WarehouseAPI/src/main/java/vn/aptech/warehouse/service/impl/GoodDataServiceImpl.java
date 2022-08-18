@@ -36,6 +36,11 @@ public class GoodDataServiceImpl implements GoodDataService{
         return repo.findByNo(no); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public List<GoodData> findByName(String name) {
+        return repo.findByName(name);
+    }
+
     
     
 }
