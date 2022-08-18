@@ -39,8 +39,6 @@ public class IssueOrderDetailActivity extends AppCompatActivity {
         initUi();
         service = ApiUtil.getIssueOrderService();
 
-
-
         int id = getIntent().getIntExtra("issue_id",0);
 
         service.findById(id).enqueue(new Callback<IssueOrder>() {
