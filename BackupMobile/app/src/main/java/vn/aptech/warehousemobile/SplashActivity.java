@@ -1,7 +1,5 @@
 package vn.aptech.warehousemobile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,13 +8,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
 
+        myRef.setValue("Hello, World!");
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
