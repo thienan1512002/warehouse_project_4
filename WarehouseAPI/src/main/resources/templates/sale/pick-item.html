@@ -34,57 +34,63 @@
                         <tbody>
                             <tr th:each="item: ${goods}">
                         <input type="hidden" th:id="'qty-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty})}"/>
-                        <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
-                        <input type="hidden" th:id="'max-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty-item.pt_hold})}"/>
-                                <td th:text="${item.pt_id}" th:id="'id-td-'+${item.pt_id}"></td>
-                               <td th:text="${item.good_data.goods_name}" th:id="'item-td-'+${item.pt_id}"></td>
-                        <td th:text="${item.loc_code}" th:id="'loc-td-'+${item.pt_id}"></td>
-                        <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
-                        <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
-                        <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
-                        <td><input th:id="'ed-'+${item.pt_id}" class="form-control col-6" th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
-                        <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
+    <input type="hidden" th:id="'max-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty-item.pt_hold})}"/>
+    <td th:text="${item.pt_id}" th:id="'id-td-'+${item.pt_id}"></td>
+    <td th:text="${item.good_data.goods_name}" th:id="'item-td-'+${item.pt_id}"></td>
+    <td th:text="${item.loc_code}" th:id="'loc-td-'+${item.pt_id}"></td>
+    <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
+    <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
+    <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
+    <td><input th:id="'ed-'+${item.pt_id}" class="form-control col-6" th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
+    <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
             
-             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h3 class="card-title">Confirm</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Inventory Id
-                                </th>
-                                <th>
-                                    Item
-                                </th>
-                                <th>Location</th>
-                                <th>Ref</th>
-                                <th>Quantity Booked</th>
-                                <th></th>                              
-                            </tr>
-                        </thead> 
-                        <tbody id="tb-body">
-                           
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="card shadow col-6">
+    <div class="card-header py-3">
+        <h3 class="card-title">Confirm</h3>
+    </div>
+    <div class="card-body">
+        <table class="table" id="tb-confirm">
+            <thead>
+                <tr>
+                    <th>
+                        Inventory Id
+                    </th>
+                    <th>
+                        Item
+                    </th>
+                    <th>Location</th>
+                    <th>Ref</th>
+                    <th>Quantity Booked</th>
+                    <th></th>                              
+                </tr>
+            </thead> 
+            <tbody id="tb-body">
 
-            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
+            </tbody>
+            <tfoot id="tFoot"></tfoot>
+        </table>
+        
+        <div class="form-group">
+            <input type="date" class="form-control" id="date"/>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+                            let jsArr = [];
                             const bookData = (id)=>{
                                 const quantity = document.getElementById('ed-'+id);
-                                const maxQty = document.getElementById('max-'+id);
+    const maxQty = document.getElementById('max-'+id);
                                 console.log(quantity.value);
                                 console.log(maxQty.value);
                                 if(quantity.value ==0){
@@ -102,6 +108,7 @@
                                     })
                                      //quantity.focus;
                                      quantity.value='';
+                                     
                                 }else{
                                     document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
                                     
@@ -112,21 +119,109 @@
                                     const ref= document.getElementById('ref-td-'+id).innerHTML;
                                     drawTable(pid,name,loc,ref,quantity.value);
                                     quantity.value='';
+                                    checkTbRows();
+                                    quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
                                 }                                                                                          
                             }
+                            
+                            
                             const drawTable = (id,item,location,ref,qty) =>{
-                                 const tr = `<tr>
-                                                <td>${id}</td>
-                                                <td>${item}</td>
-                                                <td>${location}</td>
-                                                <td>${ref}</td>
-                                                <td>${qty}</td>
-                                                <td>Remove</td>
+                                if(document.getElementById('tr-confirm-'+id)==null){
+                                 const tr = `<tr id="tr-confirm-${id}">
+                                                <td id="td-conf-id-${id}">${id}</td>
+                                                <td id="td-conf-item-${id}">${item}</td>
+                                                <td id="td-conf-loc-${id}">${location}</td>
+                                                <td id="td-conf-ref-${id}">${ref}</td>
+                                                <td id="td-conf-qty-${id}">${qty}</td>
+                                                <td>
+<button class="btn btn-outline-danger" onclick="removeRow(${id})" ><i class="fa fa-trash"></i></button>
+                                                </td>
                                             </tr>`;
                                     document.getElementById('tb-body').innerHTML += tr;
+                               }else{
+                                   document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);
+                                   
+                               }
+                               const jsObj = {
+                                   id: id,
+                                   pt_id:$(`#td-conf-id-${id}`).text(),
+                                   goods_name:$(`#td-conf-item-${id}`).text(),
+                                   loc_desc:$(`#td-conf-loc-${id}`).text(),
+                                   qty:$(`#td-conf-qty-${id}`).text(),
+                                   date:''
+                               };
+                               if(jsArr.find(x=>x.id===`${id}`)){
+                                   jsArr = jsArr.filter(x=>x.id!==`${id}`);
+                               }
+                              
+                               jsArr.push(jsObj);
+                               console.log(jsArr);
                             }
                             
-                </script>
-            </div>
-        </body>
-    </html>
+                            const removeRow = (id) => {
+                            document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)-parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML);
+                                jsArr = jsArr.filter(x=>x.id!==`${id}`);
+                                $('#tr-confirm-'+id).remove();
+                                checkTbRows();
+                            }
+                            
+                            const checkTbRows = () =>{
+                                if($('#tb-confirm > tbody > tr').length!=0){
+                                    const tfooter = `
+                                                        <tr id="tblFooter">
+                                                         <td></td>
+                                                         <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                                          <td colspan="6">
+                                                            <button class="btn btn-success" id="confirm-end" onclick="confirmEnd()">Picking</button>
+                                                          </td>
+                                                        </tr>
+                                                    `
+                                    $('#tFoot').html(tfooter);                
+                                }else{
+                                    $('#tFoot').remove();
+                                }
+                            }
+                            
+                          
+                            
+                            const confirmEnd = () =>{
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "You won't be able to revert this!",
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        jsArr.forEach(x=>x.date=$('#date').val());
+                                        console.log(jsArr);
+                                          $.ajax({
+                                            type:'POST',
+                                            url:'/Issue/create-issue',
+                                            contentType: "application/json",
+                                            data: JSON.stringify(jsArr),
+                                            success:function(res){
+                                                if (res === 200) {
+                                                    Swal.fire(
+                                                        'Good job!',
+                                                        'Add new order success',
+                                                        'success'
+                                                    ).then(function () {
+                                                        window.location.reload();
+                                                    });
+                                                }                                 
+                                            }
+                        });
+                                    }
+                                })
+                            }
+                            
+</script>
+</div>
+</body>
+</html>

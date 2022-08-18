@@ -5,6 +5,7 @@
 package vn.aptech.warehouse.controller.client;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +75,7 @@ public class IssueOrderController {
         GoodsMaster gm = gmService.findByPtId(jsObj.getPt_id());
         
         gm.setPt_qty(gm.getPt_qty()-jsObj.getQty());
+        gm.setPt_hold(gm.getPt_hold()-jsObj.getQty());
         gm.setAccepted_qty(gm.getAccepted_qty()-jsObj.getQty());
         
         GoodsMaster editGm = gmService.save(gm);
@@ -94,5 +96,29 @@ public class IssueOrderController {
         IssueOrder issue = service.findById(id);
         model.addAttribute("issue",issue);
         return "issue/detail";
+    }
+    
+    @PostMapping(value="/create-issue")
+    public ResponseEntity createIssue(@RequestBody List<JsObj> jsArr){
+         int code = 200;
+        jsArr.forEach(jsObj->{
+            GoodsMaster gm = gmService.findByPtId(jsObj.getPt_id());
+            IssueOrder issueOrder = new IssueOrder();
+            issueOrder.setGoods_master(gm);
+            issueOrder.setGoods_name(jsObj.getGoods_name());
+            issueOrder.setLocations(jsObj.getLoc_desc());
+            issueOrder.setMovemen_date(jsObj.getDate());
+            issueOrder.setClosed(false);
+            issueOrder.setSi_code("WH001");
+            issueOrder.setQuantity(jsObj.getQty());
+            IssueOrder createIs = service.save(issueOrder);
+            
+            gm.setPt_hold(gm.getPt_hold()+jsObj.getQty());
+            
+            GoodsMaster createGM = gmService.save(gm);
+            
+           
+        });
+        return ResponseEntity.ok(code);
     }
 }

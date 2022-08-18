@@ -22,4 +22,5 @@ public class JsObj {
     private int alc_id;
     private String loc_desc;
     private String note;
+    private String goods_name;
 }
