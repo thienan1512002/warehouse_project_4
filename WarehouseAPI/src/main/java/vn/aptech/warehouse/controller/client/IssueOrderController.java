@@ -6,7 +6,7 @@ package vn.aptech.warehouse.controller.client;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import vn.aptech.warehouse.entity.IssueOrder;
 import vn.aptech.warehouse.entity.Location;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
-import vn.aptech.warehouse.service.EmailSenderService;
+//import vn.aptech.warehouse.service.EmailSenderService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.IssueOrderService;
 import vn.aptech.warehouse.service.LocService;
@@ -45,22 +45,22 @@ public class IssueOrderController {
     @Autowired
     private GoodsMasterService gmService;
     
-    @Autowired
-    private EmailSenderService mailService;
-    
+//    @Autowired
+//    private EmailSenderService mailService;
+ 
     @GetMapping(value="")
     public String index(Model model){
         Warehouse wh = whService.findWHByWhCode("WH001");
         model.addAttribute("issues", service.findByConfirm(false, "WH001"));
         return "issue/index";
     }
-    
-    @PostMapping(value="/send-email")
-    public ResponseEntity sendEmail(@RequestBody JsObj jsObj) throws MessagingException, UnsupportedEncodingException{
-        mailService.sendImportGoodsRequest("nhta151202@gmail.com", jsObj.getNote());
-        return ResponseEntity.ok(200);
-    }
-    
+   
+//    @PostMapping(value="/send-email")
+//    public ResponseEntity sendEmail(@RequestBody JsObj jsObj) throws MessagingException, UnsupportedEncodingException{
+//        mailService.sendImportGoodsRequest("nhta151202@gmail.com", jsObj.getNote());
+//        return ResponseEntity.ok(200);
+//    }
+
     
     
     @PostMapping(value="/confirm")

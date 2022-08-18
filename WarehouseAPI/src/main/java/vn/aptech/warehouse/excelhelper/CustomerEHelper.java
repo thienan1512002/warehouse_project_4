@@ -36,142 +36,77 @@ public class CustomerEHelper {
         return TYPE.equals(file.getContentType());
     }
 
-//    public static List<Customer> excelToCustomers(InputStream is) {
-//        try {
-//            List<Customer> customers;
-//            try (Workbook workbook = new XSSFWorkbook(is)) {
-//                Sheet sheet = workbook.getSheet(SHEET);
-//                Iterator<Row> rows = sheet.iterator();
-//                customers = new ArrayList<Customer>();
-//                int rowNumber = 0;
-//                while (rows.hasNext()) {
-//                    Row currentRow = rows.next();
-//                    // skip header
-//                    if (rowNumber == 0) {
-//                        rowNumber++;
-//                        continue;
-//                    }
-//                    if (isRowEmpty(currentRow)) {
-//                        continue;
-//                    }
-//                    Iterator<Cell> cellsInRow = currentRow.iterator();
-//                    Customer customer = new Customer();
-//                    int cellIdx = 0;
-//                    while (cellsInRow.hasNext()) {
-//                        Cell currentCell = cellsInRow.next();
-//                        switch (cellIdx) {
-//                            case 0:
-//                                customer.setCust_code(currentCell.getStringCellValue());
-//                                break;
-//                            
-//                            case 1:
-//                                customer.setCust_name(currentCell.getStringCellValue());
-//                                break;
-//                            
-//                            case 2:
-//                                customer.setAddress(currentCell.getStringCellValue());
-//                                break;
-//                            
-//                            case 3:
-//                                customer.setCity(currentCell.getStringCellValue());
-//                                break;
-//                            case 4:
-//                                customer.setCountry(currentCell.getStringCellValue());
-//                                break;
-//                            case 5:
-//                                customer.setEmail(currentCell.getStringCellValue());
-//                                break;
-//                            case 6:
-//                                customer.setPhone(currentCell.getStringCellValue());
-//                                break;
-//                            case 7:
-//                                customer.setNote(currentCell.getStringCellValue());
-//                            case 8:
-//                                customer.setShort_name(currentCell.getStringCellValue());
-//                            case 9:
-//                                customer.setTax_code(currentCell.getStringCellValue());
-//                            case 10:
-//                                customer.setActive(currentCell.getBooleanCellValue());
-//                            default:
-//                                break;
-//                        }
-//                        cellIdx++;
-//                    }
-//                    customers.add(customer);
-//                }
-//            }
-//            return customers;
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
-//        }
-//    }
-    
-    public static List<Customer> excelToCustomers(InputStream is) {
-    try {
-      Workbook workbook = new XSSFWorkbook(is);
-      Sheet sheet = workbook.getSheet(SHEET);
-      Iterator<Row> rows = sheet.iterator();
-      List<Customer> customers = new ArrayList<Customer>();
-      int rowNumber = 0;
-      while (rows.hasNext()) {
-        Row currentRow = rows.next();
-        // skip header
-        if (rowNumber == 0) {
-          rowNumber++;
-          continue;
+public static List<Customer> excelToCustomers(InputStream is) {
+        try {
+            List<Customer> customers;
+            Workbook workbook = new XSSFWorkbook(is);
+                Sheet sheet = workbook.getSheet(SHEET);
+                Iterator<Row> rows = sheet.iterator();
+                customers = new ArrayList<Customer>();
+                int rowNumber = 0;
+                while (rows.hasNext()) {
+                    Row currentRow = rows.next();
+                    // skip header
+                    if (rowNumber == 0) {
+                        rowNumber++;
+                        continue;
+                    }
+                    if (isRowEmpty(currentRow)) {
+                        continue;
+                    }
+                    Iterator<Cell> cellsInRow = currentRow.iterator();
+                    Customer customer = new Customer();
+                    int cellIdx = 0;
+                    while (cellsInRow.hasNext()) {
+                        Cell currentCell = cellsInRow.next();
+                        switch (cellIdx) {
+                            case 0:
+                                customer.setCust_code(currentCell.getStringCellValue());
+                                break;
+                            case 1:
+                                customer.setCust_name(currentCell.getStringCellValue());
+                                break;
+                            case 2:
+                                customer.setAddress(currentCell.getStringCellValue());
+                                break;
+                            case 3:
+                                customer.setCity(currentCell.getStringCellValue());
+                                break;
+                            case 4:
+                                customer.setCountry(currentCell.getStringCellValue());
+                                break;
+                            case 5:
+                                customer.setEmail(currentCell.getStringCellValue());
+                                break;
+                            case 6:
+                                customer.setPhone(currentCell.getStringCellValue());
+                                break;
+                            case 7:
+                                customer.setNote(currentCell.getStringCellValue());
+                                break;
+                            case 8:
+                                customer.setShort_name(currentCell.getStringCellValue());
+                                break;
+                            case 9:
+                                customer.setTax_code(currentCell.getStringCellValue());
+                                break;
+                            case 10:
+                                customer.setActive(currentCell.getBooleanCellValue());
+                                break;
+                            default:
+                                break;
+                        }
+                        cellIdx++;
+                    }
+                    customers.add(customer);
+                }
+                workbook.close();
+        
+            return customers;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
         }
-        Iterator<Cell> cellsInRow = currentRow.iterator();
-        Customer customer = new Customer();
-        int cellIdx = 0;
-        while (cellsInRow.hasNext()) {
-          Cell currentCell = cellsInRow.next();
-          switch (cellIdx) {
-            case 0:
-                customer.setCust_code(currentCell.getStringCellValue());
-                break;
-
-            case 1:
-                customer.setCust_name(currentCell.getStringCellValue());
-                break;
-
-            case 2:
-                customer.setAddress(currentCell.getStringCellValue());
-                break;
-
-            case 3:
-                customer.setCity(currentCell.getStringCellValue());
-                break;
-            case 4:
-                customer.setCountry(currentCell.getStringCellValue());
-                break;
-            case 5:
-                customer.setEmail(currentCell.getStringCellValue());
-                break;
-            case 6:
-                customer.setPhone(currentCell.getStringCellValue());
-                break;
-            case 7:
-                customer.setNote(currentCell.getStringCellValue());
-            case 8:
-                customer.setShort_name(currentCell.getStringCellValue());
-            case 9:
-                customer.setTax_code(currentCell.getStringCellValue());
-            case 10:
-                customer.setActive(currentCell.getBooleanCellValue());
-            default:
-                break;
-        }
-        cellIdx++;
     }
-
-        customers.add(customer);
-      }
-      workbook.close();
-      return customers;
-    } catch (IOException e) {
-      throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
-    }
-  }
 
     private final XSSFWorkbook workbook;
     private XSSFSheet sheet;
