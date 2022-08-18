@@ -18,7 +18,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                   Inventory Id
+                                    Inventory Id
                                 </th>
                                 <th>
                                     Item
@@ -28,23 +28,105 @@
                                 <th>Quantity</th>
                                 <th>Booked</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead> 
                         <tbody>
                             <tr th:each="item: ${goods}">
-                                <td th:text="${item.pt_id}"></td>
-                                <td th:text="${item.good_data.goods_name}"></td>
-                                <td th:text="${item.loc_code}"></td>
-                                <td th:text="${item.patch_no}"></td>
-                                <td th:text="${item.pt_qty}"></td>
-                                <td th:text="${item.pt_hold}">cell</td>
-                                <td><input class="form-control col-6"/></td>
+                        <input type="hidden" th:id="'qty-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty})}"/>
+                        <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
+                        <input type="hidden" th:id="'max-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty-item.pt_hold})}"/>
+                                <td th:text="${item.pt_id}" th:id="'id-td-'+${item.pt_id}"></td>
+                               <td th:text="${item.good_data.goods_name}" th:id="'item-td-'+${item.pt_id}"></td>
+                        <td th:text="${item.loc_code}" th:id="'loc-td-'+${item.pt_id}"></td>
+                        <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
+                        <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
+                        <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
+                        <td><input th:id="'ed-'+${item.pt_id}" class="form-control col-6" th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
+                        <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+             <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3 class="card-title">Confirm</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Inventory Id
+                                </th>
+                                <th>
+                                    Item
+                                </th>
+                                <th>Location</th>
+                                <th>Ref</th>
+                                <th>Quantity Booked</th>
+                                <th></th>                              
                             </tr>
+                        </thead> 
+                        <tbody id="tb-body">
+                           
                         </tbody>
                     </table>
                 </div>
             </div>
 
-        </div>
-    </body>
-</html>
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                            const bookData = (id)=>{
+                                const quantity = document.getElementById('ed-'+id);
+                                const maxQty = document.getElementById('max-'+id);
+                                console.log(quantity.value);
+                                console.log(maxQty.value);
+                                if(quantity.value ==0){
+                                   Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Quantity must be larger than 0',
+                                    })
+                                    //quantity.focus;
+                                }else if(parseFloat(quantity.value)>parseFloat(document.getElementById('qty-td-'+id).innerHTML)- document.getElementById('booked-td-'+id).innerHTML){
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Your quantity cannot be larger than max Qty('+maxQty.value+')',
+                                    })
+                                     //quantity.focus;
+                                     quantity.value='';
+                                }else{
+                                    document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
+                                    
+                                    
+                                    const pid = document.getElementById('id-td-'+id).innerHTML;
+                                    const name =document.getElementById('item-td-'+id).innerHTML;
+                                    const loc= document.getElementById('loc-td-'+id).innerHTML;
+                                    const ref= document.getElementById('ref-td-'+id).innerHTML;
+                                    drawTable(pid,name,loc,ref,quantity.value);
+                                    quantity.value='';
+                                }                                                                                          
+                            }
+                            const drawTable = (id,item,location,ref,qty) =>{
+                                 const tr = `<tr>
+                                                <td>${id}</td>
+                                                <td>${item}</td>
+                                                <td>${location}</td>
+                                                <td>${ref}</td>
+                                                <td>${qty}</td>
+                                                <td>Remove</td>
+                                            </tr>`;
+                                    document.getElementById('tb-body').innerHTML += tr;
+                            }
+                            
+                </script>
+            </div>
+        </body>
+    </html>
