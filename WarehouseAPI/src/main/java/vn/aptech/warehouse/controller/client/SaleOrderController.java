@@ -23,6 +23,7 @@ import vn.aptech.warehouse.entity.vm.SaleOrderDetVm;
 import vn.aptech.warehouse.entity.vm.SaleOrderVm;
 import vn.aptech.warehouse.service.CustomerService;
 import vn.aptech.warehouse.service.GoodDataService;
+import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.SaleOrderDetService;
 import vn.aptech.warehouse.service.SaleOrderService;
 
@@ -45,6 +46,9 @@ public class SaleOrderController  {
     @Autowired
     private GoodDataService goodService;
     
+    @Autowired
+    private GoodsMasterService gmService;
+    
     @GetMapping(value="/browse")
     public String index(Model model){
         model.addAttribute("sales", soService.findByComplete());
@@ -58,6 +62,12 @@ public class SaleOrderController  {
         model.addAttribute("details", detService.findBySoId(so_id));
         model.addAttribute("goodsData", goodService.findAll());
         return "sale/detail";
+    }
+    
+    @GetMapping(value="/pick-list/{id}")
+    public String pickList(@PathVariable("id") String id,Model model){
+        model.addAttribute("goods",gmService.findByInventory(id));
+        return "sale/pick-item";
     }
     
     

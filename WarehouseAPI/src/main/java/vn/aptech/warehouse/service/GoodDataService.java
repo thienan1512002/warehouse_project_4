@@ -17,5 +17,6 @@ import vn.aptech.warehouse.entity.GoodData;
 public interface GoodDataService {
     List<GoodData> findAll();
     GoodData findByNo(String no);
+    List<GoodData> findByName(String name);
     GoodData save(GoodData goodData);
 }

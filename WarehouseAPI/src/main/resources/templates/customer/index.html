@@ -263,6 +263,7 @@
                             contentType: "application/json",
                             data: JSON.stringify(customer),
                             success: function (res) {
+                                console.log(res);
                                 if (res === 200) {
                                     Swal.fire(
                                             'Good job!',
@@ -270,12 +271,13 @@
                                             'success'
                                             ).then(function () {
                                         window.location.reload();
+                                        $('#exampleModal').modal('hide');
                                     });
                                 }
                             }
                         });
                         console.log(customer);
-                        $('#exampleModal').modal('hide');
+                        
                     });
                     $('#btnEdit').click(function () {
                         const customer = {

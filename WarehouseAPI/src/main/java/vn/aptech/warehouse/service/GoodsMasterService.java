@@ -21,4 +21,6 @@ public interface GoodsMasterService {
     GoodsMaster findByPtId(int pt_id);
     
     List<GoodsMaster> findUnallocated(boolean closed , String loc_code);
+    
+    List<GoodsMaster> findByInventory(String id);
 }

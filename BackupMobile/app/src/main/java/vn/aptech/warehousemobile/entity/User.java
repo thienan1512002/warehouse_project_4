@@ -13,13 +13,9 @@ public class User {
     @SerializedName("username")
     @Expose
     private String username;
-
     public User(){
 
     }
-
-
-
     public String getEmail() {
         return email;
     }

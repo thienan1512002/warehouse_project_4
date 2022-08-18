@@ -1,5 +1,7 @@
 package vn.aptech.warehousemobile.adapter;
 
+import static vn.aptech.warehousemobile.api.ApiUtil.IMG_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,7 +72,7 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
         private RelativeLayout layoutItem;
         private TextView tvId, tvName, tvLoc;
         private ImageView img_avatar;
-        private final String URL ="http://10.0.0.18:8080/goods-photos/";
+        private String URL =IMG_URL;
         public AllocateHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tvId);

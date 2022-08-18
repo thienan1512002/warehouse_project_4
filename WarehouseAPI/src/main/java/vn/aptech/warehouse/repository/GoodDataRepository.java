@@ -4,8 +4,10 @@
  */
 package vn.aptech.warehouse.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import vn.aptech.warehouse.entity.GoodData;
 
 /**
@@ -15,4 +17,6 @@ import vn.aptech.warehouse.entity.GoodData;
 public interface GoodDataRepository extends JpaRepository<GoodData, String>{
     @Query("SELECT u FROM GoodData u WHERE u.goods_no = ?1")
     GoodData findByNo(String no);
+    @Query("SELECT u FROM GoodData u WHERE u.goods_name like %:name%")
+    List<GoodData> findByName(@Param("name")String name);
 }

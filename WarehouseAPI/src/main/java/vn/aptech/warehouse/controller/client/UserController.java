@@ -4,9 +4,13 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import java.security.Principal;
 import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.User;
 import vn.aptech.warehouse.service.RoleService;
@@ -67,8 +72,16 @@ public class UserController {
         model.addAttribute("user", user);
         List<Role> roles = serviceRole.getRoles();
         model.addAttribute("listRoles", roles);
-        
         return "user/role";
+    }
+    @GetMapping(value="/profile")
+    public String showProfile(Model model) {
+        UserDetails loggedUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = service.getUser(loggedUser.getUsername());
+        model.addAttribute("user", user);
+        List<Role> roles = serviceRole.getRoles();
+        model.addAttribute("roles", roles);
+        return "user/profile";
     }
     
     
@@ -77,7 +90,6 @@ public class UserController {
         User saveUser = service.getUserById(user.getId());
         saveUser.setRoles(user.getRoles());
         service.saveUserNoPass(saveUser);
-
         return "redirect:/user";
     }
     @PostMapping(value="/save")
@@ -85,35 +97,42 @@ public class UserController {
     public String save(User user){
 //        Warehouse wh = service.save(warehouse);
         service.saveUser(user);
+        service.addRoleToUser(user.getUsername(), "ROLE_USER");
 //        return ResponseEntity.ok(200);
         return "redirect:/user";
     }
     @PostMapping(value="/save2")
-    public String saveUpdate(User user){
+    public String saveUpdate(User user, RedirectAttributes ra){
         User updateUser = service.getUser(user.getUsername());
         updateUser.setEmail(user.getEmail());
         updateUser.setActive(user.getActive());
         String password = user.getPassword();
-        if(password!=null && password!=""){
+        if(!password.isBlank() || !password.isEmpty()){
             updateUser.setPassword(password);
             service.saveUser(updateUser);
-            return "redirect:/user";
-            
-            
+            ra.addFlashAttribute("message", "User has been updated.");
+            return "redirect:/user";         
         }else{
             service.saveUserNoPass(updateUser);
+            ra.addFlashAttribute("message", "User has been updated.");
             return "redirect:/user";
         }
-//        if(user.getPassword()==null){
-//            service.saveUserNoPass(updateUser);
-//            return "redirect:/user";
-//            
-//        }else{
-//            updateUser.setPassword(user.getPassword());
-//            service.saveUser(updateUser);
-//            return "redirect:/user";
-//        }
-        
+    } 
+    @PostMapping(value="/save-profile")
+    public String saveUpdateProfile(User user, RedirectAttributes ra){
+        User updateUser = service.getUser(user.getUsername());
+        updateUser.setEmail(user.getEmail());
+        String password = user.getPassword();
+        if(!password.isBlank() || !password.isEmpty()){
+            updateUser.setPassword(password);
+            service.saveUser(updateUser);
+            ra.addFlashAttribute("message", "Your account profile has been updated.");
+            return "redirect:/user/profile";         
+        }else{
+            service.saveUserNoPass(updateUser);
+            ra.addFlashAttribute("message", "Your account profile has been updated.");
+            return "redirect:/user/profile";
+        }
     } 
 
 }

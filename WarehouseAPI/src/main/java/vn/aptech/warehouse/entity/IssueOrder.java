@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.entity;
 
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,4 +40,6 @@ public class IssueOrder {
     private boolean closed;
     
     private String si_code;
+    
+    private LocalDate movemen_date;
 }
