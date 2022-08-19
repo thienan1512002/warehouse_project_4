@@ -24,6 +24,7 @@ public class JsObj {
     private String note;
     private String goods_name; 
     private String goods_no;
+    private String wh_code;
     
    
 }
