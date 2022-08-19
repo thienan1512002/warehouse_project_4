@@ -101,6 +101,7 @@ public class GoodsActivity extends AppCompatActivity {
         searchGood.setQueryHint("Input to search goods");
         rvGoods=findViewById(R.id.rvGoods);
         imvBar = findViewById(R.id.imvBarSearch);
+
         adapter = new GoodsDataAdapter(list, this);
         rvGoods.setAdapter(adapter);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));

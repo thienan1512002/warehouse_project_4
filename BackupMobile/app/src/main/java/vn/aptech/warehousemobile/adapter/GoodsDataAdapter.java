@@ -57,6 +57,7 @@ public class GoodsDataAdapter extends RecyclerView.Adapter<GoodsDataAdapter.Good
     private void onClickGoToDetail(GoodData goodData){
         Intent intent = new Intent(mContext, GoodsDetailActivity.class);
         intent.putExtra("goods_no",goodData.getGoods_no());
+        intent.putExtra("goods_name",goodData.getGoods_name());
         mContext.startActivity(intent);
         Toast.makeText(mContext, goodData.getGoods_name(), Toast.LENGTH_SHORT).show();
 
@@ -68,21 +69,21 @@ public class GoodsDataAdapter extends RecyclerView.Adapter<GoodsDataAdapter.Good
 
     public class GoodsMasterHolder extends RecyclerView.ViewHolder {
         private LinearLayout layoutGood;
-        private TextView tvGoodName, tvGoodUnit,tvGoodNo;
+        private TextView tvGoodName, tvGoodUnit,tvGoodPrice;
         private ImageView imgGood;
         private String URL =IMG_URL;
         public GoodsMasterHolder(View view) {
             super(view);
             tvGoodName = view.findViewById(R.id.tvGoodName);
             tvGoodUnit = view.findViewById(R.id.tvGoodUnit);
-            tvGoodNo = view.findViewById(R.id.tvGoodNo);
+            tvGoodPrice = view.findViewById(R.id.tvGoodPrice);
             imgGood = view.findViewById(R.id.imvGoods);
             layoutGood = view.findViewById(R.id.layoutGood);
         }
         public void dataBind(GoodData goodData){
             tvGoodName.setText(goodData.getGoods_name());
             tvGoodUnit.setText(goodData.getGoods_package());
-            tvGoodNo.setText(goodData.getGoods_no());
+            tvGoodPrice.setText(goodData.getPrice()+"$");
             Glide.with(mContext).load(URL+goodData.getGoods_no()+"/"+goodData.getImage()).into(imgGood);
         }
     }
