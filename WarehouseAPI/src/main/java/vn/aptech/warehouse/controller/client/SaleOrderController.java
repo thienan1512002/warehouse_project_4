@@ -49,6 +49,8 @@ public class SaleOrderController  {
     @Autowired
     private GoodsMasterService gmService;
     
+    
+    
     @GetMapping(value="/browse")
     public String index(Model model){
         model.addAttribute("sales", soService.findByComplete());
@@ -69,6 +71,7 @@ public class SaleOrderController  {
         model.addAttribute("goods",gmService.findByInventory(id));
         model.addAttribute("so_id",so_id);
         model.addAttribute("goods_no",id);
+        model.addAttribute("qty", detService.findBySoId(so_id, id).getQuantity());
         return "sale/pick-item";
     }
     

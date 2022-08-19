@@ -32,6 +32,7 @@
                             </tr>
                         </thead> 
                         <tbody>
+                            <input type="hidden" id="maxable" th:value="${qty}"/>
                             <input type="hidden" id="so_id" th:value="${so_id}"/>
                             <input type="hidden" id="goods_no" th:value="${goods_no}"/>
                             <tr th:each="item: ${goods}">
@@ -90,6 +91,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
                             let jsArr = [];
+                            let sum = 0;
                             const bookData = (id)=>{
                                 const quantity = document.getElementById('ed-'+id);
     const maxQty = document.getElementById('max-'+id);
@@ -112,7 +114,23 @@
                                      quantity.value='';
                                      
                                 }else{
-                                    document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
+                                    sum+= parseFloat(quantity.value);
+                                    console.log("sum =",sum);
+                                    console.log(parseFloat($('#maxable').val())<parseFloat(sum))
+                                    if(parseFloat($('#maxable').val())<parseFloat(quantity.value) || parseFloat($('#maxable').val())<parseFloat(sum)){
+                                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Your quantity cannot be larger than max Qty('+$('#maxable').val()+') '+quantity.value,
+                                    })
+                                    console.log($('#maxable').val());
+                                    console.log($('#maxable').val()<quantity.value);
+                                     //quantity.focus;
+                                     sum-=parseFloat(quantity.value);
+                                     quantity.value='';
+                                    }else{
+                                        
+                                        document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
                                     
                                     
                                     const pid = document.getElementById('id-td-'+id).innerHTML;
@@ -123,11 +141,14 @@
                                     quantity.value='';
                                     checkTbRows();
                                     quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
+                                    }
+                                    
                                 }                                                                                          
                             }
                             
                             
                             const drawTable = (id,item,location,ref,qty) =>{
+                                
                                 if(document.getElementById('tr-confirm-'+id)==null){
                                  const tr = `<tr id="tr-confirm-${id}">
                                                 <td id="td-conf-id-${id}">${id}</td>
@@ -141,9 +162,9 @@
                                             </tr>`;
                                     document.getElementById('tb-body').innerHTML += tr;
                                }else{
-                                   document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);
-                                   
+                                   document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);                                
                                }
+                              
                                const jsObj = {
                                    id: id,
                                    pt_id:$(`#td-conf-id-${id}`).text(),
@@ -164,6 +185,9 @@
                             
                             const removeRow = (id) => {
                             document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)-parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML);
+                             document.getElementById('ed-'+id).placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
+                            sum-= parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML)
+                            console.log("After remove: ",sum);
                                 jsArr = jsArr.filter(x=>x.id!==`${id}`);
                                 $('#tr-confirm-'+id).remove();
                                 checkTbRows();

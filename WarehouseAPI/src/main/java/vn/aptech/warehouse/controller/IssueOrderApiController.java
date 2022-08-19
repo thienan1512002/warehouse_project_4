@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.aptech.warehouse.entity.GoodsMaster;
 import vn.aptech.warehouse.entity.IssueOrder;
 import vn.aptech.warehouse.entity.Location;
+import vn.aptech.warehouse.entity.SaleOrderDet;
+import vn.aptech.warehouse.entity.Transactions;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.IssueOrderService;
 import vn.aptech.warehouse.service.LocService;
+import vn.aptech.warehouse.service.SaleOrderDetService;
+import vn.aptech.warehouse.service.TransactionsService;
 
 /**
  *
@@ -38,6 +42,11 @@ public class IssueOrderApiController {
     
     @Autowired
     private GoodsMasterService gmService;
+    
+     @Autowired
+    private TransactionsService transService;
+    @Autowired
+    private SaleOrderDetService detService;
     
     
     @GetMapping(value="/issue")
@@ -70,6 +79,22 @@ public class IssueOrderApiController {
         order.setClosed(true);
         
         IssueOrder editOrder = service.save(order);
+        
+         SaleOrderDet det = detService.findBySoId(order.getSo_id(), gm.getGood_data().getGoods_no());
+        
+        det.setPicked(det.getPicked()+jsObj.getQty());
+        
+        SaleOrderDet addDet = detService.save(det);
+        
+        // add transaction report
+        Transactions trans = new Transactions();
+        trans.setType("out");
+        trans.setFrom_loc(loc.getLoc_desc());
+        trans.setTo_loc("Export for Sale Order");
+        trans.setGoods_name(gm.getGood_data().getGoods_name());
+        trans.setQuantity(jsObj.getQty());
+        
+        Transactions addTrans = transService.save(trans);
         
         return order;
        

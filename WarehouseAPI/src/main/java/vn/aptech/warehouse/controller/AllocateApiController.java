@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.GoodsMaster;
 import vn.aptech.warehouse.entity.Location;
+import vn.aptech.warehouse.entity.Transactions;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.service.AllocateRequestService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.LocService;
+import vn.aptech.warehouse.service.TransactionsService;
 import vn.aptech.warehouse.service.WarehouseService;
 
 /**
@@ -44,6 +46,9 @@ public class AllocateApiController {
     @Autowired
     private GoodsMasterService serviceGM;
     
+    @Autowired
+    private TransactionsService transService;
+    
     
     @GetMapping(value="/allocate")
     public List<AllocateRequest> findAll(){
@@ -61,7 +66,7 @@ public class AllocateApiController {
         ar.setConfirm(true);
         AllocateRequest edit = service.save(ar);
         Location loc = serviceLoc.findByLocDesc(jsObj.getLoc_desc());
-        loc.setLoc_cap(loc.getLoc_cap() + jsObj.getQty());
+        loc.setLoc_remain(loc.getLoc_remain()- ar.getAlc_moved_qty());
         loc.setLoc_holding(loc.getLoc_holding() - jsObj.getQty());
         Location editLoc = serviceLoc.save(loc);
         GoodsMaster gm = serviceGM.findByPtId(ar.getGoods_masters().getPt_id());
@@ -69,6 +74,15 @@ public class AllocateApiController {
         gm.setPt_hold(gm.getPt_hold() - jsObj.getQty());
 
         GoodsMaster gm1 = serviceGM.save(gm);
+        
+        Transactions trans = new Transactions();
+        trans.setType("in");
+        trans.setFrom_loc("UnAllocated");
+        trans.setTo_loc(loc.getLoc_desc());
+        trans.setGoods_name(gm.getGood_data().getGoods_name());
+        trans.setQuantity(ar.getAlc_moved_qty());
+        
+        Transactions addTrans = transService.save(trans);
 
         return ar;
     }
