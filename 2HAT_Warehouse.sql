@@ -151,6 +151,7 @@ create table so_detail
 	so_id varchar(100) foreign key references sale_order,
 	goods_no varchar(255) foreign key references goods_data,
 	quantity int , 
+	picked int,
 	discount int
 )
 
@@ -163,7 +164,9 @@ create table issue_order
 	so_id varchar(100), 
 	closed bit,
 	pt_id int foreign key references goods_master,
-	si_code varchar(200)
+	si_code varchar(200),
+	movemen_date datetime,
+	
 )
 
 create table transactions
@@ -171,8 +174,8 @@ create table transactions
 	id int primary key identity ,
 	type varchar(100),
 	goods_name varchar(200),
-	fromLoc varchar (100),
-	toLoc varchar(100),
+	from_loc varchar (100),
+	to_loc varchar(100),
 	quantity int
 )
 

@@ -64,9 +64,11 @@ public class SaleOrderController  {
         return "sale/detail";
     }
     
-    @GetMapping(value="/pick-list/{id}")
-    public String pickList(@PathVariable("id") String id,Model model){
+    @GetMapping(value="/pick-list/{id}/{so_id}")
+    public String pickList(@PathVariable("id") String id,@PathVariable("so_id") String so_id,Model model){
         model.addAttribute("goods",gmService.findByInventory(id));
+        model.addAttribute("so_id",so_id);
+        model.addAttribute("goods_no",id);
         return "sale/pick-item";
     }
     

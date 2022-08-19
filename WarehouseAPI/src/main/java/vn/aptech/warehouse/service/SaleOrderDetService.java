@@ -14,6 +14,8 @@ import vn.aptech.warehouse.entity.SaleOrderDet;
 public interface SaleOrderDetService {
     List<SaleOrderDet> findBySoId(String so_id);
     
+    SaleOrderDet findBySoId(String so_id,String goods_no);
+    
     SaleOrderDet save(SaleOrderDet saleOrderDet);
     
     void delete(SaleOrderDet det);

@@ -32,6 +32,8 @@
                             </tr>
                         </thead> 
                         <tbody>
+                            <input type="hidden" id="so_id" th:value="${so_id}"/>
+                            <input type="hidden" id="goods_no" th:value="${goods_no}"/>
                             <tr th:each="item: ${goods}">
                         <input type="hidden" th:id="'qty-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty})}"/>
     <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
@@ -148,7 +150,9 @@
                                    goods_name:$(`#td-conf-item-${id}`).text(),
                                    loc_desc:$(`#td-conf-loc-${id}`).text(),
                                    qty:$(`#td-conf-qty-${id}`).text(),
-                                   date:''
+                                   date:'',
+                                   so_id:$('#so_id').val(),
+                                   goods_no:$('#goods_no').val()
                                };
                                if(jsArr.find(x=>x.id===`${id}`)){
                                    jsArr = jsArr.filter(x=>x.id!==`${id}`);
@@ -188,7 +192,15 @@
                           
                             
                             const confirmEnd = () =>{
-                                Swal.fire({
+                                if(!Date.parse($('#date').val())){
+                                    Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Please pick a date',
+  
+})
+                                }else{
+                                    Swal.fire({
                                     title: 'Are you sure?',
                                     text: "You won't be able to revert this!",
                                     icon: 'question',
@@ -219,6 +231,8 @@
                         });
                                     }
                                 })
+                                }
+                                
                             }
                             
 </script>

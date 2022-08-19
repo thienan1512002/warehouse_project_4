@@ -68,18 +68,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Quantity</th>
+                                        <th>Picked</th>
                                         <th>Discount</th>
-                                        <th>Status</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="item: ${details}">
-                                        <td><a th:href="@{/sale/pick-list/{no}(no=${item.good_data.goods_no})}" class="btn btn-outline-primary">Pick List</a></td>
-                                        <td><img th:src="@{${item.good_data.photosImagePath}}" width="50px" /></td>
+                                <div th:if="${!sale.closed}">
+                                     <td><a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a></td>
+                                </div>
+                                <div th:unless="${!sale.closed}">
+                                    <td><span class="badge badge-success">Picked Completed</span></td>
+                                </div>
+                                       
+                                        <td><img th:src="@{${item.good_data.photosImagePath}}" width="100px" height="120px" /></td>
                                         <td th:text="${item.good_data.goods_name}">1</td>
                                         <td th:text="${item.quantity}">1</td>
+                                        <td th:text="${item.picked}"></td>
                                         <td th:text="${item.discount}">1</td>
-                                        <td>Action</td>
+                                        
                                         <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
                                     </tr>
                                 </tbody>

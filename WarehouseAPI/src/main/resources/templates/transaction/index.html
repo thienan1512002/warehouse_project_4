@@ -47,8 +47,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </div>
 
             <td th:text="${item.goods_name}">Goods Name</td>
-            <td th:text="${item.fromLoc}">From Location</td>
-            <td th:text="${item.toLoc}">To Location</td>
+            <td th:text="${item.from_loc}">From Location</td>
+            <td th:text="${item.to_loc}">To Location</td>
             <td th:text="${item.quantity}">Quantity</td>
 
 
@@ -65,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function () {
-      $('.nav-qc').addClass('active');
+      $('.nav-trans').addClass('active');
       $('#tblWh').dataTable();
     });
   </script>

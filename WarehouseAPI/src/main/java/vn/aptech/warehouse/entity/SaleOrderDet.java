@@ -35,4 +35,5 @@ public class SaleOrderDet {
     private GoodData good_data;
     private int quantity;
     private int discount;
+    private int picked;
 }

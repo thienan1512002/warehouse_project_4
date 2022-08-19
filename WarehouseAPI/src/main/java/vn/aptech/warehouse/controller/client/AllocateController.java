@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.GoodsMaster;
 import vn.aptech.warehouse.entity.Location;
+import vn.aptech.warehouse.entity.Transactions;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.service.AllocateRequestService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.LocService;
+import vn.aptech.warehouse.service.TransactionsService;
 import vn.aptech.warehouse.service.WarehouseService;
 
 /**
@@ -41,6 +43,9 @@ public class AllocateController {
 
     @Autowired
     private AllocateRequestService aloService;
+    
+    @Autowired
+    private TransactionsService transService;
 
     @GetMapping("/browse")
     public String index(Model model) {
@@ -76,7 +81,7 @@ public class AllocateController {
         ar.setConfirm(true);
         AllocateRequest edit = aloService.save(ar);
         Location loc = locService.findByLocCode(ar.getLocation().getLoc_code());
-        loc.setLoc_cap(loc.getLoc_cap() + ar.getAlc_moved_qty());
+        loc.setLoc_remain(loc.getLoc_remain()- ar.getAlc_moved_qty());
         loc.setLoc_holding(loc.getLoc_holding() - ar.getAlc_moved_qty());
         Location editLoc = locService.save(loc);
         GoodsMaster gm = goodsMasterService.findByPtId(ar.getGoods_masters().getPt_id());
@@ -84,6 +89,16 @@ public class AllocateController {
         gm.setPt_hold(gm.getPt_hold() - ar.getAlc_moved_qty());
 
         GoodsMaster gm1 = goodsMasterService.save(gm);
+        
+        // add transaction report
+        Transactions trans = new Transactions();
+        trans.setType("in");
+        trans.setFrom_loc("UnAllocated");
+        trans.setTo_loc(loc.getLoc_desc());
+        trans.setGoods_name(gm.getGood_data().getGoods_name());
+        trans.setQuantity(ar.getAlc_moved_qty());
+        
+        Transactions addTrans = transService.save(trans);
 
         return ResponseEntity.ok(200);
     }

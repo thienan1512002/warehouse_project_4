@@ -42,4 +42,6 @@ public class IssueOrder {
     private String si_code;
     
     private LocalDate movemen_date;
+    
+    private String so_id;
 }

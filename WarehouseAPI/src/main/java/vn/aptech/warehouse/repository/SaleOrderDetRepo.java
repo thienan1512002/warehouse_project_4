@@ -18,4 +18,7 @@ public interface SaleOrderDetRepo extends JpaRepository<SaleOrderDet, Integer> {
 
     @Query("SELECT o FROM SaleOrderDet o WHERE o.so_id=:id")
     public List<SaleOrderDet> findBySoId(@Param("id") String so_id);
+    
+     @Query("SELECT o FROM SaleOrderDet o WHERE o.so_id LIKE %:id% and o.good_data.goods_no=:goods_no")
+    public SaleOrderDet findBySoId(@Param("id") String so_id,@Param("goods_no")String goods_no);
 }

@@ -36,5 +36,10 @@ public class SaleOrderDetServiceImpl implements SaleOrderDetService {
     public void delete(SaleOrderDet det) {
         repo.delete(det);
     }
+
+    @Override
+    public SaleOrderDet findBySoId(String so_id, String goods_no) {
+       return repo.findBySoId(so_id, goods_no);
+    }
     
 }
