@@ -6,6 +6,7 @@ package vn.aptech.warehouse.controller.client;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 //import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,9 +60,9 @@ public class IssueOrderController {
 //    private EmailSenderService mailService;
  
     @GetMapping(value="")
-    public String index(Model model){
+    public String index(Model model,HttpServletRequest request){
         Warehouse wh = whService.findWHByWhCode("WH001");
-        model.addAttribute("issues", service.findByConfirm(false, "WH001"));
+        model.addAttribute("issues", service.findByConfirm(false, (String)request.getSession().getAttribute("workspace")));
         return "issue/index";
     }
    
@@ -123,7 +124,7 @@ public class IssueOrderController {
     }
     
     @PostMapping(value="/create-issue")
-    public ResponseEntity createIssue(@RequestBody List<JsObj> jsArr){
+    public ResponseEntity createIssue(@RequestBody List<JsObj> jsArr,HttpServletRequest request){
          int code = 200;
         jsArr.forEach(jsObj->{
             GoodsMaster gm = gmService.findByPtId(jsObj.getPt_id());
@@ -133,7 +134,7 @@ public class IssueOrderController {
             issueOrder.setLocations(jsObj.getLoc_desc());
             issueOrder.setMovemen_date(jsObj.getDate());
             issueOrder.setClosed(false);
-            issueOrder.setSi_code("WH001");
+            issueOrder.setSi_code((String)request.getSession().getAttribute("workspace"));
             issueOrder.setQuantity(jsObj.getQty());
             issueOrder.setSo_id(jsObj.getSo_id());
             IssueOrder createIs = service.save(issueOrder);

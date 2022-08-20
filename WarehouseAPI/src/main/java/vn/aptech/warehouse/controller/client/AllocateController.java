@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -55,8 +56,8 @@ public class AllocateController {
     }
 
     @GetMapping("")
-    public String allocated(Model model) {
-        Warehouse warehouse = whService.findWHByWhCode("WH001");
+    public String allocated(Model model,HttpServletRequest request) {
+        Warehouse warehouse = whService.findWHByWhCode((String)request.getSession().getAttribute("workspace"));
         model.addAttribute("allocates", aloService.findbyConfirm(false, warehouse));
         return "allocate/request";
     }

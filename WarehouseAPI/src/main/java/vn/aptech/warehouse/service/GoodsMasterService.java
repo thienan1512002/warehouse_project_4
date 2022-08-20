@@ -6,13 +6,14 @@ package vn.aptech.warehouse.service;
 
 import java.util.List;
 import vn.aptech.warehouse.entity.GoodsMaster;
+import vn.aptech.warehouse.entity.Warehouse;
 
 /**
  *
  * @author nhta1
  */
 public interface GoodsMasterService {
-    List<GoodsMaster> findAll(String wh);
+    List<GoodsMaster> findAll(Warehouse wh);
     
     List<GoodsMaster> findByIcId(int ic_id);
     

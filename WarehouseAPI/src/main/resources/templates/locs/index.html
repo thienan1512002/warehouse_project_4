@@ -83,12 +83,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="wh_code">Warehouse</label>
-                                    <select class="form-control" id="wh_code">
-                                        <option th:each="wh : ${warehouses}" th:value="${wh.wh_code}" th:text="${wh.wh_desc}"></option>
-                                    </select>
-                                </div>
+                               
                                 <div class="form-group col-6">
                                     <label for="loc_type">Location type</label>
                                     <select class="form-control" id="loc_type">
@@ -189,8 +184,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             loc_type: $('#loc_type :selected').val(),
                             loc_remain: $('#loc_cap').val(),
                             loc_holding: 0,
-                            loc_outgo: 0,
-                            wh_code: $('#wh_code :selected').val(),
+                            loc_outgo: 0,                            
                             flammable: $('#flammable').is(":checked") ? 1 : 0
                         };
                         $.ajax({

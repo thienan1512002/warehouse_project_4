@@ -343,10 +343,10 @@
                                         Profile
                                     </a>
                                     <!--sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')"-->
-                                    <div >
-                                        <a class="dropdown-item" href="#">
+                                    <div id="wpChange" style="cursor:pointer">
+                                        <a class="dropdown-item">
                                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Work Space
+                                            <span th:if="${#session.getAttribute('workspace')} != null" th:text="${#session.getAttribute('workspace')}"></span>
                                         </a>
                                     </div>
                                     <div class="dropdown-divider"></div>
@@ -481,6 +481,9 @@
                 });
                   }
               }
+          });
+          $('#wpChange').click(function(){
+              $('#wpModal').modal('toggle');
           });
           $('#btnChoose').click(function(){
               $('#wpModal').modal('toggle');
