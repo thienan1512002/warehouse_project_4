@@ -178,6 +178,16 @@ create table transactions
 	to_loc varchar(100),
 	quantity int
 )
+go
+create table unqualified
+(
+	id int primary key identity ,
+	goods_name varchar(200),
+	quantity int,
+	so_id varchar(100),
+	status int,
+	si_code varchar(200)
+)
 
 
 
