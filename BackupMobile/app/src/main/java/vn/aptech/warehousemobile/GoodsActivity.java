@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import vn.aptech.warehousemobile.api.service.GoodsService;
 import vn.aptech.warehousemobile.entity.GoodData;
 
 public class GoodsActivity extends AppCompatActivity {
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rvGoods;
     private GoodsService service;
     private GoodsDataAdapter adapter;
@@ -60,6 +62,15 @@ public class GoodsActivity extends AppCompatActivity {
         imvBar.setOnClickListener(v->{
             Intent it = new Intent(GoodsActivity.this, ScannerActivity.class);
             startActivity(it);
+        });
+        // SetOnRefreshListener on SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                list.clear();
+                fillData();
+            }
         });
     }
 
@@ -101,6 +112,8 @@ public class GoodsActivity extends AppCompatActivity {
         searchGood.setQueryHint("Input to search goods");
         rvGoods=findViewById(R.id.rvGoods);
         imvBar = findViewById(R.id.imvBarSearch);
+        //swipe refress
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         adapter = new GoodsDataAdapter(list, this);
         rvGoods.setAdapter(adapter);

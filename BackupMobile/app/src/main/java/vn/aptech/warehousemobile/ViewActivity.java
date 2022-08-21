@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,9 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ViewActivity extends AppCompatActivity {
-    private RelativeLayout rltGood, rltAllocate, rltMovement, rltIssue;
-    private ImageView imgGoods, imgAllocate, imgMoment, imgIssue;
-    private Button btnLogout, btnSubcribe;
+    private CardView cardGoods, cardAllocate, cardMovement, cardIssue;
     private TextView txtUser;
     @SuppressLint("SetTextI18n")
     @Override
@@ -34,56 +33,31 @@ public class ViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view);
         setUi();
         subcribeReceiveNoti();
-        rltIssue.setOnClickListener(new View.OnClickListener() {
+        cardIssue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(ViewActivity.this , IssueOrderActivity.class);
                 startActivity(it);
             }
         });
-        rltGood.setOnClickListener(new View.OnClickListener() {
+        cardGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(ViewActivity.this , GoodsActivity.class);
                 startActivity(it);
             }
         });
-        rltAllocate.setOnClickListener(new View.OnClickListener() {
+        cardAllocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(ViewActivity.this, AllocateActivity.class );
                 startActivity(it);
             }
         });
-        rltMovement.setOnClickListener(v->{
+        cardMovement.setOnClickListener(v->{
             Intent it = new Intent(ViewActivity.this, MovementActivity.class );
             startActivity(it);
         });
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
-                Intent it = new Intent(ViewActivity.this, MainActivity.class );
-                startActivity(it);
-            }
-        });
-//        btnSubcribe.setOnClickListener(v->{
-//            Task<Void> weather = FirebaseMessaging.getInstance().subscribeToTopic("sale")
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            String msg = "Subscribed";
-//                            if (!task.isSuccessful()) {
-//                                msg = "Subscribe failed";
-//                            }
-//                            Log.d(TAG, msg);
-//                            Toast.makeText(ViewActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        });
 
     }
 
@@ -98,19 +72,16 @@ public class ViewActivity extends AppCompatActivity {
     }
 
     private void setUi() {
-        btnLogout = findViewById(R.id.btnLogout);
-        btnSubcribe = findViewById(R.id.btnSubcribe);
-
         txtUser = findViewById(R.id.txtUser);
-        rltAllocate = findViewById(R.id.rltAllocate);
-        rltGood = findViewById(R.id.rltGoods);
-        rltMovement = findViewById(R.id.rltMovement);
-        rltIssue = findViewById(R.id.rltIssue);
+        cardAllocate = findViewById(R.id.cardAllocate);
+        cardGoods = findViewById(R.id.cardGoods);
+        cardMovement = findViewById(R.id.cardMovement);
+        cardIssue = findViewById(R.id.cardIssue);
 
         SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
         String welcome = "Welcome "+ username.toString();
         txtUser.setText(welcome);
-
+        getSupportActionBar().hide();
     }
 }
