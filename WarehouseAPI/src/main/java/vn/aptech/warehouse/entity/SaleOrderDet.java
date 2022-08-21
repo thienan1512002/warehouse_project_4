@@ -36,4 +36,5 @@ public class SaleOrderDet {
     private int quantity;
     private int discount;
     private int picked;
+    private int booked;
 }

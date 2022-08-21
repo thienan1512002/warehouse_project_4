@@ -31,4 +31,5 @@ public class Unqualified {
     private String so_id;
     private int status;
     private String si_code;
+    private String note;
 }

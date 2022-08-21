@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.GoodsMaster;
 import vn.aptech.warehouse.entity.IssueOrder;
 import vn.aptech.warehouse.entity.Location;
+import vn.aptech.warehouse.entity.SaleOrder;
 import vn.aptech.warehouse.entity.SaleOrderDet;
 import vn.aptech.warehouse.entity.Transactions;
+import vn.aptech.warehouse.entity.Unqualified;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 //import vn.aptech.warehouse.service.EmailSenderService;
@@ -29,7 +31,9 @@ import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.IssueOrderService;
 import vn.aptech.warehouse.service.LocService;
 import vn.aptech.warehouse.service.SaleOrderDetService;
+import vn.aptech.warehouse.service.SaleOrderService;
 import vn.aptech.warehouse.service.TransactionsService;
+import vn.aptech.warehouse.service.UnqualifiedService;
 import vn.aptech.warehouse.service.WarehouseService;
 
 /**
@@ -54,6 +58,10 @@ public class IssueOrderController {
     private TransactionsService transService;
     @Autowired
     private SaleOrderDetService detService;
+    @Autowired
+    private SaleOrderService soService;
+    @Autowired
+    private UnqualifiedService unService;
     
     
 //    @Autowired
@@ -114,6 +122,64 @@ public class IssueOrderController {
         Transactions addTrans = transService.save(trans);
         return ResponseEntity.ok(200);
        
+    }
+    
+    @PostMapping(value="/decline")
+    public ResponseEntity declineOrder(@RequestBody JsObj jsObj,HttpServletRequest request){
+         Location location = locService.findByLocCode(jsObj.getLoc_code());
+        
+        
+        location.setLoc_remain(location.getLoc_remain()+jsObj.getQty());
+        Location loc = locService.save(location);
+        
+        GoodsMaster gm = gmService.findByPtId(jsObj.getPt_id());
+        
+        gm.setPt_qty(gm.getPt_qty()-jsObj.getQty());
+        gm.setPt_hold(gm.getPt_hold()-jsObj.getQty());
+        gm.setAccepted_qty(gm.getAccepted_qty()-jsObj.getQty());
+        
+        GoodsMaster editGm = gmService.save(gm);
+        
+        IssueOrder order = service.findById(jsObj.getId());
+        
+        order.setQuantity(order.getQuantity()-jsObj.getQty());
+        
+        IssueOrder editOrder = service.save(order);
+        
+        SaleOrder so = soService.findBySoId(order.getSo_id());
+        
+        so.setClosed(false);
+        
+        SaleOrder editSo = soService.save(so);
+        
+        SaleOrderDet det = detService.findBySoId(order.getSo_id(), gm.getGood_data().getGoods_no());
+        
+        det.setBooked(det.getBooked()-jsObj.getQty());
+        
+        SaleOrderDet addDet = detService.save(det);
+        
+         // add transaction report
+        Transactions trans = new Transactions();
+        trans.setType("unqualified");
+        trans.setFrom_loc(loc.getLoc_desc());
+        trans.setTo_loc("Move to unqualified");
+        trans.setGoods_name(gm.getGood_data().getGoods_name());
+        trans.setQuantity(jsObj.getQty());
+        
+        Transactions addTrans = transService.save(trans);
+        
+        
+        Unqualified unqualified = new Unqualified();
+        
+        unqualified.setGoods_name(gm.getGood_data().getGoods_name());
+        unqualified.setStatus(0);
+        unqualified.setSo_id(jsObj.getSo_id());
+        unqualified.setQuantity(jsObj.getQty());
+        unqualified.setSi_code((String)request.getSession().getAttribute("workspace"));
+        unqualified.setNote(jsObj.getNote());
+        Unqualified addUn = unService.save(unqualified);
+        return ResponseEntity.ok(200);
+        
     }
     
     @GetMapping(value="/{id}")

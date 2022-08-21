@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <head>
-  <title>Transaction</title>
+  <title>Unqualified</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -14,45 +14,49 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <div class="container-fluid" layout:fragment="contents">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Transaction</h1>
+  <h1 class="h3 mb-2 text-gray-800">Unqualified</h1>
 
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h3 class="card-title">Transaction Report</h3>
+      <h3 class="card-title">Unqualified Item</h3>
     </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
           <thead>
           <tr>
-            <th>Transaction Id</th>
-            <th>Type</th>
+            <th>No</th>            
             <th>Goods Name</th>
-            <th>From Location</th>
-            <th>To Location</th>
+            <th>Sale Order Number</th>
             <th>Quantity</th>
+            <th>Note</th>
+            <th>Status</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="item: ${trans}">
-            <td th:text="${item.id}">Id</td>
-
-            <div th:if="${item.type.equals('in')}">
-              <td><span class="badge badge-warning">Allocate</span></td>
-          </div>
-            <div th:if="${item.type.equals('out')}">
-              <td><span class="badge badge-success">Issue</span></td>
-            </div>
-             <div th:if="${item.type.equals('unqualified')}">
-              <td><span class="badge badge-danger">Unqualified</span></td>
-            </div>
-
+          <tr th:each="item: ${unqualifieds}">
+            <td th:text="${item.id}">Id</td>          
             <td th:text="${item.goods_name}">Goods Name</td>
-            <td th:text="${item.from_loc}">From Location</td>
-            <td th:text="${item.to_loc}">To Location</td>
-            <td th:text="${item.quantity}">Quantity</td>
+            <td th:text="${item.so_id}">To Location</td>
+            <td th:text="${item.quantity}">From Location</td>
+            <td th:text="${item.note}"></td>
+          <div th:if="${item.status==0}">
+              <td>
+                  <button class="btn btn-outline-primary">Pending</button>
+              </td>
+          </div>
+          <div th:if="${item.status==1}">
+              <td>
+                  <span class="badge badge-success">Pending</span>
+              </td>
+          </div>
+          <div th:if="${item.status==-1}">
+              <td>
+                  <span class="badge badge-danger">Disposed</span>
+              </td>
+          </div>
 
 
           </tr>
@@ -68,7 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function () {
-      $('.nav-trans').addClass('active');
+      $('.nav-unqualified').addClass('active');
       $('#tblWh').dataTable();
     });
   </script>

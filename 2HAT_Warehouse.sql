@@ -152,7 +152,8 @@ create table so_detail
 	goods_no varchar(255) foreign key references goods_data,
 	quantity int , 
 	picked int,
-	discount int
+	discount int,
+	booked int
 )
 
 create table issue_order
