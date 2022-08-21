@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.GoodsMaster;
 import vn.aptech.warehouse.entity.Location;
+import vn.aptech.warehouse.entity.Note;
 import vn.aptech.warehouse.entity.Transactions;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.service.AllocateRequestService;
+import vn.aptech.warehouse.service.FirebaseMessagingService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.LocService;
 import vn.aptech.warehouse.service.TransactionsService;
@@ -46,6 +49,9 @@ public class AllocateController {
     
     @Autowired
     private TransactionsService transService;
+    
+    @Autowired
+    private FirebaseMessagingService serviceMessage;
 
     @GetMapping("/browse")
     public String index(Model model) {
@@ -104,7 +110,7 @@ public class AllocateController {
     }
 
     @PostMapping("/pick-list")
-    public ResponseEntity pickList(@RequestBody JsObj jsObj) {
+    public ResponseEntity pickList(@RequestBody JsObj jsObj) throws FirebaseMessagingException {
         int responseCode;
 
         GoodsMaster goods = goodsMasterService.findByPtId(jsObj.getPt_id());
@@ -134,7 +140,11 @@ public class AllocateController {
         if (newAr != null) {
             responseCode = 200;
         }
+        Note notiMess = new Note();
+        notiMess.setSubject("Thong bao sale");
+        notiMess.setContent("Sale 21/08/2022");
 
+        serviceMessage.sendNotification(notiMess, "sale");
         return ResponseEntity.ok(responseCode);
     }
 

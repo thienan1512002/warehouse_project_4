@@ -33,7 +33,7 @@ public class ViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         setUi();
-
+        subcribeReceiveNoti();
         rltIssue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,19 +70,30 @@ public class ViewActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-        btnSubcribe.setOnClickListener(v->{
-            Task<Void> weather = FirebaseMessaging.getInstance().subscribeToTopic("sale")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            String msg = "Subscribed";
-                            if (!task.isSuccessful()) {
-                                msg = "Subscribe failed";
-                            }
-                            Log.d(TAG, msg);
-                            Toast.makeText(ViewActivity.this, msg, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//        btnSubcribe.setOnClickListener(v->{
+//            Task<Void> weather = FirebaseMessaging.getInstance().subscribeToTopic("sale")
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            String msg = "Subscribed";
+//                            if (!task.isSuccessful()) {
+//                                msg = "Subscribe failed";
+//                            }
+//                            Log.d(TAG, msg);
+//                            Toast.makeText(ViewActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//        });
+
+    }
+
+    private void subcribeReceiveNoti() {
+        FirebaseMessaging.getInstance().subscribeToTopic("sale").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+//                Toast.makeText(ViewActivity.this, "Subcribe!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"Subcribe");
+            }
         });
     }
 
@@ -100,5 +111,6 @@ public class ViewActivity extends AppCompatActivity {
         String username = sharedPreferences.getString("username","");
         String welcome = "Welcome "+ username.toString();
         txtUser.setText(welcome);
+
     }
 }

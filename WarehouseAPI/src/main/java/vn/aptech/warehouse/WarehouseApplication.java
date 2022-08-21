@@ -1,10 +1,16 @@
 package vn.aptech.warehouse;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import vn.aptech.warehouse.entity.Role;
@@ -20,6 +26,17 @@ public class WarehouseApplication {
         @Bean
         PasswordEncoder passwordEncoder(){
             return new BCryptPasswordEncoder();
+        }
+        @Bean
+        FirebaseMessaging firebaseMessaging() throws IOException {
+            GoogleCredentials googleCredentials = GoogleCredentials
+                    .fromStream(new ClassPathResource("firebase-service-account.json").getInputStream());
+            FirebaseOptions firebaseOptions = FirebaseOptions
+                    .builder()
+                    .setCredentials(googleCredentials)
+                    .build();
+            FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
+            return FirebaseMessaging.getInstance(app);
         }
 //        @Bean
 //        CommandLineRunner run(UserService userService){
