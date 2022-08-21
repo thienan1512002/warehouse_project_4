@@ -142,8 +142,8 @@ public class AllocateController {
             responseCode = 200;
         }
         Note notiMess = new Note();
-        notiMess.setSubject("Thong bao sale");
-        notiMess.setContent("Sale 21/08/2022");
+        notiMess.setSubject("New Allocate Request");
+        notiMess.setContent("An new allocate request wait for your approval");
 
         serviceMessage.sendNotification(notiMess, "sale");
         return ResponseEntity.ok(responseCode);
