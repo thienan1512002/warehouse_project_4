@@ -13,7 +13,7 @@ import vn.aptech.warehouse.entity.vm.JsObj;
 @Controller
 public class HomeController {
 
-    @GetMapping(value = "/test-layout")
+    @GetMapping(value = "")
     public String index(Model model) {
         return "home/index";
     }
