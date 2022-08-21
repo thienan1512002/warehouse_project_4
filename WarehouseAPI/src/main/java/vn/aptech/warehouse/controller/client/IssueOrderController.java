@@ -173,7 +173,7 @@ public class IssueOrderController {
         
         unqualified.setGoods_name(gm.getGood_data().getGoods_name());
         unqualified.setStatus(0);
-        unqualified.setSo_id(jsObj.getSo_id());
+        unqualified.setSo_id(order.getSo_id());
         unqualified.setQuantity(jsObj.getQty());
         unqualified.setSi_code((String)request.getSession().getAttribute("workspace"));
         unqualified.setNote(jsObj.getNote());

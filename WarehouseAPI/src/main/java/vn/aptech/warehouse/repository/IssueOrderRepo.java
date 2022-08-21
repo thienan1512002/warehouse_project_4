@@ -16,7 +16,7 @@ import vn.aptech.warehouse.entity.IssueOrder;
  */
 public interface IssueOrderRepo extends JpaRepository<IssueOrder, Integer>{
     
-    @Query("SELECT o FROM IssueOrder o WHERE o.closed =:closed AND o.si_code=:si_code")
+    @Query("SELECT o FROM IssueOrder o WHERE o.closed =:closed AND o.si_code=:si_code AND o.quantity > 0")
     List<IssueOrder> findByClosed(@Param("closed") boolean closed , @Param("si_code") String si_code);
     @Query("SELECT o FROM IssueOrder o WHERE o.id=:id")
     IssueOrder findById(@Param("id") int id);

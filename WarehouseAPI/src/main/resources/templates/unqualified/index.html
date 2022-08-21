@@ -44,7 +44,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <td th:text="${item.note}"></td>
           <div th:if="${item.quantity>item.action_qty}">
               <td>
-                  <button class="btn btn-outline-primary" th:onclick="handleItem([[${item.id}]])">Pending</button>
+                  <button class="btn btn-outline-primary" th:onclick="handleItem([[${item.id}]],[[${item.quantity-item.action_qty}]])">Pending</button>
               </td>
           </div>
            <div th:unless="${item.quantity>item.action_qty}">
@@ -71,6 +71,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <label for="wh_desc">Quantity</label>
                                     <input id="rp_qty" class="form-control"/>
                                     <input type="hidden" id="un_id"/>
+                                    <input type="hidden" id="un_qty"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -111,9 +112,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
       
     });
     
-    const handleItem = (id) =>{
+    const handleItem = (id,qty) =>{
         $('#exampleModal').modal('show');
         $('#un_id').val(id);
+        $('#un_qty').val(qty);
     };
     
     $('#btnSave').click(function(){
@@ -123,8 +125,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
            note:$('#rp_note').val(),
            status:$('#rp_recycle').prop("checked") ? 1 : -1
        };
-       console.log(jsObj);
-       $.ajax({
+       if(!$.trim($('#rp_note').val())||parseFloat($('#rp_qty').val())>parseFloat($('#un_qty').val())){
+           Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Please add some note or your input are to large'                           
+                      });
+       }else{
+           $.ajax({
             url: '/unqualified/handle',
             type: 'POST',
             contentType: "application/json",
@@ -141,6 +149,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 }
             }
        });
+       }
+       console.log(jsObj);
+       
     });
   </script>
 </div>

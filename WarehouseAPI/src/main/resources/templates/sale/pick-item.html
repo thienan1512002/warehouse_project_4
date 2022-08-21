@@ -76,7 +76,8 @@
             <tbody id="tb-body">
 
             </tbody>
-            <tfoot id="tFoot"></tfoot>
+            <tfoot id="tFoot">
+            </tfoot>
         </table>
         
         <div class="form-group">
@@ -139,7 +140,7 @@
                                     const ref= document.getElementById('ref-td-'+id).innerHTML;
                                     drawTable(pid,name,loc,ref,quantity.value);
                                     quantity.value='';
-                                    checkTbRows();
+                                   
                                     quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
                                     }
                                     
@@ -161,6 +162,7 @@
                                                 </td>
                                             </tr>`;
                                     document.getElementById('tb-body').innerHTML += tr;
+                                    checkTbRows();
                                }else{
                                    document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);                                
                                }
@@ -181,6 +183,7 @@
                               
                                jsArr.push(jsObj);
                                console.log(jsArr);
+                                
                             }
                             
                             const removeRow = (id) => {
@@ -194,7 +197,7 @@
                             }
                             
                             const checkTbRows = () =>{
-                            console.log($('#tb-confirm > tbody > tr').length);
+                          
                                 if($('#tb-confirm > tbody > tr').length>0){
                                     const tfooter = `
                                                         <tr id="tblFooter">
@@ -210,7 +213,7 @@
                                                     `
                                     $('#tFoot').html(tfooter);                
                                 }else{
-                                    $('#tFoot').remove();
+                                    $('#tblFooter').remove();
                                 }
                             }
                             
