@@ -64,10 +64,29 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             tvTransQty.setText(String.valueOf(transaction.getQuantity()));
             tvTransFrom.setText(transaction.getFrom_loc());
             tvTransTo.setText(transaction.getTo_loc());
-            if(transaction.getType().equals("in")){
-                tvTransType.setText("Allocated");
-            }else{
-                tvTransType.setText("UnAllocated");
+
+            switch (transaction.getType()){
+                case "in":{
+                    tvTransType.setText("Allocated");
+                    break;
+                }
+                case "out":{
+                    tvTransType.setText("Unallocated");
+                    break;
+                }
+                case "unqualified":{
+                    tvTransType.setText("Unqualified");
+                    break;
+                }
+                case "Recycle":{
+                    tvTransType.setText("Recycle");
+                    break;
+                }
+                case "Disposed":{
+                    tvTransType.setText("Disposed");
+                    break;
+                }
+
             }
 
 //            tvTransName.setText(transaction.getGoods_name());

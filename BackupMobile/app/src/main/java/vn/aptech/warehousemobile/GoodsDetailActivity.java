@@ -42,7 +42,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
     private TransactionService transactionService;
     private Spinner spinnerFilter;
     private String type;
-    private String[] transType = new String[]{"Allocated","UnAllocated"};
+    private String[] transType = new String[]{"Allocated","UnAllocated","Unqualified","Recycle","Disposed"};
     private List<Transaction> list = new ArrayList<>();
     private List<Transaction> listcpy = new ArrayList<>();
     private String goods_no, goods_name;
@@ -59,10 +59,27 @@ public class GoodsDetailActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 type = spinnerFilter.getSelectedItem().toString();
-                if(type.equals("Allocated") ){
-                    type="in";
-                }else{
-                    type="out";
+                switch (spinnerFilter.getSelectedItem().toString()){
+                    case "Allocated":{
+                        type="in";
+                        break;
+                    }
+                    case "UnAllocated":{
+                        type="out";
+                        break;
+                    }
+                    case "Unqualified":{
+                        type="unqualified";
+                        break;
+                    }
+                    case "Recycle":{
+                        type="Recycle";
+                        break;
+                    }
+                    case "Disposed":{
+                        type="Disposed";
+                        break;
+                    }
                 }
                 filter(type);
             }
