@@ -194,7 +194,8 @@
                             }
                             
                             const checkTbRows = () =>{
-                                if($('#tb-confirm > tbody > tr').length!=0){
+                            console.log($('#tb-confirm > tbody > tr').length);
+                                if($('#tb-confirm > tbody > tr').length>0){
                                     const tfooter = `
                                                         <tr id="tblFooter">
                                                          <td></td>

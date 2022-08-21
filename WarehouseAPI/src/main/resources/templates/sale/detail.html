@@ -75,12 +75,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </thead>
                                 <tbody>
                                     <tr th:each="item: ${details}">
+                                        <td>
                                 <div th:if="${sale.closed && item.booked<item.quantity}">
-                                     <td><a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a></td>
+                                    <a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a>
                                 </div>
                                 <div th:if="${sale.closed && item.booked==item.quantity}">
-                                    <td><span class="badge badge-success">Picked Completed</span></td>
+                                    <span class="badge badge-success">Picked Completed</span>
                                 </div>
+                                        </td>           
                                        
                                         <td><img th:src="@{${item.good_data.photosImagePath}}" width="100px" height="120px" /></td>
                                         <td th:text="${item.good_data.goods_name}">1</td>

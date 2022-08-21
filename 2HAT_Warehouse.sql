@@ -187,7 +187,8 @@ create table unqualified
 	quantity int,
 	so_id varchar(100),
 	status int,
-	si_code varchar(200)
+	si_code varchar(200),
+	action_qty int
 )
 
 

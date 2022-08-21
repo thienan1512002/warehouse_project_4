@@ -48,6 +48,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
              <div th:if="${item.type.equals('unqualified')}">
               <td><span class="badge badge-danger">Unqualified</span></td>
             </div>
+            <div th:if="${item.type.equals('Recycle')}">
+              <td><span class="badge badge-primary">Recycle</span></td>
+            </div>
+            <div th:if="${item.type.equals('Disposed')}">
+              <td><span class="badge badge-danger">Disposed</span></td>
+            </div>
 
             <td th:text="${item.goods_name}">Goods Name</td>
             <td th:text="${item.from_loc}">From Location</td>

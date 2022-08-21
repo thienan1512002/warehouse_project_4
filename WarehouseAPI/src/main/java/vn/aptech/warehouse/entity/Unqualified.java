@@ -28,6 +28,7 @@ public class Unqualified {
     private int id;
     private String goods_name;
     private int quantity;
+    private int action_qty;
     private String so_id;
     private int status;
     private String si_code;

@@ -41,6 +41,11 @@ public class GoodDataServiceImpl implements GoodDataService{
         return repo.findByName(name);
     }
 
+    @Override
+    public GoodData findByGoodName(String name) {
+        return repo.findByGoodName(name);
+    }
+
     
     
 }

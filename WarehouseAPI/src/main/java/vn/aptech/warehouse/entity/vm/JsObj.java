@@ -25,6 +25,6 @@ public class JsObj {
     private String goods_name; 
     private String goods_no;
     private String wh_code;
-    
+    private int status;
    
 }

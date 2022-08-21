@@ -19,4 +19,6 @@ public interface GoodDataRepository extends JpaRepository<GoodData, String>{
     GoodData findByNo(String no);
     @Query("SELECT u FROM GoodData u WHERE u.goods_name like %:name%")
     List<GoodData> findByName(@Param("name")String name);
+    @Query("SELECT u FROM GoodData u WHERE u.goods_name like %:name%")
+    GoodData findByGoodName(@Param("name")String name);
 }
