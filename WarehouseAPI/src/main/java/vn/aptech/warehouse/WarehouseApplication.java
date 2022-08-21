@@ -19,14 +19,7 @@ import vn.aptech.warehouse.service.UserService;
 
 @SpringBootApplication
 public class WarehouseApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(WarehouseApplication.class, args);
-	}
-        @Bean
-        PasswordEncoder passwordEncoder(){
-            return new BCryptPasswordEncoder();
-        }
+    
         @Bean
         FirebaseMessaging firebaseMessaging() throws IOException {
             GoogleCredentials googleCredentials = GoogleCredentials
@@ -38,6 +31,15 @@ public class WarehouseApplication {
             FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
             return FirebaseMessaging.getInstance(app);
         }
+
+	public static void main(String[] args) {
+		SpringApplication.run(WarehouseApplication.class, args);
+	}
+        @Bean
+        PasswordEncoder passwordEncoder(){
+            return new BCryptPasswordEncoder();
+        }
+        
 //        @Bean
 //        CommandLineRunner run(UserService userService){
 //            return args ->{

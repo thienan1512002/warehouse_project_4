@@ -3,6 +3,8 @@ package vn.aptech.warehousemobile.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collection;
+
 public class User {
     @SerializedName("email")
     @Expose
@@ -13,6 +15,14 @@ public class User {
     @SerializedName("username")
     @Expose
     private String username;
+    @SerializedName("role")
+    @Expose
+    private Collection<Role> role;
+    public Collection<Role> getRole() {
+        return role;
+    }
+
+
     public User(){
 
     }

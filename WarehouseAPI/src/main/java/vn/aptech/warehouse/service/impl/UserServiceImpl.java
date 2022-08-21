@@ -108,13 +108,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
         User currentUser = userRepo.findByUsername(user.getUsername());
         user.setEmail(currentUser.getEmail());
+        user.setRole(currentUser.getRoles());
         if (currentUser == null) {
             return null;
         } 
         if(!passwordEncoder.matches(user.getPassword(),currentUser.getPassword())){
             return null;
         }
-        
         return user;
     }
 

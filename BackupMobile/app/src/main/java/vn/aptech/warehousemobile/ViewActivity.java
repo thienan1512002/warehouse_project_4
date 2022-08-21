@@ -25,6 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ViewActivity extends AppCompatActivity {
     private CardView cardGoods, cardAllocate, cardMovement, cardIssue;
+    private ImageView imgLogout;
     private TextView txtUser;
     @SuppressLint("SetTextI18n")
     @Override
@@ -58,7 +59,20 @@ public class ViewActivity extends AppCompatActivity {
             Intent it = new Intent(ViewActivity.this, MovementActivity.class );
             startActivity(it);
         });
+        imgLogout.setOnClickListener(v->{
+            logout();
+        });
 
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+        Intent it = new Intent(this, MainActivity.class);
+        finishAffinity();
+        startActivity(it);
     }
 
     private void subcribeReceiveNoti() {
@@ -72,6 +86,7 @@ public class ViewActivity extends AppCompatActivity {
     }
 
     private void setUi() {
+        imgLogout = findViewById(R.id.imgLogout);
         txtUser = findViewById(R.id.txtUser);
         cardAllocate = findViewById(R.id.cardAllocate);
         cardGoods = findViewById(R.id.cardGoods);

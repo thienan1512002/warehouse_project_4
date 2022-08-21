@@ -1,5 +1,6 @@
 package vn.aptech.warehousemobile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -15,6 +16,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
@@ -122,6 +125,14 @@ public class GoodsActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         rvGoods.addItemDecoration(itemDecoration);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        return super.onCreateOptionsMenu(menu);
+//    }
 }

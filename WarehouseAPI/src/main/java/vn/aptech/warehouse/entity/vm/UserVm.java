@@ -4,7 +4,9 @@
  */
 package vn.aptech.warehouse.entity.vm;
 
+import java.util.Collection;
 import lombok.Data;
+import vn.aptech.warehouse.entity.Role;
 
 /**
  *
@@ -15,4 +17,5 @@ public class UserVm {
     private String username;
     private String password;
     private String email;
+    private Collection<Role> role;
 }
