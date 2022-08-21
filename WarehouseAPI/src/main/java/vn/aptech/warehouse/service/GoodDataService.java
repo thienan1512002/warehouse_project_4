@@ -19,4 +19,5 @@ public interface GoodDataService {
     GoodData findByNo(String no);
     List<GoodData> findByName(String name);
     GoodData save(GoodData goodData);
+    GoodData findByGoodName(String name);
 }

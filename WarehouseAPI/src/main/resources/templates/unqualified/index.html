@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xlmns:th="http://www.thymeleaf.org" xlmns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title>Unqualified</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container-fluid" layout:fragment="contents">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Unqualified</h1>
+
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h3 class="card-title">Unqualified Item</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="tblWh" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>No</th>            
+            <th>Goods Name</th>
+            <th>Sale Order Number</th>
+            <th>Quantity</th>
+            <th>Note</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item: ${unqualifieds}">
+            <td th:text="${item.id}">Id</td>          
+            <td th:text="${item.goods_name}">Goods Name</td>
+            <td th:text="${item.so_id}">To Location</td>
+            <td th:text="${item.quantity}">From Location</td>
+            <td th:text="${item.note}"></td>
+          <div th:if="${item.quantity>item.action_qty}">
+              <td>
+                  <button class="btn btn-outline-primary" th:onclick="handleItem([[${item.id}]])">Pending</button>
+              </td>
+          </div>
+           <div th:unless="${item.quantity>item.action_qty}">
+              <td>
+                  <span class="badge badge-success">Completed</span>
+              </td>
+          </div>
+         
+
+
+          </tr>
+          </tbody>
+        </table>
+           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Enter quantity and note</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">                               
+                                <div class="form-group col-6">
+                                    <label for="wh_desc">Quantity</label>
+                                    <input id="rp_qty" class="form-control"/>
+                                    <input type="hidden" id="un_id"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                 <div class="form-group col-4">
+                                    <label class="form-check-label" for="wh_editStatus">Recycle</label>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" id="rp_recycle" class="form-check-input" style="cursor:pointer;"/>
+                            </div>
+                                 </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="wh_cmt">Note</label>
+                                    <textarea class="form-control" id="rp_note">
+                                        
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" id="btnSave">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    $(document).ready(function () {
+      $('.nav-unqualified').addClass('active');
+      $('#tblWh').dataTable();
+      
+    });
+    
+    const handleItem = (id) =>{
+        $('#exampleModal').modal('show');
+        $('#un_id').val(id);
+    };
+    
+    $('#btnSave').click(function(){
+       const jsObj = {
+           id : $('#un_id').val(),
+           qty: $('#rp_qty').val(),
+           note:$('#rp_note').val(),
+           status:$('#rp_recycle').prop("checked") ? 1 : -1
+       };
+       console.log(jsObj);
+       $.ajax({
+            url: '/unqualified/handle',
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(jsObj),
+            success:function(res){
+                if(res===200){
+                     Swal.fire(
+                       'Good job!',
+                       'Action success',
+                       'success'
+                    ).then(function () {
+                       window.location.reload();
+                   });
+                }
+            }
+       });
+    });
+  </script>
+</div>
+</div>
+</body>
+</html>

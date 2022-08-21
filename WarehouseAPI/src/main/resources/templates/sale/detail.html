@@ -69,23 +69,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Name</th>
                                         <th>Quantity</th>
                                         <th>Picked</th>
+                                        <th>Booked</th>
                                         <th>Discount</th>
-                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="item: ${details}">
-                                <div th:if="${!sale.closed}">
-                                     <td><a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a></td>
+                                        <td>
+                                <div th:if="${sale.closed && item.booked<item.quantity}">
+                                    <a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a>
                                 </div>
-                                <div th:unless="${!sale.closed}">
-                                    <td><span class="badge badge-success">Picked Completed</span></td>
+                                <div th:if="${sale.closed && item.booked==item.quantity}">
+                                    <span class="badge badge-success">Picked Completed</span>
                                 </div>
+                                        </td>           
                                        
                                         <td><img th:src="@{${item.good_data.photosImagePath}}" width="100px" height="120px" /></td>
                                         <td th:text="${item.good_data.goods_name}">1</td>
                                         <td th:text="${item.quantity}">1</td>
                                         <td th:text="${item.picked}"></td>
+                                        <td th:text="${item.booked}"></td>
                                         <td th:text="${item.discount}">1</td>
                                         
                                         <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
@@ -155,7 +158,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <script>
                         $(document).ready(function () {
                             $('.nav-sale').addClass('active');
-                            $('#tblWh').dataTable();
+                           
                             $('#new-list').click(function () {
                                 $('#exampleModal').modal('show');
                             });

@@ -80,6 +80,11 @@
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <span>Unallocate</span></a>
                 </li>
+                 <li class="nav-item nav-unqualified">
+                    <a class="nav-link nav-unqualified" th:href="@{/unqualified}">
+                        <i class="fa-solid fa-recycle"></i>
+                        <span>Unqualified</span></a>
+                </li>
                 <hr class="sidebar-divider my-0">
                 <li class="nav-item nav-qc">
                     <a class="nav-link nav-qc" th:href="@{/qc}">
@@ -343,10 +348,10 @@
                                         Profile
                                     </a>
                                     <!--sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')"-->
-                                    <div >
-                                        <a class="dropdown-item" href="#">
+                                    <div id="wpChange" style="cursor:pointer">
+                                        <a class="dropdown-item">
                                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Work Space
+                                            <span th:if="${#session.getAttribute('workspace')} != null" th:text="${#session.getAttribute('workspace')}"></span>
                                         </a>
                                     </div>
                                     <div class="dropdown-divider"></div>
@@ -412,6 +417,26 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="wpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose your workspace to start your action</h5>                   
+                </div>
+                <div class="modal-body">
+                    <select class="form-control" id="selectWs">
+                        
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnChoose">Choose</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
@@ -431,7 +456,65 @@
     <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function(){
+          $.ajax({
+             type : "GET",
+             url:"/api/warehouses",
+             success:function(data){
+                 console.log(data);
+                 data.forEach(x=>{
+                    const option = `<option value="${x.wh_code}">${x.wh_desc}</option>`;
+                    $('#selectWs').append(option);
+                 });
+             }
+          });
+          $.ajax({
+              type : "GET",
+              url:"/check-workspace",
+              success:function(res){
+                  console.log(res);
+                  if(res===400){
+                    Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    html: '<b>Selected your workspace first !</b>',
+                    button: "Select workspace"
+                }).then(function(){
+                    $('#wpModal').modal('toggle');
+                });
+                  }
+              }
+          });
+          $('#wpChange').click(function(){
+              $('#wpModal').modal('toggle');
+          });
+          $('#btnChoose').click(function(){
+              $('#wpModal').modal('toggle');
+              const jsObj = {
+                  wh_code : $('#selectWs :selected').val()
+              };
+              $.ajax({
+                  type: "POST",
+                  url:"/choose-workspace",
+                  contentType: "application/json",
+                  data: JSON.stringify(jsObj),
+                  success:function(res){
+                      if(res===200){
+                        Swal.fire(
+                            'Good job!',
+                            'Choose workspace success',
+                            'success'
+                        ).then(function(){
+                            window.location.reload();
+                        });  
+                      }
+                  }
+              });
+          });
+        });
+    </script>
 </body>
 
 </html>

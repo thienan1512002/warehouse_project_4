@@ -35,7 +35,6 @@ public class LocController {
     
     @GetMapping(value="")
     public String index(Model model,HttpServletRequest request){
-        request.getSession().setAttribute("workspace", "WH001");
         model.addAttribute("locs", service.findByWhCode((String) request.getSession().getAttribute("workspace")));
         model.addAttribute("warehouses", whService.findAll());
         return "locs/index";
@@ -43,7 +42,8 @@ public class LocController {
     
     
     @PostMapping(value="/save")
-    public ResponseEntity save(@RequestBody Location location){
+    public ResponseEntity save(@RequestBody Location location,HttpServletRequest request){
+        location.setWh_code((String) request.getSession().getAttribute("workspace"));
         Location loc = service.save(location);
         return ResponseEntity.ok(200);
     } 

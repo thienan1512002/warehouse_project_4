@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,18 +21,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="so_detail")
-public class SaleOrderDet {
-
+@Table(name="unqualified")
+public class Unqualified {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String so_id;
-    @ManyToOne
-    @JoinColumn(name = "goods_no", nullable = false)
-    private GoodData good_data;
+    private String goods_name;
     private int quantity;
-    private int discount;
-    private int picked;
-    private int booked;
+    private int action_qty;
+    private String so_id;
+    private int status;
+    private String si_code;
+    private String note;
 }

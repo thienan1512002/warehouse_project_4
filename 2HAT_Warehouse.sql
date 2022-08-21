@@ -152,7 +152,8 @@ create table so_detail
 	goods_no varchar(255) foreign key references goods_data,
 	quantity int , 
 	picked int,
-	discount int
+	discount int,
+	booked int
 )
 
 create table issue_order
@@ -177,6 +178,17 @@ create table transactions
 	from_loc varchar (100),
 	to_loc varchar(100),
 	quantity int
+)
+go
+create table unqualified
+(
+	id int primary key identity ,
+	goods_name varchar(200),
+	quantity int,
+	so_id varchar(100),
+	status int,
+	si_code varchar(200),
+	action_qty int
 )
 
 

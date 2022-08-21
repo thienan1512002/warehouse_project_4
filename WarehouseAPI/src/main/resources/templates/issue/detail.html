@@ -14,10 +14,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-
-
-
-
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h3 class="card-title">Issue Order details</h3>
@@ -33,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                         <dt class="col-sm-3">Goods Name</dt>
                         <dd class="col-sm-9" th:text="${issue.goods_name}">
-                         <dt class="col-sm-3">Sale Order No</dt>
+                        <dt class="col-sm-3">Sale Order No</dt>
                         <dd class="col-sm-9" th:text="${issue.so_id}">        
                         </dd>
 
@@ -47,12 +43,42 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </dd>
                         <dd class="col-sm-9" th:unless="${issue.closed}">
                             <span class="btn btn-outline-success" id="btnSubmit">Submit</span>
-                            <span class="btn btn-outline-warning" id="btnSendMail">Send Mail</span>
+                            <span class="btn btn-outline-danger" id="modalReport">Report</span>
                         </dd>
                     </dl>
                 </div>
             </div>
 
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Enter quantity and note</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">                               
+                                <div class="form-group col-8">
+                                    <label for="wh_desc">Quantity</label>
+                                    <input id="rp_qty" class="form-control"/> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="wh_cmt">Note</label>
+                                    <textarea class="form-control" id="rp_note">
+                                        
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" id="btnReport">Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
@@ -62,7 +88,58 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 $(document).ready(function () {
                     $('.nav-issue').addClass('active');
                     $('#tblWh').dataTable();
+                    $('#modalReport').click(function () {
+                        $('#exampleModal').modal('show');
+                    });
+                    $('#btnReport').click(function () {
+                        const jsObj = {
+                            id: $('#id').val(),
+                            pt_id: $('#pt_id').val(),
+                            loc_code: $('#loc_code').val(),
+                            qty: $('#rp_qty').val(),
+                            note: $('#rp_note').val()
+                        };
+                        console.log(jsObj);                      
+                        if (!$.trim($('#rp_note').val())) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Please add some note'                           
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    console.log(jsObj);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/Issue/decline',
+                                        contentType: "application/json",
+                                        data: JSON.stringify(jsObj),
+                                        success: function (res) {
+                                            if (res === 200) {
+                                                Swal.fire(
+                                                        'Good job!',
+                                                        'Report success',
+                                                        'success'
+                                                        ).then(function () {
+                                                    window.location.href = "/Issue";
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
 
+                    });
                     $('#btnSubmit').click(function () {
                         const jsObj = {
                             id: $('#id').val(),
@@ -141,7 +218,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 }
 
                             },
-                          
+
                         });
 
                     });

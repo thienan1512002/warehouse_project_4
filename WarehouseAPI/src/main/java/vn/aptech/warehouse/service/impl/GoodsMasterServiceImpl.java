@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.aptech.warehouse.entity.GoodsMaster;
+import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.repository.GoodsMasterRepository;
 import vn.aptech.warehouse.service.GoodsMasterService;
 
@@ -22,8 +23,8 @@ public class GoodsMasterServiceImpl implements GoodsMasterService {
     private GoodsMasterRepository service;
     
     @Override
-    public List<GoodsMaster> findAll(String wh) {
-       return service.findAll();
+    public List<GoodsMaster> findAll(Warehouse wh) {
+       return service.findIncome("", wh);
     }
 
     @Override
