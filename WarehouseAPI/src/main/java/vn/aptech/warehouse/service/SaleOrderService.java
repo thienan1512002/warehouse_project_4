@@ -17,4 +17,6 @@ public interface SaleOrderService {
     SaleOrder findBySoId(String so_id);
     
     SaleOrder save(SaleOrder saleOrder);
+    
+    List<SaleOrder> findAll();
 }

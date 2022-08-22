@@ -17,4 +17,6 @@ public interface UnqualifiedService {
     Unqualified findById(int id);
     
     Unqualified save(Unqualified unqualified);
+    
+    List<Unqualified> findItem(String wh_code);
 }

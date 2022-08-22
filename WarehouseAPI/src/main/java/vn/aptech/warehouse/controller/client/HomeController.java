@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.IssueOrder;
+import vn.aptech.warehouse.entity.SaleOrder;
+import vn.aptech.warehouse.entity.Unqualified;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.entity.vm.NotyfVm;
+import vn.aptech.warehouse.repository.SaleOrderRepo;
 import vn.aptech.warehouse.service.AllocateRequestService;
 import vn.aptech.warehouse.service.IssueOrderService;
 import vn.aptech.warehouse.service.LocService;
+import vn.aptech.warehouse.service.SaleOrderService;
+import vn.aptech.warehouse.service.UnqualifiedService;
 import vn.aptech.warehouse.service.WarehouseService;
 
 @Controller
@@ -34,6 +39,12 @@ public class HomeController {
     private IssueOrderService issueService;
     @Autowired
     private WarehouseService whService;
+    @Autowired
+    private UnqualifiedService unService;
+    @Autowired
+    private SaleOrderService soService;
+    @Autowired
+    private SaleOrderRepo repo;
     
     @GetMapping(value = "")
     public String index(Model model,HttpServletRequest request) {
@@ -93,6 +104,19 @@ public class HomeController {
         model.addAttribute("order10", orders10.size());
         model.addAttribute("order11", orders11.size());
         model.addAttribute("order12", orders12.size());
+        
+        model.addAttribute("unqualified", unService.findItem((String)request.getSession().getAttribute("workspace")).size());
+        
+        float totalSo = Float.parseFloat(Integer.toString(soService.findAll().size()));
+        float completed = Float.parseFloat(Integer.toString(repo.findSoByCompleted().size()));
+        float pending = Float.parseFloat(Integer.toString(repo.findSoByPending().size()));
+        
+        
+        model.addAttribute("pendingRate", pending);
+        model.addAttribute("completedRate", completed);
+        model.addAttribute("totalSo", totalSo);
+        
+       
         
         return "home/index";
     }
