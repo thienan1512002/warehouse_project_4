@@ -4,6 +4,10 @@
  */
 package vn.aptech.warehouse.excelhelper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -11,12 +15,15 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -36,7 +43,7 @@ public class CustomerEHelper {
         return TYPE.equals(file.getContentType());
     }
 
-public static List<Customer> excelToCustomers(InputStream is) {
+    public static List<Customer> excelToCustomers(InputStream is) {
         try {
             List<Customer> customers;
             Workbook workbook = new XSSFWorkbook(is);
@@ -108,10 +115,11 @@ public static List<Customer> excelToCustomers(InputStream is) {
         }
     }
 
-    private final XSSFWorkbook workbook;
+    private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private final List<Customer> customers;
-     
+    private final String excelFilePath = "SaleOrder.xlsx";
+    
     public CustomerEHelper(List<Customer> customers) {
         this.customers = customers;
         workbook = new XSSFWorkbook();
@@ -143,7 +151,6 @@ public static List<Customer> excelToCustomers(InputStream is) {
     }
      
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
-        sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
         if (value instanceof Integer) {
             cell.setCellValue((Integer) value);
@@ -153,20 +160,35 @@ public static List<Customer> excelToCustomers(InputStream is) {
             cell.setCellValue((String) value);
         }
         cell.setCellStyle(style);
+        sheet.autoSizeColumn(columnCount);
     }
      
-    private void writeDataLines() {
-        int rowCount = 1;
- 
-        CellStyle style = workbook.createCellStyle();
+    private void writeDataLines() throws FileNotFoundException, IOException {
+        int rowCount = 8;
+        
+//        XSSFFont font = workbook.createFont();
+//        font.setFontHeight(14);
+//        style.setFont(font);
+        FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+        workbook = (XSSFWorkbook) WorkbookFactory.create(inputStream);
+        
+        sheet = workbook.getSheetAt(0);
         XSSFFont font = workbook.createFont();
-        font.setFontHeight(14);
+        font.setFontName("Times New Roman");
+        font.setFontHeight(18);
+        
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setBorderTop(BorderStyle.THIN);
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setBorderRight(BorderStyle.THIN);
         style.setFont(font);
-                 
+        
         for (Customer customer : customers) {
-            Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
-             
+            Row row = sheet.getRow(rowCount++);
+            int columnCount = 1;
+            int rowNum = 1;
+            createCell(row, columnCount++, rowNum, style);
             createCell(row, columnCount++, customer.getCust_code(), style);
             createCell(row, columnCount++, customer.getCust_name(), style);
             createCell(row, columnCount++, customer.getAddress(), style);
@@ -178,16 +200,23 @@ public static List<Customer> excelToCustomers(InputStream is) {
             createCell(row, columnCount++, customer.getShort_name(), style);
             createCell(row, columnCount++, customer.getTax_code(), style);
             if (customer.getActive()==true) {
-                createCell(row, columnCount++, "Active", style);
+                createCell(row, columnCount++, "Active", null);
             } else {
-                createCell(row, columnCount++, "Inactive", style);
+                createCell(row, columnCount++, "Inactive", null);
             }
-             
+            rowNum++;
         }
+        
+        inputStream.close();
+        
+//        FileOutputStream outputStream = new FileOutputStream("SaleOrder1.xls");
+//        workbook.write(outputStream);
+//        workbook.close();
+//        outputStream.close();
     }
      
     public void export(HttpServletResponse response) throws IOException {
-        writeHeaderLine();
+//        writeHeaderLine();
         writeDataLines();
          
         ServletOutputStream outputStream = response.getOutputStream();

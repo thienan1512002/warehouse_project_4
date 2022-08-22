@@ -20,6 +20,9 @@
                     </button>
                 </div>
                 <div class="card-header py-3">
+                    <h5 th:if="${message}" class="alert alert-success" th:text="${message}"></h5>
+                    <h5 th:if="${message1}" class="alert alert-danger" th:text="${message1}"></h5>
+                    <h5 th:if="${message2}" class="alert alert-danger" th:text="${message2}"></h5>
                     <form th:action="@{/api/customers/import}" method="post" enctype="multipart/form-data">
 <!--                        <input type="file" th:name="file" />
 
