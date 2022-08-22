@@ -26,7 +26,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                      
                 </div>
                 <div class="card-header py-3">
-                    <form th:action="@{/api/suppliers/import}" method="post" enctype="multipart/form-data">
+                    
+                    <div th:if="${message}">
+                        <input type="hidden" th:value="${message}" id="excel">
+                    </div>
+                    <form method="post" th:action="@{/suppliers/import}" enctype="multipart/form-data" id="excel">
 <!--                        <input type="file" th:name="file" />
                         
                         <button  class="btn btn-primary" id="btnShow">
@@ -39,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>
                             <br>
                             <div class="col-4">
-                                <button class="btn btn-primary" type="submit">Upload</button>
+                                <button class="btn btn-primary" th:type="submit" id="btnUpload">Upload</button>
                             </div>
                         </div>
                     </form>
@@ -187,6 +191,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $(document).ready(function () {
+                    console.log($('#excel').val());
+                    //var element =  document.getElementById('excel');
+                    if ($('#excel').val().match('Upload')){
+                        Swal.fire(
+                                'Good job!',
+                                $('#excel').val(),
+                                'success'
+                                );
+                    };
+                
                     $('.nav-supplier').addClass('active');
                     $('#tblSl').dataTable();
                     $('#btnShow').click(function () {
@@ -279,8 +293,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     });
                     $('#editModal').modal('show');
                 };
-
-
             </script>
         </div>
     </body>
