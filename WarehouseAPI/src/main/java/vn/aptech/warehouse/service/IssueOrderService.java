@@ -17,4 +17,6 @@ public interface IssueOrderService {
     IssueOrder findById (int id);
     
     IssueOrder save (IssueOrder issueOrder);
+    
+    List<IssueOrder> findInAMonth(int startMonth,int endMonth,String si_code);
 }

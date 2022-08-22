@@ -20,4 +20,6 @@ public interface IssueOrderRepo extends JpaRepository<IssueOrder, Integer>{
     List<IssueOrder> findByClosed(@Param("closed") boolean closed , @Param("si_code") String si_code);
     @Query("SELECT o FROM IssueOrder o WHERE o.id=:id")
     IssueOrder findById(@Param("id") int id);
+    @Query("SELECT o FROM IssueOrder o WHERE month(o.movemen_date) between :startMonth and :endMonth and o.si_code=:si_code")
+    List<IssueOrder> findInAMonth(@Param("startMonth")int startMonth,@Param("endMonth")int endMonth,@Param("si_code") String si_code);
 }

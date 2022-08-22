@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeHttpRequests()
                 //admin, manager, movement
                 .antMatchers("/warehouse/","/customer","/goods","/Incoming","/locs",
-                        "/suppliers","/user","/qc","/allocated","/sale","/unqualified")
+                        "/suppliers","/user","/qc","/allocated","/sale","/unqualified","/")
                 .hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN","ROLE_MOVEMENT")
                 //update profile
                 .antMatchers("/user/update-profile/**").authenticated()
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/warehouse")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error=true")
                 .and()//logout
                 .logout()

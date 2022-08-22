@@ -66,6 +66,34 @@ public class HomeController {
         model.addAttribute("oct",requests10.size());
         model.addAttribute("nov",requests11.size());
         model.addAttribute("dec",requests12.size());
+        
+        
+        List<IssueOrder> orders1 = issueService.findInAMonth(1, 1, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders2 = issueService.findInAMonth(2, 2, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders3 = issueService.findInAMonth(3, 3, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders4 = issueService.findInAMonth(4, 4, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders5 = issueService.findInAMonth(5, 5, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders6 = issueService.findInAMonth(6, 6, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders7 = issueService.findInAMonth(7, 7, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders8 = issueService.findInAMonth(8, 8, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders9 = issueService.findInAMonth(9, 9, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders10 = issueService.findInAMonth(10, 10, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders11 = issueService.findInAMonth(11, 11, (String)request.getSession().getAttribute("workspace"));
+        List<IssueOrder> orders12 = issueService.findInAMonth(12, 12, (String)request.getSession().getAttribute("workspace"));
+        
+        model.addAttribute("order1", orders1.size());
+        model.addAttribute("order2", orders2.size());
+        model.addAttribute("order3", orders3.size());
+        model.addAttribute("order4", orders4.size());
+        model.addAttribute("order5", orders5.size());
+        model.addAttribute("order6", orders6.size());
+        model.addAttribute("order7", orders7.size());
+        model.addAttribute("order8", orders8.size());
+        model.addAttribute("order9", orders9.size());
+        model.addAttribute("order10", orders10.size());
+        model.addAttribute("order11", orders11.size());
+        model.addAttribute("order12", orders12.size());
+        
         return "home/index";
     }
     
