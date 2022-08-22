@@ -49,10 +49,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeHttpRequests();
         http.authorizeHttpRequests()
-                .antMatchers("/warehouse","/customer","/goods","/Incoming","/locs", "/suppliers","/user","/qc","/allocated","/sale","/unqualified").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
-                .antMatchers("/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**","/qc/**","/allocated/**","/sale/**","/unqualified/**").hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
+                //admin, manager, movement
+                .antMatchers("/warehouse/","/customer","/goods","/Incoming","/locs",
+                        "/suppliers","/user","/qc","/allocated","/sale","/unqualified")
+                .hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN","ROLE_MOVEMENT")
+                //update profile
                 .antMatchers("/user/update-profile/**").authenticated()
-                .antMatchers("/user/update/**","/user/update-role/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
+                //update role
+                .antMatchers("/user/update/**","/user/update-role/**").hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN","ROLE_APP")
+                //app manager
+//                .antMatchers("/warehouse/","/customer","/goods","/locs", "/suppliers","/user","/user/**",
+//                        "/warehouse/**","/customer/**","/goods/**","/Incoming/**","/locs/**", "/suppliers/**"
+//                ).hasAnyAuthority("ROLE_APP")
+//                //receive incoming
+//                .antMatchers("/warehouse/","/Incoming","/Incoming/**").hasAnyAuthority("ROLE_RECEIVE_INCOM")
+//                //qc
+//                .antMatchers("/warehouse/","/Incoming","/Incoming/**","/qc","/qc/**").hasAnyAuthority("ROLE_RECEIVE_QC")
+//                //create sale
+//                .antMatchers("/warehouse/","/sale","/sale/**").hasAnyAuthority("ROLE_CREATE_SO")
+//                //approve sale
+//                .antMatchers("/warehouse/","/sale","/sale/**").hasAnyAuthority("ROLE_APPROVE_SO")
                 .anyRequest().permitAll();
         http.authorizeHttpRequests()
                 .and()//login

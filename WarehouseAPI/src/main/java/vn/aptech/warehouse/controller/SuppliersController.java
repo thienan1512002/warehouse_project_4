@@ -33,8 +33,11 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 /**
@@ -70,25 +73,28 @@ public class SuppliersController {
         return ResponseEntity.ok(200);
     }
 
-    @Autowired
-    ExcelService fileService;
-
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        if (SupplierEHelper.hasExcelFormat(file)) {
-            try {
-                fileService.save(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-            }
-        }
-        message = "Please upload an excel file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-    }
+//    @Autowired
+//    ExcelService fileService;
+//
+//    @RequestMapping(value = "/import", method = RequestMethod.POST)
+//    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes ra) {
+//        String message = "";
+//        if (SupplierEHelper.hasExcelFormat(file)) {
+//            try {
+//                fileService.save(file);
+//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//                ra.addFlashAttribute("message", message);
+//                return "redirect:/suppliers";
+//            } catch (Exception e) {
+//                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//                ra.addFlashAttribute("message", message);
+//                return "redirect:/suppliers";
+//            }
+//        }
+//        message = "Please upload an excel file!";
+//        ra.addFlashAttribute("message", message);
+//        return "redirect:/suppliers";
+//    }
     
     @GetMapping(value = "/export")
     public void exportToExcel(HttpServletResponse response) throws IOException {

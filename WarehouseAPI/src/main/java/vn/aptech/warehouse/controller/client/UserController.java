@@ -5,6 +5,7 @@
 package vn.aptech.warehouse.controller.client;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,19 +87,27 @@ public class UserController {
     
     
     @PostMapping(value="/save3")
-    public String updateRole(User user){
+    public String updateRole(User user, RedirectAttributes ra){
         User saveUser = service.getUserById(user.getId());
         saveUser.setRoles(user.getRoles());
         service.saveUserNoPass(saveUser);
+        ra.addFlashAttribute("message", "User has been updated.");
         return "redirect:/user";
     }
     @PostMapping(value="/save")
-    //public String save(User user,String role){
-    public String save(User user){
-//        Warehouse wh = service.save(warehouse);
-        service.saveUser(user);
-        service.addRoleToUser(user.getUsername(), "ROLE_USER");
-//        return ResponseEntity.ok(200);
+    public String save(User user, RedirectAttributes ra){
+        User saveUser = new User();
+        saveUser.setUsername(user.getUsername());
+        saveUser.setEmail(user.getEmail());
+        saveUser.setPassword(user.getPassword());
+        saveUser.setActive(true);
+//        Collection<Role> userRole = new ArrayList<Role>();
+//        Role role = 
+//        userRole.add("ROLE_USER");
+//        saveUser.setRoles(roles);
+        service.saveUser(saveUser);
+//        service.addRoleToUser(saveUser.getUsername(), "ROLE_USER");
+        ra.addFlashAttribute("message", "User has been created.");
         return "redirect:/user";
     }
     @PostMapping(value="/save2")
