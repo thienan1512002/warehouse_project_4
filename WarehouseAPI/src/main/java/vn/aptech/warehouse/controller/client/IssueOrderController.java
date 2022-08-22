@@ -108,6 +108,7 @@ public class IssueOrderController {
         SaleOrderDet det = detService.findBySoId(order.getSo_id(), gm.getGood_data().getGoods_no());
         
         det.setPicked(det.getPicked()+jsObj.getQty());
+       
         
         SaleOrderDet addDet = detService.save(det);
         
@@ -205,7 +206,15 @@ public class IssueOrderController {
             issueOrder.setSo_id(jsObj.getSo_id());
             IssueOrder createIs = service.save(issueOrder);
             
+            SaleOrderDet det = detService.findBySoId(issueOrder.getSo_id(), gm.getGood_data().getGoods_no());
+        
+            det.setBooked(det.getBooked()+jsObj.getQty());
+            
+            SaleOrderDet addDet = detService.save(det);
+            
             gm.setPt_hold(gm.getPt_hold()+jsObj.getQty());
+            
+            
             
             GoodsMaster createGM = gmService.save(gm);
             

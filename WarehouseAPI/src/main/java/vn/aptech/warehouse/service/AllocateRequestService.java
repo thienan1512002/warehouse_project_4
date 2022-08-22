@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.Warehouse;
@@ -15,6 +16,8 @@ import vn.aptech.warehouse.entity.Warehouse;
 public interface AllocateRequestService {
     
     public List<AllocateRequest> findbyConfirm(boolean confirm , Warehouse warehouse);
+    
+    public List<AllocateRequest> findInAMonth(Warehouse warehouse,int startMonth,int endMonth);
     
     public AllocateRequest save(AllocateRequest allocateRequest);
     

@@ -45,10 +45,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <dd class="col-sm-9" th:if="${sale.confirm}">
                             <span class="badge badge-info">Wait for picking goods</span>
                         </dd>
-                        <dd class="col-sm-9" th:if="${!sale.confirm && sale.closed}">
+                        <dd class="col-sm-9" th:if="${!sale.confirm && sale.closed && !sale.complete}">
                             <span class="badge badge-warning">Pending</span>
                         </dd>
                     </dl>
+                    <div>
+                        <button class="btn btn-outline-primary" id="btnCompletedSo"  th:if="${sale.closed && !sale.complete}">Completed</button>
+                    </div>
                 </div>
             </div>
             <div class="card shadow mb-4">
@@ -240,6 +243,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     }
                                 });
 
+                            });
+                            
+                            $('#btnCompletedSo').click(function(){
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "You won't be able to revert this!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, completed it!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $.ajax({
+                                           type:'GET',
+                                           url:`/sale/${$('#so_id').val()}`,
+                                           success:function(res){
+                                               if(res===200){
+                                                 Swal.fire(
+                                                    'Good job!',
+                                                    'Sale order has been completed',
+                                                    'success'
+                                                ).then(function(){
+                                                    window.location.reload();
+                                                });  
+                                               }
+                                           }
+                                        });
+                                    }
+                                });
                             });
                         });
 

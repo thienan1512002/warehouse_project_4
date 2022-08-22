@@ -36,8 +36,36 @@ public class HomeController {
     private WarehouseService whService;
     
     @GetMapping(value = "")
-    public String index(Model model,HttpServletRequest request) {       
+    public String index(Model model,HttpServletRequest request) {
+        Warehouse warehouse = whService.findWHByWhCode((String)request.getSession().getAttribute("workspace"));
+        
         model.addAttribute("locations", locService.findByWhCode((String)request.getSession().getAttribute("workspace")));
+        List<AllocateRequest> requests8 = aloService.findInAMonth(warehouse,8,8);
+        List<AllocateRequest> requests7 = aloService.findInAMonth(warehouse,7,7);
+        List<AllocateRequest> requests6 = aloService.findInAMonth(warehouse,6,6);
+        List<AllocateRequest> requests5 = aloService.findInAMonth(warehouse,5,5);
+        List<AllocateRequest> requests4 = aloService.findInAMonth(warehouse,4,3);
+        List<AllocateRequest> requests3 = aloService.findInAMonth(warehouse,3,2);
+        List<AllocateRequest> requests2 = aloService.findInAMonth(warehouse,2,1);
+        List<AllocateRequest> requests1 = aloService.findInAMonth(warehouse,1,1);
+        List<AllocateRequest> requests9 = aloService.findInAMonth(warehouse,9,9);
+        List<AllocateRequest> requests10 = aloService.findInAMonth(warehouse,10,10);
+        List<AllocateRequest> requests11 = aloService.findInAMonth(warehouse,11,11);
+        List<AllocateRequest> requests12 = aloService.findInAMonth(warehouse,12,12);
+        
+       
+        model.addAttribute("jan",requests1.size());
+        model.addAttribute("feb",requests2.size());
+        model.addAttribute("thi",requests3.size());
+        model.addAttribute("apr",requests4.size());
+        model.addAttribute("may",requests5.size());
+        model.addAttribute("jun",requests6.size());
+        model.addAttribute("july",requests7.size());
+        model.addAttribute("aug",requests8.size());
+        model.addAttribute("sep",requests9.size());
+        model.addAttribute("oct",requests10.size());
+        model.addAttribute("nov",requests11.size());
+        model.addAttribute("dec",requests12.size());
         return "home/index";
     }
     
