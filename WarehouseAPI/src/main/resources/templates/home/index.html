@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-          
+
             <input type="hidden" id="jan_count" th:value="${jan}"/>
             <input type="hidden" id="feb_count" th:value="${feb}"/>
             <input type="hidden" id="thi_count" th:value="${thi}"/>
@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="hidden" id="oct_count" th:value="${oct}"/>
             <input type="hidden" id="nov_count" th:value="${nov}"/>
             <input type="hidden" id="dec_count" th:value="${dec}"/>
-            
+
             <input type="hidden" id="order1" th:value="${order1}"/>
             <input type="hidden" id="order2" th:value="${order2}"/>
             <input type="hidden" id="order3" th:value="${order3}"/>
@@ -40,11 +40,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="hidden" id="order10" th:value="${order10}"/>
             <input type="hidden" id="order11" th:value="${order11}"/>
             <input type="hidden" id="order12" th:value="${order12}"/>
-            
+
             <input type="hidden" id="pendingRate" th:value="${pendingRate/totalSo*100}"/>
             <input type="hidden" id="completedRate" th:value="${completedRate/totalSo*100}"/>
-            
-            
+
+            <input type="hidden" id="logoSrc"value="http://localhost:8080/goods-photos/logo.jpg"/>
             <!-- Content Row -->
             <div class="row">
 
@@ -84,22 +84,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                 </div>
 
-                 <!-- Earnings (Monthly) Card Example -->
+                <!-- Earnings (Monthly) Card Example -->
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-danger shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                         <a th:href="@{/unqualified}" class="card-link" style="text-decoration: none;">Unqualified Items</a></div>
+                                        <a th:href="@{/unqualified}" class="card-link" style="text-decoration: none;">Unqualified Items</a></div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${unqualified}"></div>
                                 </div>
                                 <div class="col-auto">
-                                   <i class="fa-regular fa-not-equal fa-2x text-gray-300"></i>
+                                    <i class="fa-regular fa-not-equal fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -140,11 +140,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                      aria-labelledby="dropdownMenuLink">
-                                    <div class="dropdown-header">Dropdown Header:</div>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="dropdown-header">Action:</div>
+                                    <a class="dropdown-item" id="imgExport" style="cursor:pointer">Export to Img</a>
+                                    <a class="dropdown-item" id="pdfExport" style="cursor:pointer">Export to PDF</a>
+
                                 </div>
                             </div>
                         </div>
@@ -191,7 +190,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <span class="mr-2">
                                     <i class="fas fa-circle text-success"></i> Completed
                                 </span>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -214,18 +213,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <!--
                                 
                                 -->
-                            <h4 class="small font-weight-bold" th:text="${item.loc_desc}">Server Migration </h4><span
-                                
+                                <h4 class="small font-weight-bold" th:text="${item.loc_desc}">Server Migration </h4><span
+
                                     class="float-right" th:text="${#numbers.formatDecimal(((item.loc_remain+item.loc_holding)/item.loc_cap *100),0,'COMMA',2,'POINT') +'%'}" style=" transform: translate(-60px,-30px);">20%</span>
-                            <div class="progress mb-4">
-                                <div class="progress-bar bg-primary" role="progressbar" th:style="'width:'+@{${100-((item.loc_remain+item.loc_holding)/item.loc_cap *100)}}+'%;' "
-                                     aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-primary" role="progressbar" th:style="'width:'+@{${100-((item.loc_remain+item.loc_holding)/item.loc_cap *100)}}+'%;' "
+                                         aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                  
+
 
                 </div>
 
@@ -234,46 +233,103 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <!-- Illustrations -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Nearly transacions</h6>
                         </div>
                         <div class="card-body">
-                            <div class="text-center">
-                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                     src="img/undraw_posting_photo.svg" alt="...">
-                            </div>
-                            <p>Add some quality, svg illustrations to your project courtesy of <a
-                                    target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                constantly updated collection of beautiful svg images that you can use
-                                completely free and without attribution!</p>
-                            <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                unDraw &rarr;</a>
+                            <table class="table table-bordered" id="tblTrans" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Type</th>
+                                        <th>Goods Name</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item: ${trans}">
+                                        <td th:text="${item.id}">Id</td>
+
+                                <div th:if="${item.type.equals('in')}">
+                                    <td><span class="badge badge-warning">Allocate</span></td>
+                                </div>
+                                <div th:if="${item.type.equals('out')}">
+                                    <td><span class="badge badge-success">Issue</span></td>
+                                </div>
+                                <div th:if="${item.type.equals('unqualified')}">
+                                    <td><span class="badge badge-danger">Unqualified</span></td>
+                                </div>
+                                <div th:if="${item.type.equals('Recycle')}">
+                                    <td><span class="badge badge-primary">Recycle</span></td>
+                                </div>
+                                <div th:if="${item.type.equals('Disposed')}">
+                                    <td><span class="badge badge-danger">Disposed</span></td>
+                                </div>
+
+                                <td th:text="${item.goods_name}">Goods Name</td>
+                                <td th:text="${item.from_loc}">From Location</td>
+                                <td th:text="${item.to_loc}">To Location</td>
+                                <td th:text="${item.quantity}">Quantity</td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <!-- Approach -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                        </div>
-                        <div class="card-body">
-                            <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                CSS bloat and poor page performance. Custom CSS classes are used to create
-                                custom components and custom utility classes.</p>
-                            <p class="mb-0">Before working with this theme, you should become familiar with the
-                                Bootstrap framework, especially the utility classes.</p>
-                        </div>
-                    </div>
+
 
                 </div>
             </div>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
             <script>
                 $(document).ready(function () {
+                    const logo = new Image();
+                        logo.src = "http://localhost:8080/goods-photos/logo123.png";
+                        logo.width=200;
+                        logo.height=100;
+                        console.log(logo);
                     $('.nav-dash').addClass('active');
-                                    
+                    $('#tblTrans').DataTable().order([1, 'desc']);
+                    $('#imgExport').click(function () {
+                        var canvas = document.getElementById("myAreaChart");
+                        var anchor = document.createElement("a");
+                        var ctx = canvas.getContext("2d");
+                        ctx.globalCompositeOperation = 'destination-over'
+// Now draw!
+                        ctx.fillStyle = "white";
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        anchor.href = canvas.toDataURL("image/png");
+                        anchor.download = "order_chart.PNG";
+                        anchor.click();
+                    });
+                    $('#pdfExport').click(function () {
+                        var canvas = document.getElementById("myAreaChart");
+                        var imgData = canvas.toDataURL("image/png");
+                        var pdf = new jsPDF({
+                            orientation: "landscape",
+                        });
+                        
+                        const date = new Date();
+
+                        let day = date.getDate();
+                        let month = date.getMonth() + 1;
+                        let year = date.getFullYear();
+                        let currentDate = `${day}-${month}-${year}`;
+                        pdf.addImage(logo,'PNG',5,5);
+                        pdf.text("2HAT Warehouses", 5, 40);                      
+                        pdf.text("Total Orders report(In 1 year)", 120, 10);
+                        pdf.addImage(imgData, 'PNG', 10, 50);
+                        pdf.save("order_chart"+currentDate + ".pdf");
+                    })
                 });
             </script>
         </div>

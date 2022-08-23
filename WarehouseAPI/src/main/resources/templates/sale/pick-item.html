@@ -207,7 +207,7 @@
                                  <td></td>
                                  <td></td>
                                                           <td colspan="6">
-                                                            <button class="btn btn-success" id="confirm-end" onclick="confirmEnd()">Picking</button>
+                                                            <button class="btn btn-success" id="confirm-end" onclick="confirmEnd()" style="color=#20bf6b;">Picking</button>
                                                           </td>
                                                         </tr>
                                                     `
@@ -233,9 +233,9 @@
                                     text: "You won't be able to revert this!",
                                     icon: 'question',
                                     showCancelButton: true,
-                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonColor: '#20bf6b',
                                     cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Yes, delete it!'
+                                    confirmButtonText: 'Yes, submit it!'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         jsArr.forEach(x=>x.date=$('#date').val());
