@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -101,13 +102,20 @@ public class UserController {
         saveUser.setEmail(user.getEmail());
         saveUser.setPassword(user.getPassword());
         saveUser.setActive(true);
-//        Collection<Role> userRole = new ArrayList<Role>();
-//        Role role = 
-//        userRole.add("ROLE_USER");
-//        saveUser.setRoles(roles);
-        service.saveUser(saveUser);
+        try{
+            service.saveUser(saveUser);
+            ra.addFlashAttribute("message", "User has been created.");
+        }catch(DataIntegrityViolationException e){
+            User existUsername = service.getUser(user.getUsername());
+            if(existUsername!=null){
+                ra.addFlashAttribute("alert","Create failed. Existed username in database!");
+            }
+            e.printStackTrace();
+            ra.addFlashAttribute("alert","Create failed. Existed email in database!");
+        }
+        
 //        service.addRoleToUser(saveUser.getUsername(), "ROLE_USER");
-        ra.addFlashAttribute("message", "User has been created.");
+        
         return "redirect:/user";
     }
     @PostMapping(value="/save2")
@@ -116,32 +124,43 @@ public class UserController {
         updateUser.setEmail(user.getEmail());
         updateUser.setActive(user.getActive());
         String password = user.getPassword();
-        if(!password.isBlank() || !password.isEmpty()){
+        try{
+            if(!password.isBlank() || !password.isEmpty()){
             updateUser.setPassword(password);
             service.saveUser(updateUser);
             ra.addFlashAttribute("message", "User has been updated.");
-            return "redirect:/user";         
+                    
         }else{
             service.saveUserNoPass(updateUser);
             ra.addFlashAttribute("message", "User has been updated.");
-            return "redirect:/user";
         }
+        }catch(DataIntegrityViolationException e){
+            e.printStackTrace();
+            ra.addFlashAttribute("alert","Update failed. Existed email in database!");
+        }
+        return "redirect:/user"; 
     } 
     @PostMapping(value="/save-profile")
     public String saveUpdateProfile(User user, RedirectAttributes ra){
         User updateUser = service.getUser(user.getUsername());
         updateUser.setEmail(user.getEmail());
         String password = user.getPassword();
-        if(!password.isBlank() || !password.isEmpty()){
+        try{
+            if(!password.isBlank() || !password.isEmpty()){
             updateUser.setPassword(password);
             service.saveUser(updateUser);
             ra.addFlashAttribute("message", "Your account profile has been updated.");
-            return "redirect:/user/profile";         
-        }else{
-            service.saveUserNoPass(updateUser);
-            ra.addFlashAttribute("message", "Your account profile has been updated.");
-            return "redirect:/user/profile";
+//            return "redirect:/user/profile";         
+            }else{
+                service.saveUserNoPass(updateUser);
+                ra.addFlashAttribute("message", "Your account profile has been updated.");
+
+            }
+        }catch(DataIntegrityViolationException e){
+            e.printStackTrace();
+            ra.addFlashAttribute("alert","Update failed. Existed email in database!");
         }
+        return "redirect:/user/profile";
     } 
 
 }

@@ -16,6 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">User Profile</h1>
             <h5 th:if="${message}" class="alert alert-success" th:text="${message}"></h5>
+            <h5 th:if="${alert}" class="alert alert-danger" th:text="${alert}"></h5>
             <form th:action="@{/user/save-profile}" method="post" th:object="${user}" 
                   oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
                 <input type="hidden" th:field="*{id}">

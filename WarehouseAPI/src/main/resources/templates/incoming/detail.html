@@ -97,7 +97,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                      <div th:if="${item.passed}">
                                         <td><span class="badge badge-success">Passed</span></td>
                                     </div>
-                                     <div th:unless="${item.passed}">
+                                     <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
+                                          or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
                                         <!--<td><span class="badge badge-info">Wait for Qc Check</span></td>-->
                                         <td><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button></td>
                                     </div>

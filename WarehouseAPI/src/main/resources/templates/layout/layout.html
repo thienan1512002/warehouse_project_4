@@ -38,7 +38,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column bg-gradient-primary sidebar sidebar-dark" id="accordionSidebar" ata-widget="treeview" role="menu" data-accordion="false">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -67,7 +67,7 @@
                         <span >Issue Order</span></a>
                 </li>
                 <li class="nav-item nav-sale" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
-                              or hasRole('ROLE_CREATE_SO') or hasRole('ROLE_APPROVE_SO')">
+                              or hasRole('ROLE_CREATE_SO') or hasRole('ROLE_SALE_LEADER')">
                     <a class="nav-link nav-sale" th:href="@{/sale/browse}">
                         <i class="fa-solid fa-money-bill"></i>
                         <span >Sale Order</span></a>
@@ -103,14 +103,15 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span >Incoming List</span></a>
                 </li>
-                <hr class="sidebar-divider my-0" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
+                <hr class="sidebar-divider my-0" >
+                <li class="nav-item nav-goods" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
                               or hasRole('ROLE_APP')">
-                <li class="nav-item nav-goods">
                     <a class="nav-link nav-goods" th:href="@{/goods}">
                         <i class="fa-solid fa-cookie-bite"></i>
                         <span >Goods Information</span></a>
                 </li>
-                <li class="nav-item nav-warehouse" sec:authorize="isAuthenticated()">
+                <li class="nav-item nav-warehouse" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
+                              or hasRole('ROLE_APP')">
                     <a class="nav-link nav-warehouse" th:href="@{/warehouse}">
                         <i class="fa-solid fa-warehouse"></i>
                         <span >Warehouse</span></a>
@@ -405,52 +406,53 @@
                  }
              }
             });
-          setInterval(()=>{
-              $.ajax({
-             type : "GET",
-             url:"/api/warehouses/notyf",
-             success:function(data){
-                 if(document.getElementById("pendingRequests1")!==null){
-                     $('#pendingRequests1').html(data.length);
-                 }
-                 if(data.length===0){
-                      $('#altertSite').empty();
-                  const a = `<a class="dropdown-item d-flex align-items-center">                                          
-                                        <div>
-                                            <span>There is no notification right now, you are doing great!
-                                            <i class="fa-regular fa-thumbs-up"></i>
-                                            </span>
-                                        </div>
-                               </a> 
-                            `;
-                 $('#altertSite').append(a);
-                     $('#count').remove();
-                 }
-                 if(data.length!==0){
-                    $('#altertSite').empty();
-                    $('#count').html(data.length);
-                 }
-                
-                 data.forEach(x=>{
-                     const icon = x.content.includes("issue") ? `<i class="fa-solid fa-arrow-right-from-bracket"></i>`:`<i class="fa-solid fa-file-import"></i>`;
-                   const a = `<a class="dropdown-item d-flex align-items-center" href="${x.url}">  
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                ${icon}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">${x.time}</div>
-                                            ${x.content}
-                                        </div>
-                               </a> 
-                            `;
-                   $('#altertSite').append(a);
-                 });
-                 console.log(data);
-             }
-          }); 
-          },1000);
+//          setInterval(()=>{
+//              $.ajax({
+//             type : "GET",
+//             url:"/api/warehouses/notyf",
+//             success:function(data){
+//                 if(document.getElementById("pendingRequests1")!==null){
+//                     $('#pendingRequests1').html(data.length);
+//                 }
+//                 if(data.length===0){
+//                      $('#altertSite').empty();
+//                  const a = `<a class="dropdown-item d-flex align-items-center">                                          
+//                                        <div>
+//                                            <span>There is no notification right now, you are doing great!
+//                                            <i class="fa-regular fa-thumbs-up"></i>
+//                                            </span>
+//                                        </div>
+//                               </a> 
+//                            `;
+//                 $('#altertSite').append(a);
+//                     $('#count').remove();
+//                 }
+//                 if(data.length!==0){
+//                    $('#altertSite').empty();
+//                    $('#count').html(data.length);
+//                 }
+//                
+//                 data.forEach(x=>{
+//                     const icon = x.content.includes("issue") ? `<i class="fa-solid fa-arrow-right-from-bracket"></i>`:`<i class="fa-solid fa-file-import"></i>`;
+//                   const a = `<a class="dropdown-item d-flex align-items-center" href="${x.url}">  
+//                                        <div class="mr-3">
+//                                            <div class="icon-circle bg-primary">
+//                                                ${icon}
+//                                            </div>
+//                                        </div>
+//                                        <div>
+//                                            <div class="small text-gray-500">${x.time}</div>
+//                                            ${x.content}
+//                                        </div>
+//                               </a> 
+//                            `;
+//                   $('#altertSite').append(a);
+//                 });
+//                 console.log(data);
+//             }
+//          }); 
+//          },1000);
+//          
           $.ajax({
              type : "GET",
              url:"/api/warehouses",
