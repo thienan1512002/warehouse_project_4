@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
                   List<Role> filterRole;
                   Collection<Role> roles = response.body().getRole();
                   ArrayList<Role> listRole = new ArrayList<>(roles);
-                  List<String> allowRole = Arrays.asList("ROLE_ADMIN","ROLE_MANAGER");
+                  List<String> allowRole = Arrays.asList("ROLE_ADMIN","ROLE_MANAGER","ROLE_MOVEMENT");
                   filterRole = listRole.stream().filter(role -> allowRole.contains(role.getName()))
                           .collect(Collectors.toList());
-                  if(filterRole.size()>1){
+                  if(filterRole.size()>0){
                       Toast.makeText(MainActivity.this, "Admin or manager", Toast.LENGTH_SHORT).show();
 
                       SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
