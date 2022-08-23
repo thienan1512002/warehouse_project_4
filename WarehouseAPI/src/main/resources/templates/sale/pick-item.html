@@ -45,7 +45,7 @@
     <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
     <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
     <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
-    <td><input th:id="'ed-'+${item.pt_id}" class="form-control col-6" th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
+    <td><input type="number" th:id="'ed-'+${item.pt_id}" class="form-control col-6"  th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
     <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
 </tr>
 </tbody>
@@ -115,7 +115,17 @@
                                      quantity.value='';
                                      
                                 }else{
-                                    sum+= parseFloat(quantity.value);
+                                    
+                                    if(parseInt(quantity.value)<1){
+                                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Your quantity cannot be lower than 1'
+                                        
+                                    })
+                                     quantity.value='';
+                                    }else{
+                                       sum+= parseFloat(quantity.value);
                                     console.log("sum =",sum);
                                     console.log(parseFloat($('#maxable').val())<parseFloat(sum))
                                     if(parseFloat($('#maxable').val())<parseFloat(quantity.value) || parseFloat($('#maxable').val())<parseFloat(sum)){
@@ -141,7 +151,9 @@
                                     drawTable(pid,name,loc,ref,quantity.value);
                                     quantity.value='';
                                    
-                                    quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
+                                    quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`; 
+                                    }
+                                    
                                     }
                                     
                                 }                                                                                          
