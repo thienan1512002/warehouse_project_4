@@ -74,27 +74,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Picked</th>
                                         <th>Booked</th>
                                         <th>Discount</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="item: ${details}">
                                         <td>
-                                <div th:if="${sale.closed && item.booked<item.quantity}">
-                                    <a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a>
-                                </div>
-                                <div th:if="${sale.closed && item.booked==item.quantity}">
-                                    <span class="badge badge-success">Picked Completed</span>
-                                </div>
+                                            <div th:if="${sale.closed && item.booked<item.quantity}">
+                                                <a th:href="@{'/sale/pick-list/'+${item.good_data.goods_no}+'/'+${sale.so_id}}" class="btn btn-outline-primary">Pick List</a>
+                                            </div>
+                                            <div th:if="${sale.closed && item.booked==item.quantity}">
+                                                <span class="badge badge-success">Picked Completed</span>
+                                            </div>
                                         </td>           
-                                       
+
                                         <td><img th:src="@{${item.good_data.photosImagePath}}" width="100px" height="120px" /></td>
                                         <td th:text="${item.good_data.goods_name}">1</td>
                                         <td th:text="${item.quantity}">1</td>
                                         <td th:text="${item.picked}"></td>
                                         <td th:text="${item.booked}"></td>
                                         <td th:text="${item.discount}">1</td>
-                                        
+
                                         <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
+                                        <td>
+                                            <button class="btn btn-outline-danger" th:if="${!sale.closed&&item.picked==0&&item.booked==0}" th:onclick="deletedItem([[${item.id}]])">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -159,9 +165,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                     <script>
+                        const deletedItem = (id) => {
+                            Swal.fire({
+                                title: 'Do you want to delete that item?',
+                                showDenyButton: true,
+                                showCancelButton: false,
+                                confirmButtonText: 'Yes',
+                                denyButtonText: `Don't save`,
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: `/sale/deletedItem/${id}`,
+                                        success: function (res) {
+                                            if (res === 200) {
+                                                Swal.fire('Saved!', '', 'success').then(function () {
+                                                    window.location.reload();
+                                                });
+                                            }
+                                        }
+                                    });
+
+                                } else if (result.isDenied) {
+                                    Swal.fire('Not deleted', '', 'info');
+                                }
+                            });
+                        }
                         $(document).ready(function () {
                             $('.nav-sale').addClass('active');
-                           
+
                             $('#new-list').click(function () {
                                 $('#exampleModal').modal('show');
                             });
@@ -244,8 +277,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 });
 
                             });
-                            
-                            $('#btnCompletedSo').click(function(){
+
+                            $('#btnCompletedSo').click(function () {
                                 Swal.fire({
                                     title: 'Are you sure?',
                                     text: "You won't be able to revert this!",
@@ -257,19 +290,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         $.ajax({
-                                           type:'GET',
-                                           url:`/sale/${$('#so_id').val()}`,
-                                           success:function(res){
-                                               if(res===200){
-                                                 Swal.fire(
-                                                    'Good job!',
-                                                    'Sale order has been completed',
-                                                    'success'
-                                                ).then(function(){
-                                                    window.location.href="/sale/browse";
-                                                });  
-                                               }
-                                           }
+                                            type: 'GET',
+                                            url: `/sale/${$('#so_id').val()}`,
+                                            success: function (res) {
+                                                if (res === 200) {
+                                                    Swal.fire(
+                                                            'Good job!',
+                                                            'Sale order has been completed',
+                                                            'success'
+                                                            ).then(function () {
+                                                        window.location.href = "/sale/browse";
+                                                    });
+                                                }
+                                            }
                                         });
                                     }
                                 });

@@ -14,10 +14,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-
-
-
-
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h3 class="card-title">Incoming details</h3>
@@ -74,6 +70,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Accepted</th>
                                         <th>Supplier</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,16 +91,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                 </div>
                                 <div th:unless="${!incoming.closed}">
-                                     <div th:if="${item.passed}">
+                                    <div th:if="${item.passed}">
                                         <td><span class="badge badge-success">Passed</span></td>
                                     </div>
-                                     <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
-                                          or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
+                                    <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
+                                         or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
                                         <!--<td><span class="badge badge-info">Wait for Qc Check</span></td>-->
                                         <td><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button></td>
                                     </div>
                                 </div>
                                 <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
+                                <td>
+                                    <button class="btn btn-outline-danger" th:if="${!incoming.closed}" th:onclick="deletedItem([[${item.pt_id}]])">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -212,6 +214,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     
                     return true;
                 }
+
+                const deletedItem = (id) => {
+                    Swal.fire({
+                        title: 'Do you want to delete that item?',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: 'Yes',
+                        denyButtonText: `Don't save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "GET",
+                                url: `/Incoming/delete-item/${id}`,
+                                success: function (res) {
+                                    if (res === 200) {
+                                        Swal.fire('Saved!', '', 'success').then(function () {
+                                           window.location.reload();     
+                                        });
+                                    }
+                                }
+                            });
+
+                        } else if (result.isDenied) {
+                            Swal.fire('Not deleted', '', 'info');
+                        }
+                    });
+                }
+
                 $(document).ready(function () {
                     $('.nav-incoming').addClass('active');
                     $('#tblWh').dataTable();
