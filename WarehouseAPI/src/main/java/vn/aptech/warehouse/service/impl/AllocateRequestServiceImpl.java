@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,12 @@ public class AllocateRequestServiceImpl implements AllocateRequestService{
        }
        return result;
     }
+
+    @Override
+    public List<AllocateRequest> findInAMonth(Warehouse warehouse, int startMonth,int endMonth) {
+        return repo.findInAMonth(warehouse, startMonth,endMonth);
+    }
+
+    
     
 }

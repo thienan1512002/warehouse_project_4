@@ -35,5 +35,10 @@ public class IssueOrderServiceImpl implements IssueOrderService {
     public IssueOrder save(IssueOrder issueOrder) {
         return repo.save(issueOrder);
     }
+
+    @Override
+    public List<IssueOrder> findInAMonth(int startMonth, int endMonth, String si_code) {
+       return repo.findInAMonth(startMonth, endMonth, si_code);
+    }
     
 }

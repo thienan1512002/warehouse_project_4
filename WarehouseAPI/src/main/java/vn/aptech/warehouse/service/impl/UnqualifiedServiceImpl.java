@@ -35,5 +35,10 @@ public class UnqualifiedServiceImpl implements UnqualifiedService {
     public Unqualified save(Unqualified unqualified) {
        return repo.save(unqualified);
     }
+
+    @Override
+    public List<Unqualified> findItem(String wh_code) {
+        return repo.findItem(wh_code);
+    }
     
 }

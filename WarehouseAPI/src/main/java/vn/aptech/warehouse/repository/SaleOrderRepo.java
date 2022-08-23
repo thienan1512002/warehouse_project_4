@@ -18,6 +18,11 @@ public interface SaleOrderRepo extends JpaRepository<SaleOrder, String>{
     
     @Query("SELECT o FROM SaleOrder o WHERE o.complete = false")
     public List<SaleOrder> findByCompleted();
+    @Query("SELECT o FROM SaleOrder o WHERE o.complete = true")
+    public List<SaleOrder> findSoByCompleted();
+    @Query("SELECT o FROM SaleOrder o WHERE o.complete = false and o.closed=true")
+    public List<SaleOrder> findSoByPending();
     @Query("SELECT o FROM SaleOrder o WHERE o.complete = false and o.so_id=:id")
     public SaleOrder findBySoId(@Param("id") String so_id);
+   
 }

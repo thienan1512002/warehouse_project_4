@@ -66,6 +66,14 @@ public class SaleOrderController  {
         return "sale/detail";
     }
     
+    @GetMapping(value="/{id}")
+    public ResponseEntity completeSo(@PathVariable("id") String so_id){
+        SaleOrder so = soService.findBySoId(so_id);
+        so.setComplete(true);
+        SaleOrder edit = soService.save(so);
+        return ResponseEntity.ok(200);
+    }
+    
     @GetMapping(value="/pick-list/{id}/{so_id}")
     public String pickList(@PathVariable("id") String id,@PathVariable("so_id") String so_id,Model model){
         model.addAttribute("goods",gmService.findByInventory(id));

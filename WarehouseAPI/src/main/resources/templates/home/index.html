@@ -15,7 +15,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
             <!-- Page Heading -->
           
-
+            <input type="hidden" id="jan_count" th:value="${jan}"/>
+            <input type="hidden" id="feb_count" th:value="${feb}"/>
+            <input type="hidden" id="thi_count" th:value="${thi}"/>
+            <input type="hidden" id="apr_count" th:value="${apr}"/>
+            <input type="hidden" id="may_count" th:value="${may}"/>
+            <input type="hidden" id="jun_count" th:value="${jun}"/>
+            <input type="hidden" id="july_count" th:value="${july}"/>
+            <input type="hidden" id="aug_count" th:value="${aug}"/>
+            <input type="hidden" id="sep_count" th:value="${sep}"/>
+            <input type="hidden" id="oct_count" th:value="${oct}"/>
+            <input type="hidden" id="nov_count" th:value="${nov}"/>
+            <input type="hidden" id="dec_count" th:value="${dec}"/>
+            
+            <input type="hidden" id="order1" th:value="${order1}"/>
+            <input type="hidden" id="order2" th:value="${order2}"/>
+            <input type="hidden" id="order3" th:value="${order3}"/>
+            <input type="hidden" id="order4" th:value="${order4}"/>
+            <input type="hidden" id="order5" th:value="${order5}"/>
+            <input type="hidden" id="order6" th:value="${order6}"/>
+            <input type="hidden" id="order7" th:value="${order7}"/>
+            <input type="hidden" id="order8" th:value="${order8}"/>
+            <input type="hidden" id="order9" th:value="${order9}"/>
+            <input type="hidden" id="order10" th:value="${order10}"/>
+            <input type="hidden" id="order11" th:value="${order11}"/>
+            <input type="hidden" id="order12" th:value="${order12}"/>
+            
+            <input type="hidden" id="pendingRate" th:value="${pendingRate/totalSo*100}"/>
+            <input type="hidden" id="completedRate" th:value="${completedRate/totalSo*100}"/>
+            
+            
             <!-- Content Row -->
             <div class="row">
 
@@ -26,8 +55,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                         Allocate Request</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                        <a th:href="@{/allocated}" class="card-link" style="text-decoration: none;">Allocate Request</a></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${jan+feb+thi+apr+may+jun+july+aug+sep+oct+nov+dec}"></div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -44,8 +73,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                       Issue Order</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                                        <a th:href="@{/Issue}" class="card-link" style="text-decoration: none;">Issue Order</a></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${order1+order2+order3+order4+order5+order6+order7+order8+order9+order10+order11+order12}"></div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -62,14 +91,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                        Unqualified Items</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                                         <a th:href="@{/unqualified}" class="card-link" style="text-decoration: none;">Unqualified Items</a></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${unqualified}"></div>
                                 </div>
                                 <div class="col-auto">
                                    <i class="fa-regular fa-not-equal fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 
@@ -102,7 +132,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <!-- Card Header - Dropdown -->
                         <div
                             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Total Orders Overview </h6>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -133,7 +163,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <!-- Card Header - Dropdown -->
                         <div
                             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Sale order Rate (%)</h6>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -156,14 +186,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </div>
                             <div class="mt-4 text-center small">
                                 <span class="mr-2">
-                                    <i class="fas fa-circle text-primary"></i> Direct
+                                    <i class="fas fa-circle text-primary"></i> Pending
                                 </span>
                                 <span class="mr-2">
-                                    <i class="fas fa-circle text-success"></i> Social
+                                    <i class="fas fa-circle text-success"></i> Completed
                                 </span>
-                                <span class="mr-2">
-                                    <i class="fas fa-circle text-info"></i> Referral
-                                </span>
+                               
                             </div>
                         </div>
                     </div>

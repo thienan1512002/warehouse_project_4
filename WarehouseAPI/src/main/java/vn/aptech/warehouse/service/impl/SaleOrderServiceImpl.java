@@ -35,5 +35,10 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     public SaleOrder findBySoId(String so_id) {
         return repo.findBySoId(so_id);
     }
+
+    @Override
+    public List<SaleOrder> findAll() {
+        return repo.findAll();
+    }
     
 }

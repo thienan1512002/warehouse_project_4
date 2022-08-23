@@ -18,5 +18,7 @@ public interface UnqualifiedRepository extends JpaRepository<Unqualified, Intege
     
     @Query("SELECT o FROM Unqualified o WHERE o.si_code =:si_code")
     List<Unqualified> findBySiCode(@Param("si_code")String si_code);
+    @Query("SELECT o FROM Unqualified o WHERE o.si_code =:si_code and o.action_qty=o.quantity")
+    List<Unqualified> findItem(@Param("si_code")String si_code);
     
 }
