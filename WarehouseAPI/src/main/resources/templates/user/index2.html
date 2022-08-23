@@ -17,6 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <h1 class="h3 mb-2 text-gray-800">User Lists</h1>
 
             <h5 th:if="${message}" class="alert alert-success" th:text="${message}"></h5>
+            <h5 th:if="${alert}" class="alert alert-danger" th:text="${alert}"></h5>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -39,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </thead>
                             <tbody>
                                 <tr th:each="item: ${users}">
-                                    <td><button th:text="${item.id}" class="btn btn-primary" th:id="${item.id}" th:onclick="editUser([[${item.id}]])"></button></td>
+                                    <td th:text="${item.id}"></td>
                                     <td th:text="${item.username}"></td>
                                     <td th:text="${item.email}"></td>
                                     <!--<td th:text="${item.roles}"></td>-->
@@ -98,44 +99,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit warehouse</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <input type="hidden" id="wh_editCode" class="form-control" readonly/>
-                                <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
-                                    <input id="wh_editDesc" class="form-control"/> 
-                                </div>
-                                <div class="form-group col-4">
-                                    <label class="form-check-label" for="wh_editStatus">Active</label>
-                                    <div class="form-check form-switch">
-                                        <input type="checkbox" id="wh_editStatus" class="form-check-input" style="cursor:pointer; margin-top: 20px"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-12">
-                                    <label for="wh_editCmt">Comment</label>
-                                    <textarea class="form-control" id="wh_editCmt">
-                                        
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnEdit">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>

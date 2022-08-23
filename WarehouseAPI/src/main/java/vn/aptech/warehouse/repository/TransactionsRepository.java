@@ -13,4 +13,8 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Obje
     @Query("SELECT b FROM Transactions b WHERE b.goods_name like %:name%")
     List<Transactions> findByName(@Param("name")String name);
     
+    @Query("SELECT b FROM Transactions b ORDER BY b.id DESC")
+    List<Transactions> findAllById();
+    
+    
 }

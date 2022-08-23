@@ -44,7 +44,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <td th:text="${item.goods_no}">1</td>
                                     <td><img th:src="@{${item.photosImagePath}}" width="150px" /></td>
                                     <td th:text="${item.goods_name}">1</td>
-                                    <td th:text="${item.price}">1</td>
+                                    <td th:text="${item.price}+'$'">1</td>
                                     <div th:if="${item.active}">
                                         <td><span class="badge badge-success">Active</span></td>
                                     </div>

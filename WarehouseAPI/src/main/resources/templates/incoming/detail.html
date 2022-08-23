@@ -14,10 +14,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-
-
-
-
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h3 class="card-title">Incoming details</h3>
@@ -74,6 +70,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <th>Accepted</th>
                                         <th>Supplier</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,15 +91,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                 </div>
                                 <div th:unless="${!incoming.closed}">
-                                     <div th:if="${item.passed}">
+                                    <div th:if="${item.passed}">
                                         <td><span class="badge badge-success">Passed</span></td>
                                     </div>
-                                     <div th:unless="${item.passed}">
+                                    <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
+                                         or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
                                         <!--<td><span class="badge badge-info">Wait for Qc Check</span></td>-->
                                         <td><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button></td>
                                     </div>
                                 </div>
                                 <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
+                                <td>
+                                    <button class="btn btn-outline-danger" th:if="${!incoming.closed}" th:onclick="deletedItem([[${item.pt_id}]])">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -182,6 +185,64 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
+                function validateAddItem() {
+                    if (parseInt(document.getElementById("quantity").value)< 0) {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Can not input negative quantity'
+                                    });
+                        return false;
+                    }
+                    if (parseInt(document.getElementById("quantity").value) === 0) {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Can not input quantity 0'
+                                    });
+                        return false;
+                    }
+                    if ((document.getElementById("quantity").value) === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Empty quantity'
+                                    });
+                        return false;
+                    }
+                    
+                    
+                    return true;
+                }
+
+                const deletedItem = (id) => {
+                    Swal.fire({
+                        title: 'Do you want to delete that item?',
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: 'Yes',
+                        denyButtonText: `Don't save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "GET",
+                                url: `/Incoming/delete-item/${id}`,
+                                success: function (res) {
+                                    if (res === 200) {
+                                        Swal.fire('Saved!', '', 'success').then(function () {
+                                           window.location.reload();     
+                                        });
+                                    }
+                                }
+                            });
+
+                        } else if (result.isDenied) {
+                            Swal.fire('Not deleted', '', 'info');
+                        }
+                    });
+                }
+
                 $(document).ready(function () {
                     $('.nav-incoming').addClass('active');
                     $('#tblWh').dataTable();
@@ -198,7 +259,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             wh_code: $('#wh_code').val(),
                             pt_qty: $('#quantity').val()
                         };
-                        $.ajax({
+                        if(validateAddItem()){
+                           $.ajax({
                             type: 'POST',
                             url: '/Incoming/add-item',
                             contentType: "application/json",
@@ -222,7 +284,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     });
                                 }
                             }
-                        });
+                        }); 
+                        }
+                        
                         console.log(goodsMaster);
                     });
                     $('#close-list').click(function () {
@@ -231,7 +295,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             showDenyButton: true,
                             showCancelButton: true,
                             confirmButtonText: 'Save',
-                            denyButtonText: `Don't save`,
+                            denyButtonText: `Don't save`
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
@@ -257,9 +321,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 });
                                 Swal.fire('Saved!', '', 'success');
                             } else if (result.isDenied) {
-                                Swal.fire('Changes are not saved', '', 'info')
+                                Swal.fire('Changes are not saved', '', 'info');
                             }
-                        })
+                        });
                     });
                 });
                 const checkQc = (id) => {

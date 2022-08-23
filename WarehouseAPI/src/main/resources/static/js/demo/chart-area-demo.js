@@ -90,6 +90,7 @@ var myLineChart = new Chart(ctx, {
         ],
     },
     options: {
+        
         maintainAspectRatio: false,
         layout: {
             padding: {

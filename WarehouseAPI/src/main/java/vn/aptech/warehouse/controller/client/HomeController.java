@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.AllocateRequest;
 import vn.aptech.warehouse.entity.IssueOrder;
 import vn.aptech.warehouse.entity.SaleOrder;
+import vn.aptech.warehouse.entity.Transactions;
 import vn.aptech.warehouse.entity.Unqualified;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.entity.vm.NotyfVm;
 import vn.aptech.warehouse.repository.SaleOrderRepo;
+import vn.aptech.warehouse.repository.TransactionsRepository;
 import vn.aptech.warehouse.service.AllocateRequestService;
 import vn.aptech.warehouse.service.IssueOrderService;
 import vn.aptech.warehouse.service.LocService;
 import vn.aptech.warehouse.service.SaleOrderService;
+import vn.aptech.warehouse.service.TransactionsService;
 import vn.aptech.warehouse.service.UnqualifiedService;
 import vn.aptech.warehouse.service.WarehouseService;
 
@@ -45,7 +48,10 @@ public class HomeController {
     private SaleOrderService soService;
     @Autowired
     private SaleOrderRepo repo;
-    
+    @Autowired
+    private TransactionsService transService;
+    @Autowired
+    private TransactionsRepository transRepo;
     @GetMapping(value = "")
     public String index(Model model,HttpServletRequest request) {
         Warehouse warehouse = whService.findWHByWhCode((String)request.getSession().getAttribute("workspace"));
@@ -115,8 +121,11 @@ public class HomeController {
         model.addAttribute("pendingRate", pending);
         model.addAttribute("completedRate", completed);
         model.addAttribute("totalSo", totalSo);
-        
-       
+        List<Transactions> trans = new ArrayList<>();
+        for(int index = 0; index<5;index++){
+            trans.add(transRepo.findAllById().get(index));
+        }
+        model.addAttribute("trans", trans);
         
         return "home/index";
     }

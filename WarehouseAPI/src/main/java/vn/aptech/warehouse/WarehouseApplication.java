@@ -36,13 +36,14 @@ public class WarehouseApplication {
                     .builder()
                     .setCredentials(googleCredentials)
                     .build();
-            FirebaseApp app=null;
             if(FirebaseApp.getApps().isEmpty()){
-                app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
+                return FirebaseMessaging.getInstance(FirebaseApp.initializeApp(firebaseOptions, "my-app"));
             }else{
-                app = FirebaseApp.initializeApp(firebaseOptions);
+                FirebaseApp app = FirebaseApp.getInstance("my-app");
+                return FirebaseMessaging.getInstance(app);
             }
-            return FirebaseMessaging.getInstance(app);   
+            
+//            return FirebaseMessaging.getInstance(app);   
         }
         
         @Bean
@@ -68,7 +69,7 @@ public class WarehouseApplication {
 //                userService.saveRole(new Role(0,"ROLE_RECEIVE_INCOM"));
 //                userService.saveRole(new Role(0,"ROLE_QC"));
 //                userService.saveRole(new Role(0,"ROLE_CREATE_SO"));
-//                userService.saveRole(new Role(0,"ROLE_APPROVE_SO"));
+//                userService.saveRole(new Role(0,"ROLE_SALE_LEADER"));
 //                userService.saveRole(new Role(0,"ROLE_MOVEMENT"));
                 
             };

@@ -25,7 +25,7 @@ public interface GoodsMasterRepository extends JpaRepository<GoodsMaster, String
     @Query("SELECT o FROM GoodsMaster o WHERE o.passed=:passed and o.loc_code=:loc_code")
     public List<GoodsMaster> findUnallocated(@Param("passed") boolean pass, @Param("loc_code")String loc_code);
     
-    @Query("SELECT o FROM GoodsMaster o WHERE o.good_data.goods_no =:id and o.loc_code!=:loc_code")
+    @Query("SELECT o FROM GoodsMaster o WHERE o.pt_qty > 0 and o.good_data.goods_no =:id and o.loc_code!=:loc_code")
     public List<GoodsMaster> findGoodsLists(@Param("id") String id , @Param("loc_code")String loc_code);
      @Query("SELECT o FROM GoodsMaster o WHERE o.pt_qty > 0 and o.loc_code!=:loc_code and o.warehouse =:warehouse")
     public List<GoodsMaster> findIncome(@Param("loc_code")String loc_code,@Param("warehouse")Warehouse warehouse);
