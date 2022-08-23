@@ -127,14 +127,14 @@
                         <i class="fa-solid fa-user-tie"></i>
                         <span >Supplier</span></a>
                 </li>
-                <li class="nav-item nav-supplier" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
+                <li class="nav-item nav-customer" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') 
                               or hasRole('ROLE_APP')">
                     <a class="nav-link nav-customer" th:href="@{/customer}">
                         <i class="fa-solid fa-person-walking-luggage"></i>
                         <span >Customer</span></a>
                 </li>
                 
-                <li class="nav-item nav-supplier" sec:authorize="isAuthenticated()">
+                <li class="nav-item nav-transaction" sec:authorize="isAuthenticated()">
                     <a class="nav-link nav-trans" th:href="@{/transaction}">
                         <i class="fa-solid fa-truck-moving"></i>
                         <span >Transaction</span></a>

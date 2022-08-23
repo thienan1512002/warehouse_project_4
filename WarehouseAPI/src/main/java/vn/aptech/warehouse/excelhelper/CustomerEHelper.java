@@ -66,6 +66,9 @@ public class CustomerEHelper {
                     int cellIdx = 0;
                     while (cellsInRow.hasNext()) {
                         Cell currentCell = cellsInRow.next();
+                        if (currentCell == null || currentCell.getCellType() == CellType.BLANK) {
+                            continue;
+                        }
                         switch (cellIdx) {
                             case 0:
                                 customer.setCust_code(currentCell.getStringCellValue());
@@ -118,7 +121,7 @@ public class CustomerEHelper {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private final List<Customer> customers;
-    private final String excelFilePath = "SaleOrder.xlsx";
+    private final String excelFilePath = "Customer.xlsx";
     
     public CustomerEHelper(List<Customer> customers) {
         this.customers = customers;
@@ -188,22 +191,15 @@ public class CustomerEHelper {
             Row row = sheet.getRow(rowCount++);
             int columnCount = 1;
             int rowNum = 1;
-            createCell(row, columnCount++, rowNum, style);
-            createCell(row, columnCount++, customer.getCust_code(), style);
             createCell(row, columnCount++, customer.getCust_name(), style);
+            createCell(row, columnCount++, customer.getShort_name(), style);
             createCell(row, columnCount++, customer.getAddress(), style);
             createCell(row, columnCount++, customer.getCity(), style);
             createCell(row, columnCount++, customer.getCountry(), style);
             createCell(row, columnCount++, customer.getEmail(), style);
             createCell(row, columnCount++, customer.getPhone(), style);
             createCell(row, columnCount++, customer.getNote(), style);
-            createCell(row, columnCount++, customer.getShort_name(), style);
             createCell(row, columnCount++, customer.getTax_code(), style);
-            if (customer.getActive()==true) {
-                createCell(row, columnCount++, "Active", null);
-            } else {
-                createCell(row, columnCount++, "Inactive", null);
-            }
             rowNum++;
         }
         

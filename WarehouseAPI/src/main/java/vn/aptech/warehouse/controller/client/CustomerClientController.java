@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.aptech.warehouse.entity.Customer;
 import vn.aptech.warehouse.entity.Supplier;
 import vn.aptech.warehouse.excelhelper.CustomerEHelper;
@@ -52,5 +53,30 @@ public class CustomerClientController {
             code= 500;
         }
         return ResponseEntity.ok(code);
+    }
+    
+    @Autowired
+    ExcelService fileService;
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes ra) {
+        String message = "";
+        String message1 = "";
+        String message2 = "";
+        if (SupplierEHelper.hasExcelFormat(file)) {
+            try {
+                fileService.saveCust(file);
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                ra.addFlashAttribute("message", message);
+                return "redirect:/customer";
+            } catch (Exception e) {
+                message1 = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                ra.addFlashAttribute("message", message1);
+                return "redirect:/customer";
+            }
+        }
+        message2 = "Please upload an excel file!";
+        ra.addFlashAttribute("message", message2);
+        return "redirect:/customer";
     }
 }

@@ -61,25 +61,25 @@ public class CustomerController {
     }
 
     //Excel
-    @Autowired
-    ExcelService fileService;
-
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public ResponseEntity<ResponseMessage> uploadFile1(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        if (CustomerEHelper.hasExcelFormat(file)) {
-            try {
-                fileService.saveCust(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-            }
-        }
-        message = "Please upload an excel file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-    }
+//    @Autowired
+//    ExcelService fileService;
+//
+//    @RequestMapping(value = "/import", method = RequestMethod.POST)
+//    public ResponseEntity<ResponseMessage> uploadFile1(@RequestParam("file") MultipartFile file) {
+//        String message = "";
+//        if (CustomerEHelper.hasExcelFormat(file)) {
+//            try {
+//                fileService.saveCust(file);
+//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+//            } catch (Exception e) {
+//                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+//            }
+//        }
+//        message = "Please upload an excel file!";
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+//    }
     
     @GetMapping(value = "/export")
     public void exportToExcel(HttpServletResponse response) throws IOException {
