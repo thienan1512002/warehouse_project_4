@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN","ROLE_MOVEMENT","ROLE_APP"
                         ,"ROLE_CREATE_SO","ROLE_RECEIVE_INCOM","ROLE_SALE_LEADER"
                         ,"ROLE_QC")
-                .antMatchers("/customer/**","/goods/**","/warehouse/**","/locs/**","/save/**",
+                .antMatchers("/customer/**","/goods/**","/warehouse/**","/locs/**","/sale/**",
                         "/suppliers/**","/user/update","/user/update-role","/user/create","/user/save","/user/save2","/user/save3")
                 .hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN","ROLE_APP")
                 .antMatchers("/sale/**").hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN","ROLE_CREATE_SO","ROLE_SALE_LEADER")

@@ -144,23 +144,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
+                function validateIncom() {
+                    if (document.getElementById("date").value.trim() === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Please choose drivery date'
+                                    });
+                        return false;
+                    }
+                    if (document.getElementById("vehicle").value.trim() === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Please input vehicle'
+                                    });
+                        return false;
+                    }
+                    if (document.getElementById("driver").value.trim() === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Please input driver'
+                                    });
+                        return false;
+                    }  
+                    return true;
+                };
                 $(document).ready(function () {
                     $('.nav-incoming').addClass('active');
                     $('#tblWh').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
                     });
-
+                    
                     $('#btnAdd').click(function () {
-                        const incoming = {
+                        
+                        const incoming =  {
                             sup_code: $('#sup_code :selected').val(),
                             vehicle: $('#vehicle').val(),
                             driver: $('#driver').val(),
                             delivery_date: $('#date').val(),
-                            closed: 0
+                            closed: 0                            
                         };
                         console.log(incoming);
-                        $.ajax({
+                        if(validateIncom()){
+                            $.ajax({
                             type: 'POST',
                             url: '/Incoming/save',
                             contentType: "application/json",
@@ -177,6 +206,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 }
                             }
                         });
+                        }
+                        
                     });
                 });
                 

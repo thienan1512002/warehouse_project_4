@@ -42,6 +42,7 @@ public class WarehouseApplication {
                 FirebaseApp app = FirebaseApp.getInstance("my-app");
                 return FirebaseMessaging.getInstance(app);
             }
+            
 //            return FirebaseMessaging.getInstance(app);   
         }
         

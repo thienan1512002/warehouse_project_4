@@ -183,6 +183,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
+                function validateAddItem() {
+                    if (parseInt(document.getElementById("quantity").value)< 0) {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Can not input negative quantity'
+                                    });
+                        return false;
+                    }
+                    if (parseInt(document.getElementById("quantity").value) === 0) {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Can not input quantity 0'
+                                    });
+                        return false;
+                    }
+                    if ((document.getElementById("quantity").value) === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Empty quantity'
+                                    });
+                        return false;
+                    }
+                    
+                    
+                    return true;
+                }
                 $(document).ready(function () {
                     $('.nav-incoming').addClass('active');
                     $('#tblWh').dataTable();
@@ -199,7 +228,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             wh_code: $('#wh_code').val(),
                             pt_qty: $('#quantity').val()
                         };
-                        $.ajax({
+                        if(validateAddItem()){
+                           $.ajax({
                             type: 'POST',
                             url: '/Incoming/add-item',
                             contentType: "application/json",
@@ -223,7 +253,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     });
                                 }
                             }
-                        });
+                        }); 
+                        }
+                        
                         console.log(goodsMaster);
                     });
                     $('#close-list').click(function () {
@@ -232,7 +264,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             showDenyButton: true,
                             showCancelButton: true,
                             confirmButtonText: 'Save',
-                            denyButtonText: `Don't save`,
+                            denyButtonText: `Don't save`
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
@@ -258,9 +290,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 });
                                 Swal.fire('Saved!', '', 'success');
                             } else if (result.isDenied) {
-                                Swal.fire('Changes are not saved', '', 'info')
+                                Swal.fire('Changes are not saved', '', 'info');
                             }
-                        })
+                        });
                     });
                 });
                 const checkQc = (id) => {
