@@ -2,6 +2,9 @@ package vn.aptech.warehouse.excelhelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,12 +12,15 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -125,32 +131,34 @@ public class SupplierEHelper {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private List<Supplier> suppliers;
-     
+        private final String excelFilePath = "Supplier.xlsx";
+
+    
     public SupplierEHelper(List<Supplier> suppliers) {
         this.suppliers = suppliers;
         workbook = new XSSFWorkbook();
     }
  
  
-    private void writeHeaderLine() {
-        sheet = workbook.createSheet("Suppliers");
-         
-        Row row = sheet.createRow(0);
-         
-        CellStyle style = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
-        font.setBold(true);
-        font.setFontHeight(16);
-        style.setFont(font);
-         
-        createCell(row, 0, "Sup_code", style);      
-        createCell(row, 1, "Name", style);       
-        createCell(row, 2, "Address", style);    
-        createCell(row, 3, "Email", style);
-        createCell(row, 4, "City", style);
-        createCell(row, 5, "Tax Code", style);
-        createCell(row, 6, "Active", style);
-    }
+//    private void writeHeaderLine() {
+//        sheet = workbook.createSheet("Suppliers");
+//         
+//        Row row = sheet.createRow(0);
+//         
+//        CellStyle style = workbook.createCellStyle();
+//        XSSFFont font = workbook.createFont();
+//        font.setBold(true);
+//        font.setFontHeight(16);
+//        style.setFont(font);
+//         
+//        createCell(row, 0, "Sup_code", style);      
+//        createCell(row, 1, "Name", style);       
+//        createCell(row, 2, "Address", style);    
+//        createCell(row, 3, "Email", style);
+//        createCell(row, 4, "City", style);
+//        createCell(row, 5, "Tax Code", style);
+//        createCell(row, 6, "Active", style);
+//    }
      
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
         sheet.autoSizeColumn(columnCount);
@@ -165,35 +173,45 @@ public class SupplierEHelper {
         cell.setCellStyle(style);
     }
      
-    private void writeDataLines() {
-        int rowCount = 1;
- 
-        CellStyle style = workbook.createCellStyle();
+    private void writeDataLines() throws FileNotFoundException, IOException {
+        int rowCount = 8;
+        
+//        XSSFFont font = workbook.createFont();
+//        font.setFontHeight(14);
+//        style.setFont(font);
+        FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+        workbook = (XSSFWorkbook) WorkbookFactory.create(inputStream);
+        
+        sheet = workbook.getSheetAt(0);
         XSSFFont font = workbook.createFont();
-        font.setFontHeight(14);
+        font.setFontName("Times New Roman");
+        font.setFontHeight(18);
+        
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setBorderTop(BorderStyle.THIN);
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setBorderRight(BorderStyle.THIN);
         style.setFont(font);
                  
         for (Supplier supplier : suppliers) {
-            Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
+            Row row = sheet.getRow(rowCount++);
+            int columnCount = 1;
              
-            createCell(row, columnCount++, supplier.getSup_code(), style);
+
             createCell(row, columnCount++, supplier.getSup_name(), style);
             createCell(row, columnCount++, supplier.getSup_address(), style);
             createCell(row, columnCount++, supplier.getSup_email(), style);
             createCell(row, columnCount++, supplier.getCity(), style);
             createCell(row, columnCount++, supplier.getTax_code(), style);
-            if (supplier.getActive()==true) {
-                createCell(row, columnCount++, "Active", style);
-            } else {
-                createCell(row, columnCount++, "Inactive", style);
-            }
              
         }
+        
+        inputStream.close();
     }
      
     public void export(HttpServletResponse response) throws IOException {
-        writeHeaderLine();
+//        writeHeaderLine();
         writeDataLines();
          
         ServletOutputStream outputStream = response.getOutputStream();
