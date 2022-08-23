@@ -21,6 +21,7 @@ import vn.aptech.warehouse.entity.SaleOrderDet;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.entity.vm.SaleOrderDetVm;
 import vn.aptech.warehouse.entity.vm.SaleOrderVm;
+import vn.aptech.warehouse.repository.SaleOrderDetRepo;
 import vn.aptech.warehouse.service.CustomerService;
 import vn.aptech.warehouse.service.GoodDataService;
 import vn.aptech.warehouse.service.GoodsMasterService;
@@ -49,7 +50,15 @@ public class SaleOrderController  {
     @Autowired
     private GoodsMasterService gmService;
     
+    @Autowired
+    private SaleOrderDetRepo repo;
     
+    @GetMapping(value="/deletedItem/{id}")
+    public ResponseEntity deletedItem(@PathVariable("id")int id){
+        SaleOrderDet det= repo.findById(id).get();
+        repo.delete(det);
+        return ResponseEntity.ok(200);
+    }
     
     @GetMapping(value="/browse")
     public String index(Model model){

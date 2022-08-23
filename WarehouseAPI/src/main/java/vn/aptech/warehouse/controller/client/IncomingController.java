@@ -20,6 +20,7 @@ import vn.aptech.warehouse.entity.Supplier;
 import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.entity.vm.GoodsMasterVm;
 import vn.aptech.warehouse.entity.vm.IncomingVm;
+import vn.aptech.warehouse.repository.GoodsMasterRepository;
 import vn.aptech.warehouse.service.GoodDataService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.IncomingService;
@@ -44,6 +45,8 @@ public class IncomingController {
     private GoodDataService goodsDataService;
     @Autowired
     private WarehouseService whService;
+    @Autowired
+    private GoodsMasterRepository gmRepo;
     
     @GetMapping(value="")
     public String index(Model model){
@@ -60,6 +63,13 @@ public class IncomingController {
         model.addAttribute("goodsMasters", goodsMasterService.findByIcId(icId));
         model.addAttribute("goodsData", goodsDataService.findAll());
         return "incoming/detail";
+    }
+    
+    @GetMapping(value="/delete-item/{id}")
+    public ResponseEntity deletedItem(@PathVariable("id") int pt_id){
+        GoodsMaster gm = gmRepo.findByPtId(pt_id);
+        gmRepo.delete(gm);
+        return ResponseEntity.ok(200);
     }
     
     @PostMapping(value="/save")
