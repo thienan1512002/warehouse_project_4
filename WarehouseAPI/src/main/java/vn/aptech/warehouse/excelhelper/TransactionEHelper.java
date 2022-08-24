@@ -26,8 +26,10 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import vn.aptech.warehouse.entity.Transactions;
+import vn.aptech.warehouse.service.TransactionsService;
 
 /**
  *
@@ -42,74 +44,21 @@ public class TransactionEHelper {
         return TYPE.equals(file.getContentType());
     }
 
-//    public static List<Transactions> excelToCustomers(InputStream is) {
-//        try {
-//            List<Transactions> transactions;
-//            Workbook workbook = new XSSFWorkbook(is);
-//                Sheet sheet = workbook.getSheet(SHEET);
-//                Iterator<Row> rows = sheet.iterator();
-//                transactions = new ArrayList<Transactions>();
-//                int rowNumber = 0;
-//                while (rows.hasNext()) {
-//                    Row currentRow = rows.next();
-//                    // skip header
-//                    if (rowNumber == 0) {
-//                        rowNumber++;
-//                        continue;
-//                    }
-//                    if (isRowEmpty(currentRow)) {
-//                        continue;
-//                    }
-//                    Iterator<Cell> cellsInRow = currentRow.iterator();
-//                    Transactions transaction = new Transactions();
-//                    int cellIdx = 0;
-//                    while (cellsInRow.hasNext()) {
-//                        Cell currentCell = cellsInRow.next();
-//                        if (currentCell == null || currentCell.getCellType() == CellType.BLANK) {
-//                            continue;
-//                        }
-//                        switch (cellIdx) {
-//                            case 0:
-//                                transaction.setId((int) currentCell.getNumericCellValue());
-//                                break;
-//                            case 1:
-//                                transaction.setType(currentCell.getStringCellValue());
-//                                break;
-//                            case 2:
-//                                transaction.setGoods_name(currentCell.getStringCellValue());
-//                                break;
-//                            case 3:
-//                                transaction.setFrom_loc(currentCell.getStringCellValue());
-//                                break;
-//                            case 4:
-//                                transaction.setTo_loc(currentCell.getStringCellValue());
-//                                break;
-//                            case 5:
-//                                transaction.setQuantity((int) currentCell.getNumericCellValue());
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        cellIdx++;
-//                    }
-//                    transactions.add(transaction);
-//                }
-//                workbook.close();
-//        
-//            return transactions;
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
-//        }
-//    }
+
 
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
-    private final List<Transactions> transactions;
+    
     private final String excelFilePath = "Transactions.xlsx";
+   
+    @Autowired
+    private TransactionsService service;
+    private List<Transactions> transactions;
     
     public TransactionEHelper(List<Transactions> transactions) {
-        this.transactions = transactions;
         workbook = new XSSFWorkbook();
+        this.transactions = transactions;
+        
     }
  
  
@@ -152,7 +101,7 @@ public class TransactionEHelper {
      
     private void writeDataLines() throws FileNotFoundException, IOException {
         int rowCount = 8;
-        
+        List<Transactions> datas = service.findAll();
 //        XSSFFont font = workbook.createFont();
 //        font.setFontHeight(14);
 //        style.setFont(font);
@@ -170,21 +119,15 @@ public class TransactionEHelper {
         style.setBorderLeft(BorderStyle.THIN);
         style.setBorderRight(BorderStyle.THIN);
         style.setFont(font);
-        
-        for (var i=1; i<10; i++) {
+        for (Transactions tran: datas) {
             Row row = sheet.getRow(rowCount++);
             int columnCount = 1;
             int rowNum = 1;
-//            createCell(row, columnCount++, transaction.getType(), style);
-//            createCell(row, columnCount++, transaction.getGoods_name(), style);
-//            createCell(row, columnCount++, transaction.getFrom_loc(), style);
-//            createCell(row, columnCount++, transaction.getTo_loc(), style);
-//            createCell(row, columnCount++, transaction.getQuantity(), style);
-createCell(row, columnCount++, "text", style);
-createCell(row, columnCount++, "text", style);
-createCell(row, columnCount++, "text", style);
-createCell(row, columnCount++, "text", style);
-
+            createCell(row, columnCount++, tran.getType(), style);
+            createCell(row, columnCount++, tran.getGoods_name(), style);
+            createCell(row, columnCount++, tran.getFrom_loc(), style);
+            createCell(row, columnCount++, tran.getTo_loc(), style);
+            createCell(row, columnCount++, tran.getQuantity(), style);
             rowNum++;
         }
         

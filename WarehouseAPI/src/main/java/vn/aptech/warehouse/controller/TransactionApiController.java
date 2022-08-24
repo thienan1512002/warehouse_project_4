@@ -30,7 +30,7 @@ public class TransactionApiController {
     @Autowired
     private TransactionsService service;
     
-    @GetMapping(value="/")
+    @GetMapping(value="")
     public List<Transactions> findAll(){
         return service.findAll();
     }
@@ -50,8 +50,8 @@ public class TransactionApiController {
         String headerValue = "attachment; filename=transactions_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
          
-        List<Transactions> transactions = service.findAll();
-         
+        List<Transactions> transactions = findAll();
+            
         TransactionEHelper excelExporter = new TransactionEHelper(transactions);
          
         excelExporter.export(response);    
