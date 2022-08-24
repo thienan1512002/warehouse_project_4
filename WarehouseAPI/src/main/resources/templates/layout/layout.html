@@ -289,7 +289,7 @@
                                     <div id="wpChange" style="cursor:pointer">
                                         <a class="dropdown-item">
                                             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            <span th:if="${#session.getAttribute('workspace')} != null" th:text="${#session.getAttribute('workspace')}"></span>
+                                            <span th:if="${#session.getAttribute('workspace')} != null" th:text="${#session.getAttribute('workspace')}" id="wp"></span>
                                         </a>
                                     </div>
                                     <div class="dropdown-divider"></div>
@@ -496,6 +496,7 @@
                     const option = `<option value="${x.wh_code}">${x.wh_desc}</option>`;
                     $('#selectWs').append(option);
                  });
+                 
              }
           });
           $.ajax({
@@ -519,6 +520,7 @@
               $('#wpModal').modal('toggle');
           });
           $('#btnChoose').click(function(){
+              
               $('#wpModal').modal('toggle');
               const jsObj = {
                   wh_code : $('#selectWs :selected').val()

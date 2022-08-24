@@ -8,8 +8,8 @@ import vn.aptech.warehousemobile.api.service.TransactionService;
 import vn.aptech.warehousemobile.api.service.UserService;
 
 public class ApiUtil {
-    public static final String BASE_URL ="http://172.16.3.130:8080/api/";
-    public static final String IMG_URL ="http://172.16.3.130:8080/goods-photos/";
+    public static final String BASE_URL ="http://192.168.1.7:8080/api/";
+    public static final String IMG_URL ="http://192.168.1.7:8080/goods-photos/";
 //    public static final String BASE_URL ="http://192.168.1.12:8080/api/";
 //    public static final String IMG_URL ="http://192.168.1.12:8080/goods-photos/";
 

@@ -55,9 +55,9 @@ public class AllocateController {
     private FirebaseMessagingService serviceMessage;
 
     @GetMapping("/browse")
-    public String index(Model model) {
+    public String index(Model model,HttpServletRequest request) {
         model.addAttribute("unallocates", goodsMasterService.findUnallocated(true, ""));
-        model.addAttribute("locs", locService.findByWhCode("WH001"));
+        model.addAttribute("locs", locService.findByWhCode((String)request.getSession().getAttribute("workspace")));
         return "allocate/index";
     }
 
