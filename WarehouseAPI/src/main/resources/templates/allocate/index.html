@@ -128,6 +128,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     });
                     $('#date').val(new Date().toJSON().slice(0,10));
                     $('#btnAdd').click(function () {
+                        $('btnAdd').attr('disabled', true);
                         console.log(parseFloat($('#qtyHidden').val())<parseFloat($('#quantity').val()));
                         if(parseFloat($('#qtyHidden').val())<parseFloat($('#quantity').val())||parseFloat($('#maxQtyItem').val())<parseFloat($('#quantity').val())){
                             Swal.fire({
@@ -144,7 +145,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             date: $('#date').val()
                         };
                         console.log(jsObj);
-
+                        
                         $.ajax({
                             type: 'POST',
                             url: '/allocated/pick-list',
