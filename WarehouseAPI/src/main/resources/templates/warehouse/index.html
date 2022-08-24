@@ -161,7 +161,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     });
                                 }
                                 if (res===501){
-                                    Swal.fire('Ooobs','This warehouse code has been created before','error').then(function(){
+                                    Swal.fire('Ooops','This warehouse code has been created before','error').then(function(){
+                                        window.location.reload();
+                                    });
+                                }
+                                
+                                if (res===500){
+                                    Swal.fire('Ooops','Required fields must not be blank!','error').then(function(){
                                         window.location.reload();
                                     });
                                 }
