@@ -318,6 +318,16 @@
                                         $('#exampleModal').modal('hide');
                                     });
                                 }
+                                if (res===501){
+                                    Swal.fire('Ooobs','This customer code has been created before','error').then(function(){
+                                        window.location.reload();
+                                    });
+                                }
+                                if (res===500){
+                                    Swal.fire('Ooobs','All fields must not be blank!','error').then(function(){
+                                        window.location.reload();
+                                    });
+                                }
                             }
                         });
                         console.log(customer);
