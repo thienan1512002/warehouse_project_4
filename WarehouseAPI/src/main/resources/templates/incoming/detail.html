@@ -103,9 +103,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <button class="btn btn-outline-danger" th:if="${!incoming.closed}" th:onclick="deletedItem([[${item.pt_id}]])">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                     <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
-                                          or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')"><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button>
-                                        <button class="btn btn-outline-danger" id="btnReject" th:onclick="deletedItem([[${item.pt_id}]])">REJECT</button></div>
+                                    <div th:if="${incoming.closed}">
+                                        <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
+                                          or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')"><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">PASS</button>
+                                        <button class="btn btn-outline-danger" id="btnReject" th:onclick="deletedItem([[${item.pt_id}]])">REJECT</button>
+                                     </div>
+                                        
+                                    </div>
+                                     
                                     
                                 </td>
                                 </tr>

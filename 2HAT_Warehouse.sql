@@ -190,7 +190,8 @@ create table unqualified
 	si_code varchar(200),
 	action_qty int
 )
-insert into warehouses values('WH007','Warehouse 7',1,'des')
+insert into warehouses values('WH001','Warehouse CMT8',1,'General Warehouse')
+
 
 
 
