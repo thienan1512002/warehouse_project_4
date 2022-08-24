@@ -56,7 +56,7 @@ public class AllocateActivity extends AppCompatActivity {
                     Log.e("get value ", "data."+r.getAlc_id());
                 }
 
-                Toast.makeText(AllocateActivity.this, "data "+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AllocateActivity.this, "data "+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

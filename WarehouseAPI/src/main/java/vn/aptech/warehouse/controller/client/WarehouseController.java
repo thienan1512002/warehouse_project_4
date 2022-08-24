@@ -4,6 +4,7 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,24 @@ public class WarehouseController {
     
     @PostMapping(value="/save")
     public ResponseEntity save(@RequestBody Warehouse warehouse){
-        Warehouse wh = service.save(warehouse);
+       
+        boolean duplicate = false;
+        if (warehouse.getWh_code().equals("") || warehouse.getWh_desc().equals("")){
+            return ResponseEntity.ok(500);
+        }
+        List<Warehouse> whs = service.findAll();
+        for(Warehouse wh : whs){
+            if(wh.getWh_code().equals(warehouse.getWh_code())){
+                duplicate=true;
+            }
+        }
+        
+        if(duplicate){
+            return ResponseEntity.ok(501);
+        }else{
+            Warehouse wh = service.save(warehouse);
+        }
+         
         return ResponseEntity.ok(200);
     } 
 }

@@ -59,7 +59,7 @@ public class AllocateAdapter extends RecyclerView.Adapter<AllocateAdapter.Alloca
         Intent intent = new Intent(mContext, AllocateDetailActivity.class);
         intent.putExtra("alc_id",alo.getAlc_id());
         mContext.startActivity(intent);
-        Toast.makeText(mContext, alo.getGoods_masters().getGood_data().getGoods_name(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, alo.getGoods_masters().getGood_data().getGoods_name(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

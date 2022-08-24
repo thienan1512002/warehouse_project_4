@@ -47,12 +47,18 @@ public class CustomerClientController {
     @PostMapping(value="/save")
     public ResponseEntity save(@RequestBody Customer customer){
         
-        int code =200;
+    
         Customer cust = service.save(customer);
-        if (cust.getCust_code().equals("")  ){
-            code= 500;
+        if(cust.getCust_code().equals("")|| 
+                cust.getCust_name().equals("")|| 
+                cust.getAddress().equals("")||
+                cust.getEmail().equals("")||
+                cust.getCity().equals("")||
+                cust.getCountry().equals("")||
+                cust.getPhone().equals("")){
+             return ResponseEntity.ok(500);
         }
-        return ResponseEntity.ok(code);
+        return ResponseEntity.ok(200);
     }
     
     @Autowired

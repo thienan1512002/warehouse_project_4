@@ -155,7 +155,7 @@
                                     <input id="tax_code"  class="form-control"/> 
                                 </div>
                             </div>
-                            <span><i>Fields marked with * are required.</i></span>
+                            <b ><i>Fields marked with * are required.</i></b>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -247,14 +247,25 @@
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
               <script>
+                  function validate(){
+                      if (document.getElementById("cust_code").value.trim() === "") {
+                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Please input customer code'
+                                    });
+                        return false;
+                        }
+                        return true;
+                  };
                 $(document).ready(function () {
                     $('.nav-customer').addClass('active');
                     $('#tblWh').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
                     });
-                    
-                    if ($('#excel').val().match('Upload')){
+                    if(document.getElementById("excel")!==null){
+                        if ($('#excel').val().match('Upload')){
                         Swal.fire(
                                 'Good job!',
                                 $('#excel').val(),
@@ -273,6 +284,8 @@
                                 'error'
                                 );
                     }
+                    }
+                    
                     
                     $('#btnAdd').click(function () {
                         const customer = {
@@ -288,7 +301,6 @@
                             short_name: $('#short_name').val(),
                             active: 1
                         };
-
                         $.ajax({
                             url: '/customer/save',
                             type: 'POST',
