@@ -14,7 +14,61 @@
                     <h3 class="card-title">Pick List SO</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+
+                    <div th:if="${#lists.isEmpty(goods)}">
+                        <input type="hidden" id="goods_no" th:value="${goods_no}"/>
+                        <h3 class="text-center">There isn't any goods in warehouse yet</h3>
+                        <div style="text-align: center;"><button class="btn btn-primary" id="autoMail">Send email for Import goods</button></div>
+                    </div>
+                    <div th:unless="${#lists.isEmpty(goods)}">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Inventory Id
+                                    </th>
+                                    <th>
+                                        Item
+                                    </th>
+                                    <th>Location</th>
+                                    <th>Ref</th>
+                                    <th>Quantity</th>
+                                    <th>Booked</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                            <input type="hidden" id="maxable" th:value="${qty}"/>
+                            <input type="hidden" id="so_id" th:value="${so_id}"/>
+                            <input type="hidden" id="goods_no" th:value="${goods_no}"/>
+                            <tr th:each="item: ${goods}">
+                            <input type="hidden" th:id="'qty-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty})}"/>
+                                   <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
+                            <input type="hidden" th:id="'max-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty-item.pt_hold})}"/>
+                            <td th:text="${item.pt_id}" th:id="'id-td-'+${item.pt_id}"></td>
+                            <td th:text="${item.good_data.goods_name}" th:id="'item-td-'+${item.pt_id}"></td>
+                            <td th:text="${item.loc_code}" th:id="'loc-td-'+${item.pt_id}"></td>
+                            <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
+                            <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
+                            <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
+                            <td><input type="number" th:id="'ed-'+${item.pt_id}" class="form-control col-6"  th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
+                            <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
+                            </tr> 
+                            </tbody>
+                        </table>
+                    </div>
+                           
+
+                </div>
+            </div>
+            
+            <div class="card shadow col-6">
+                <div class="card-header py-3">
+                    <h3 class="card-title">Confirm</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="tb-confirm">
                         <thead>
                             <tr>
                                 <th>
@@ -25,257 +79,231 @@
                                 </th>
                                 <th>Location</th>
                                 <th>Ref</th>
-                                <th>Quantity</th>
-                                <th>Booked</th>
-                                <th></th>
-                                <th></th>
+                                <th>Quantity Booked</th>
+                                <th></th>                              
                             </tr>
                         </thead> 
-                        <tbody>
-                            <input type="hidden" id="maxable" th:value="${qty}"/>
-                            <input type="hidden" id="so_id" th:value="${so_id}"/>
-                            <input type="hidden" id="goods_no" th:value="${goods_no}"/>
-                            <tr th:each="item: ${goods}">
-                        <input type="hidden" th:id="'qty-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty})}"/>
-    <input type="hidden" th:id="'booked-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_hold})}"/>
-    <input type="hidden" th:id="'max-'+${item.pt_id}" class="form-control col-6" th:value="@{{no}(no=${item.pt_qty-item.pt_hold})}"/>
-    <td th:text="${item.pt_id}" th:id="'id-td-'+${item.pt_id}"></td>
-    <td th:text="${item.good_data.goods_name}" th:id="'item-td-'+${item.pt_id}"></td>
-    <td th:text="${item.loc_code}" th:id="'loc-td-'+${item.pt_id}"></td>
-    <td th:text="${item.patch_no}" th:id="'ref-td-'+${item.pt_id}"></td>
-    <td th:text="${item.pt_qty}" th:id="'qty-td-'+${item.pt_id}"></td>
-    <td th:text="${item.pt_hold}" th:id="'booked-td-'+${item.pt_id}">cell</td>
-    <td><input type="number" th:id="'ed-'+${item.pt_id}" class="form-control col-6"  th:placeholder="@{Max: {no}(no=${item.pt_qty-item.pt_hold})}"/></td>
-    <td><button th:id='btn-+${item.pt_id}' class="btn btn-primary" th:onclick="bookData([[${item.pt_id}]])">Book</button></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-            
-<div class="card shadow col-6">
-    <div class="card-header py-3">
-        <h3 class="card-title">Confirm</h3>
-    </div>
-    <div class="card-body">
-        <table class="table" id="tb-confirm">
-            <thead>
-                <tr>
-                    <th>
-                        Inventory Id
-                    </th>
-                    <th>
-                        Item
-                    </th>
-                    <th>Location</th>
-                    <th>Ref</th>
-                    <th>Quantity Booked</th>
-                    <th></th>                              
-                </tr>
-            </thead> 
-            <tbody id="tb-body">
+                        <tbody id="tb-body">
 
-            </tbody>
-            <tfoot id="tFoot">
-            </tfoot>
-        </table>
-        
-        <div class="form-group">
-            <input type="date" class="form-control" id="date"/>
-        </div>
-    </div>
-</div>
+                        </tbody>
+                        <tfoot id="tFoot">
+                        </tfoot>
+                    </table>
 
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-                            let jsArr = [];
-                            let sum = 0;
-                            const bookData = (id)=>{
-                                const quantity = document.getElementById('ed-'+id);
-    const maxQty = document.getElementById('max-'+id);
-                                console.log(quantity.value);
-                                console.log(maxQty.value);
-                                if(quantity.value ==0){
-                                   Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Quantity must be larger than 0',
-                                    })
-                                    //quantity.focus;
-                                }else if(parseFloat(quantity.value)>parseFloat(document.getElementById('qty-td-'+id).innerHTML)- document.getElementById('booked-td-'+id).innerHTML){
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Your quantity cannot be larger than max Qty('+maxQty.value+')',
-                                    })
-                                     //quantity.focus;
-                                     quantity.value='';
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="date"/>
+                    </div>
+                </div>
+            </div>
+
+            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                                        $('#autoMail').click(function(){
+                                           $.ajax({
+                                               type:"GET",
+                                               url:`/sale/send-email/${$('#goods_no').val()}`,
+                                               success:function(res){
+                                                   console.log(res);
+                                                   if(res===200){
+                                                       Swal.fire(
+                                                                    'Good job!',
+                                                                    'Send email success',
+                                                                    'success'
+                                                                ).then(function () {
+                                                                    window.location.reload();
+                                                                });
+                                                   }
+                                               }
+                                           })
+                                        });
+                                        let jsArr = [];
+                                        let sum = 0;
+                                        const bookData = (id)=>{
+                                            const quantity = document.getElementById('ed-'+id);
+                const maxQty = document.getElementById('max-'+id);
+                                            console.log(quantity.value);
+                                            console.log(maxQty.value);
+                                            if(quantity.value ==0){
+                                               Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Quantity must be larger than 0',
+                                                })
+                                                //quantity.focus;
+                                            }else if(parseFloat(quantity.value)>parseFloat(document.getElementById('qty-td-'+id).innerHTML)- document.getElementById('booked-td-'+id).innerHTML){
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Your quantity cannot be larger than max Qty('+maxQty.value+')',
+                                                })
+                                                 //quantity.focus;
+                                                 quantity.value='';
                                      
-                                }else{
+                                            }else{
                                     
-                                    if(parseInt(quantity.value)<1){
-                                        Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Your quantity cannot be lower than 1'
+                                                if(parseInt(quantity.value)<1){
+                                                    Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Your quantity cannot be lower than 1'
                                         
-                                    })
-                                     quantity.value='';
-                                    }else{
-                                       sum+= parseFloat(quantity.value);
-                                    console.log("sum =",sum);
-                                    console.log(parseFloat($('#maxable').val())<parseFloat(sum))
-                                    if(parseFloat($('#maxable').val())<parseFloat(quantity.value) || parseFloat($('#maxable').val())<parseFloat(sum)){
-                                        Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Your quantity cannot be larger than max Qty('+$('#maxable').val()+') '+quantity.value,
-                                    })
-                                    console.log($('#maxable').val());
-                                    console.log($('#maxable').val()<quantity.value);
-                                     //quantity.focus;
-                                     sum-=parseFloat(quantity.value);
-                                     quantity.value='';
-                                    }else{
+                                                })
+                                                 quantity.value='';
+                                                }else{
+                                                   sum+= parseFloat(quantity.value);
+                                                console.log("sum =",sum);
+                                                console.log(parseFloat($('#maxable').val())<parseFloat(sum))
+                                                if(parseFloat($('#maxable').val())<parseFloat(quantity.value) || parseFloat($('#maxable').val())<parseFloat(sum)){
+                                                    Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Your quantity cannot be larger than max Qty('+$('#maxable').val()+') '+quantity.value,
+                                                })
+                                                console.log($('#maxable').val());
+                                                console.log($('#maxable').val()<quantity.value);
+                                                 //quantity.focus;
+                                                 sum-=parseFloat(quantity.value);
+                                                 quantity.value='';
+                                                }else{
                                         
-                                        document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
+                                                    document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)+parseFloat(quantity.value);
                                     
                                     
-                                    const pid = document.getElementById('id-td-'+id).innerHTML;
-                                    const name =document.getElementById('item-td-'+id).innerHTML;
-                                    const loc= document.getElementById('loc-td-'+id).innerHTML;
-                                    const ref= document.getElementById('ref-td-'+id).innerHTML;
-                                    drawTable(pid,name,loc,ref,quantity.value);
-                                    quantity.value='';
+                                                const pid = document.getElementById('id-td-'+id).innerHTML;
+                                                const name =document.getElementById('item-td-'+id).innerHTML;
+                                                const loc= document.getElementById('loc-td-'+id).innerHTML;
+                                                const ref= document.getElementById('ref-td-'+id).innerHTML;
+                                                drawTable(pid,name,loc,ref,quantity.value);
+                                                quantity.value='';
                                    
-                                    quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`; 
-                                    }
+                                                quantity.placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`; 
+                                                }
                                     
-                                    }
+                                                }
                                     
-                                }                                                                                          
-                            }
+                                            }                                                                                          
+                                        }
                             
                             
-                            const drawTable = (id,item,location,ref,qty) =>{
+                                        const drawTable = (id,item,location,ref,qty) =>{
                                 
-                                if(document.getElementById('tr-confirm-'+id)==null){
-                                 const tr = `<tr id="tr-confirm-${id}">
-                                                <td id="td-conf-id-${id}">${id}</td>
-                                                <td id="td-conf-item-${id}">${item}</td>
-                                                <td id="td-conf-loc-${id}">${location}</td>
-                                                <td id="td-conf-ref-${id}">${ref}</td>
-                                                <td id="td-conf-qty-${id}">${qty}</td>
-                                                <td>
-<button class="btn btn-outline-danger" onclick="removeRow(${id})" ><i class="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>`;
-                                    document.getElementById('tb-body').innerHTML += tr;
-                                    checkTbRows();
-                               }else{
-                                   document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);                                
-                               }
+                                            if(document.getElementById('tr-confirm-'+id)==null){
+                                             const tr = `<tr id="tr-confirm-${id}">
+                                                            <td id="td-conf-id-${id}">${id}</td>
+                                                            <td id="td-conf-item-${id}">${item}</td>
+                                                            <td id="td-conf-loc-${id}">${location}</td>
+                                                            <td id="td-conf-ref-${id}">${ref}</td>
+                                                            <td id="td-conf-qty-${id}">${qty}</td>
+                                                            <td>
+            <button class="btn btn-outline-danger" onclick="removeRow(${id})" ><i class="fa fa-trash"></i></button>
+                                                            </td>
+                                                        </tr>`;
+                                                document.getElementById('tb-body').innerHTML += tr;
+                                                checkTbRows();
+                                           }else{
+                                               document.getElementById(`td-conf-qty-${id}`).innerHTML = parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML) + parseFloat(qty);                                
+                                           }
                               
-                               const jsObj = {
-                                   id: id,
-                                   pt_id:$(`#td-conf-id-${id}`).text(),
-                                   goods_name:$(`#td-conf-item-${id}`).text(),
-                                   loc_desc:$(`#td-conf-loc-${id}`).text(),
-                                   qty:$(`#td-conf-qty-${id}`).text(),
-                                   date:'',
-                                   so_id:$('#so_id').val(),
-                                   goods_no:$('#goods_no').val()
-                               };
-                               if(jsArr.find(x=>x.id===`${id}`)){
-                                   jsArr = jsArr.filter(x=>x.id!==`${id}`);
-                               }
+                                           const jsObj = {
+                                               id: id,
+                                               pt_id:$(`#td-conf-id-${id}`).text(),
+                                               goods_name:$(`#td-conf-item-${id}`).text(),
+                                               loc_desc:$(`#td-conf-loc-${id}`).text(),
+                                               qty:$(`#td-conf-qty-${id}`).text(),
+                                               date:'',
+                                               so_id:$('#so_id').val(),
+                                               goods_no:$('#goods_no').val()
+                                           };
+                                           if(jsArr.find(x=>x.id===`${id}`)){
+                                               jsArr = jsArr.filter(x=>x.id!==`${id}`);
+                                           }
                               
-                               jsArr.push(jsObj);
-                               console.log(jsArr);
+                                           jsArr.push(jsObj);
+                                           console.log(jsArr);
                                 
-                            }
+                                        }
                             
-                            const removeRow = (id) => {
-                            document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)-parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML);
-                             document.getElementById('ed-'+id).placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
-                            sum-= parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML)
-                            console.log("After remove: ",sum);
-                                jsArr = jsArr.filter(x=>x.id!==`${id}`);
-                                $('#tr-confirm-'+id).remove();
-                                checkTbRows();
-                            }
+                                        const removeRow = (id) => {
+                                        document.getElementById('booked-td-'+id).innerHTML=parseFloat(document.getElementById('booked-td-'+id).innerHTML)-parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML);
+                                         document.getElementById('ed-'+id).placeholder =`Max: ${(parseFloat(document.getElementById('qty-td-'+id).innerHTML)-parseFloat(document.getElementById('booked-td-'+id).innerHTML))}`;
+                                        sum-= parseFloat(document.getElementById(`td-conf-qty-${id}`).innerHTML)
+                                        console.log("After remove: ",sum);
+                                            jsArr = jsArr.filter(x=>x.id!==`${id}`);
+                                            $('#tr-confirm-'+id).remove();
+                                            checkTbRows();
+                                        }
                             
-                            const checkTbRows = () =>{
+                                        const checkTbRows = () =>{
                           
-                                if($('#tb-confirm > tbody > tr').length>0){
-                                    const tfooter = `
-                                                        <tr id="tblFooter">
-                                                         <td></td>
-                                                         <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                                          <td colspan="6">
-                                                            <button class="btn btn-success" id="confirm-end" onclick="confirmEnd()" style="color=#20bf6b;">Picking</button>
-                                                          </td>
-                                                        </tr>
-                                                    `
-                                    $('#tFoot').html(tfooter);                
-                                }else{
-                                    $('#tblFooter').remove();
-                                }
-                            }
-                            
-                          
-                            
-                            const confirmEnd = () =>{
-                                if(!Date.parse($('#date').val())){
-                                    Swal.fire({
-  icon: 'error',
-  title: 'Oops...',
-  text: 'Please pick a date',
-  
-})
-                                }else{
-                                    Swal.fire({
-                                    title: 'Are you sure?',
-                                    text: "You won't be able to revert this!",
-                                    icon: 'question',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#20bf6b',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Yes, submit it!'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        jsArr.forEach(x=>x.date=$('#date').val());
-                                        console.log(jsArr);
-                                          $.ajax({
-                                            type:'POST',
-                                            url:'/Issue/create-issue',
-                                            contentType: "application/json",
-                                            data: JSON.stringify(jsArr),
-                                            success:function(res){
-                                                if (res === 200) {
-                                                    Swal.fire(
-                                                        'Good job!',
-                                                        'Add new order success',
-                                                        'success'
-                                                    ).then(function () {
-                                                        window.location.reload();
-                                                    });
-                                                }                                 
+                                            if($('#tb-confirm > tbody > tr').length>0){
+                                                const tfooter = `
+                                                                    <tr id="tblFooter">
+                                                                     <td></td>
+                                                                     <td></td>
+                                             <td></td>
+                                             <td></td>
+                                             <td></td>
+                                                                      <td colspan="6">
+                                                                        <button class="btn btn-success" id="confirm-end" onclick="confirmEnd()" style="color=#20bf6b;">Picking</button>
+                                                                      </td>
+                                                                    </tr>
+                                                                `
+                                                $('#tFoot').html(tfooter);                
+                                            }else{
+                                                $('#tblFooter').remove();
                                             }
-                        });
-                                    }
-                                })
-                                }
-                                
-                            }
+                                        }
                             
-</script>
-</div>
-</body>
-</html>
+                          
+                            
+                                        const confirmEnd = () =>{
+                                            if(!Date.parse($('#date').val())){
+                                                Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Please pick a date',
+  
+            })
+                                            }else{
+                                                Swal.fire({
+                                                title: 'Are you sure?',
+                                                text: "You won't be able to revert this!",
+                                                icon: 'question',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#20bf6b',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Yes, submit it!'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    jsArr.forEach(x=>x.date=$('#date').val());
+                                                    console.log(jsArr);
+                                                      $.ajax({
+                                                        type:'POST',
+                                                        url:'/Issue/create-issue',
+                                                        contentType: "application/json",
+                                                        data: JSON.stringify(jsArr),
+                                                        success:function(res){
+                                                            if (res === 200) {
+                                                                Swal.fire(
+                                                                    'Good job!',
+                                                                    'Add new order success',
+                                                                    'success'
+                                                                ).then(function () {
+                                                                    window.location.reload();
+                                                                });
+                                                            }                                 
+                                                        }
+                                    });
+                                                }
+                                            })
+                                            }
+                                
+                                        }
+                            
+                </script>
+            </div>
+        </body>
+    </html>

@@ -14,7 +14,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-fluid" layout:fragment="contents">
 
             <!-- Page Heading -->
-
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <a  id="pdfExport" style="cursor:pointer"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            </div>
+            
             <input type="hidden" id="jan_count" th:value="${jan}"/>
             <input type="hidden" id="feb_count" th:value="${feb}"/>
             <input type="hidden" id="thi_count" th:value="${thi}"/>
@@ -142,7 +147,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                      aria-labelledby="dropdownMenuLink">
                                     <div class="dropdown-header">Action:</div>
                                     <a class="dropdown-item" id="imgExport" style="cursor:pointer">Export to Img</a>
-                                    <a class="dropdown-item" id="pdfExport" style="cursor:pointer">Export to PDF</a>
+                                  
 
                                 </div>
                             </div>
@@ -314,8 +319,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     $('#pdfExport').click(function () {
                         var canvas = document.getElementById("myAreaChart");
                         var imgData = canvas.toDataURL("image/png");
+                         var canvas1 = document.getElementById("myPieChart");
+                        var imgData1 = canvas1.toDataURL("image/png");
+                        imgData1.height=200;
                         var pdf = new jsPDF({
                             orientation: "landscape",
+                            format:[300,270]
                         });
                         
                         const date = new Date();
@@ -326,10 +335,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         let currentDate = `${day}-${month}-${year}`;
                         pdf.addImage(logo,'PNG',5,5);
                         pdf.text("2HAT Warehouses", 5, 40);                      
-                        pdf.text("Total Orders report(In 1 year)", 120, 10);
+                        pdf.text("Total Orders report(In 1 year)", 120, 40);
                         pdf.addImage(imgData, 'PNG', 10, 50);
+                        pdf.text("Sale Orders rate report(%)", 120, 160);
+                        pdf.addImage(imgData1, 'PNG', 100, 170);
                         pdf.save("order_chart"+currentDate + ".pdf");
-                    })
+                    });
                 });
             </script>
         </div>

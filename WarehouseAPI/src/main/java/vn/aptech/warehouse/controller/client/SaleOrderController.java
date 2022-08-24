@@ -5,6 +5,8 @@
 package vn.aptech.warehouse.controller.client;
 
 
+import java.io.UnsupportedEncodingException;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.Customer;
 import vn.aptech.warehouse.entity.GoodData;
+import vn.aptech.warehouse.entity.Role;
 import vn.aptech.warehouse.entity.SaleOrder;
 import vn.aptech.warehouse.entity.SaleOrderDet;
+import vn.aptech.warehouse.entity.User;
 import vn.aptech.warehouse.entity.vm.JsObj;
 import vn.aptech.warehouse.entity.vm.SaleOrderDetVm;
 import vn.aptech.warehouse.entity.vm.SaleOrderVm;
+import vn.aptech.warehouse.repository.RoleRepository;
 import vn.aptech.warehouse.repository.SaleOrderDetRepo;
+import vn.aptech.warehouse.repository.UserRepository;
 import vn.aptech.warehouse.service.CustomerService;
+import vn.aptech.warehouse.service.EmailSenderService;
 import vn.aptech.warehouse.service.GoodDataService;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.SaleOrderDetService;
@@ -52,6 +59,15 @@ public class SaleOrderController  {
     
     @Autowired
     private SaleOrderDetRepo repo;
+    
+    @Autowired
+    private EmailSenderService service;
+    
+    @Autowired
+    private UserRepository userRepo;
+    
+    @Autowired
+    private RoleRepository roleRepo;
     
     @GetMapping(value="/deletedItem/{id}")
     public ResponseEntity deletedItem(@PathVariable("id")int id){
@@ -90,6 +106,26 @@ public class SaleOrderController  {
         model.addAttribute("goods_no",id);
         model.addAttribute("qty", detService.findBySoId(so_id, id).getQuantity());
         return "sale/pick-item";
+    }
+    
+    @GetMapping(value="/send-email/{id}")
+    public ResponseEntity sendEmail(@PathVariable("id") String id) throws MessagingException, UnsupportedEncodingException{
+        Role role = roleRepo.findByName("ROLE_RECEIVE_INCOM");
+        User user = userRepo.findAll().stream().filter(x->x.getRoles().contains(role)).findFirst().get();
+        service.sendImportGoodsRequest(user.getEmail(), contentMail(id, user.getUsername()));
+        return ResponseEntity.ok(200);
+    }
+    
+    private String contentMail(String id , String username){
+        GoodData good = goodService.findByNo(id);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dear ").append(username).append("\n");
+        sb.append("This is an automail from 2HAT Warehouse"+"\n");
+        sb.append("We have an Sale Order which will required goods name: "+good.getGoods_name()+"\n");
+        sb.append("But we don't have quantity enough in inventory for this Sale Order "+"\n");
+        sb.append("So can you import for us more so that we can finished this Sale Order"+"\n");
+        sb.append("Thanks and Best regards!");        
+        return sb.toString();
     }
     
     

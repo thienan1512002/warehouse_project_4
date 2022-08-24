@@ -46,7 +46,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     <!--<td th:text="${item.roles}"></td>-->
                                     <td>
                                         <div th:each="role: ${item.roles}">
-                                            <span th:text="${role.name}"></span>
+                                            <span th:text="${role.name}" class="badge badge-warning"></span>
                                         </div>
                                     </td>
                                     <td><a class="btn btn-primary" th:href="@{/user/update/{id}(id=${item.id})}">Update</a></td>

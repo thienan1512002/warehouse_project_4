@@ -74,11 +74,7 @@ public class IssueOrderController {
         return "issue/index";
     }
    
-//    @PostMapping(value="/send-email")
-//    public ResponseEntity sendEmail(@RequestBody JsObj jsObj) throws MessagingException, UnsupportedEncodingException{
-//        mailService.sendImportGoodsRequest("nhta151202@gmail.com", jsObj.getNote());
-//        return ResponseEntity.ok(200);
-//    }
+    
 
     
     
