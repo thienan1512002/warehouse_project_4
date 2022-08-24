@@ -171,15 +171,20 @@ public class TransactionEHelper {
         style.setBorderRight(BorderStyle.THIN);
         style.setFont(font);
         
-        for (Transactions transaction : transactions) {
+        for (var i=1; i<10; i++) {
             Row row = sheet.getRow(rowCount++);
             int columnCount = 1;
             int rowNum = 1;
-            createCell(row, columnCount++, transaction.getType(), style);
-            createCell(row, columnCount++, transaction.getGoods_name(), style);
-            createCell(row, columnCount++, transaction.getFrom_loc(), style);
-            createCell(row, columnCount++, transaction.getTo_loc(), style);
-            createCell(row, columnCount++, transaction.getQuantity(), style);
+//            createCell(row, columnCount++, transaction.getType(), style);
+//            createCell(row, columnCount++, transaction.getGoods_name(), style);
+//            createCell(row, columnCount++, transaction.getFrom_loc(), style);
+//            createCell(row, columnCount++, transaction.getTo_loc(), style);
+//            createCell(row, columnCount++, transaction.getQuantity(), style);
+createCell(row, columnCount++, "text", style);
+createCell(row, columnCount++, "text", style);
+createCell(row, columnCount++, "text", style);
+createCell(row, columnCount++, "text", style);
+
             rowNum++;
         }
         
