@@ -221,7 +221,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         showDenyButton: true,
                         showCancelButton: false,
                         confirmButtonText: 'Yes',
-                        denyButtonText: `Don't save`,
+                        denyButtonText: `No`
                     }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
@@ -230,7 +230,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 url: `/Incoming/delete-item/${id}`,
                                 success: function (res) {
                                     if (res === 200) {
-                                        Swal.fire('Saved!', '', 'success').then(function () {
+                                        Swal.fire('Deleted!', '', 'success').then(function () {
                                            window.location.reload();     
                                         });
                                     }
@@ -291,11 +291,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     });
                     $('#close-list').click(function () {
                         Swal.fire({
-                            title: 'Do you want to save the changes?',
+                            title: 'Do you want to submit?',
                             showDenyButton: true,
-                            showCancelButton: true,
-                            confirmButtonText: 'Save',
-                            denyButtonText: `Don't save`
+                            confirmButtonText: 'Yes',
+                            denyButtonText: `No`
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
@@ -314,14 +313,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                                     'Submit Incoming success',
                                                     'success'
                                                     ).then(function () {
-                                                window.location.reload();
+                                                window.location.href='/Incoming';
                                             });
                                         }
                                     }
                                 });
-                                Swal.fire('Saved!', '', 'success');
+                                Swal.fire('Submited!', '', 'success');
                             } else if (result.isDenied) {
-                                Swal.fire('Changes are not saved', '', 'info');
+                                Swal.fire('Not submit', '', 'info');
                             }
                         });
                     });

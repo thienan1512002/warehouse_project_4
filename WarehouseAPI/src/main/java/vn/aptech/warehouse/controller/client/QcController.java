@@ -4,6 +4,8 @@
  */
 package vn.aptech.warehouse.controller.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.aptech.warehouse.entity.GoodsMaster;
+import vn.aptech.warehouse.entity.Incoming;
 import vn.aptech.warehouse.entity.vm.GoodsMasterVm;
 import vn.aptech.warehouse.service.GoodsMasterService;
 import vn.aptech.warehouse.service.IncomingService;
@@ -31,7 +34,13 @@ public class QcController {
     private GoodsMasterService goodsMasterService;
     @GetMapping(value="")
     public String index(Model model){
-        model.addAttribute("incomings", incomingService.findByClosed(true));
+        List<Incoming> qcs = new ArrayList<>(); //incomingService.findByClosed(true);
+        incomingService.findByClosed(true).forEach(x->{
+            if(!x.getGoods().isEmpty()){
+                qcs.add(x);
+            }
+        });
+        model.addAttribute("incomings",qcs);
         return "qc/index";
     }
     

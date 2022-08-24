@@ -95,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="order_date">Order Date</label>
-                                        <input type="date" id="order_date" class="form-control"/> 
+                                        <input type="date" id="order_date" onchange="setDeliDate()" class="form-control"/> 
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="req_date">Delivery Date</label>
@@ -126,6 +126,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
+                function setDeliDate(){
+                    var order_date = document.getElementById("order_date").value;
+                    var date_entered = new Date(order_date);
+//                    date_entered = date_entered +5;
+                    var req_date = document.getElementById("req_date").value;
+//                    req_date = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+                    $('#req_date').val((date_entered.getDate()+1).toJSON().slice(0,10));
+                }
+                
                 $(document).ready(function () {
                     $('#tblWh').dataTable();
                     $('.nav-sale').addClass('active');

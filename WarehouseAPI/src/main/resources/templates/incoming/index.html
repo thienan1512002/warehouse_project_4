@@ -76,7 +76,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </div>
                                 <div class="form-group col-8">
                                     <label for="wh_desc">Delivery Date</label>
-                                    <input type="date" id="date" class="form-control"/> 
+                                    <input type="date" id="date"  readonly class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
@@ -141,6 +141,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
+                 $('#date').val(new Date().toJSON().slice(0,10));
+
                 function validateIncom() {
                     if (document.getElementById("date").value.trim() === "") {
                         Swal.fire({
