@@ -103,41 +103,37 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="form-group col-4">
-                                    <label for="sup_code">Supplier Code</label>
+                                <div class="form-group col-6">
+                                    <label for="sup_code">Supplier Code *</label>
                                     <input id="sup_code" class="form-control"/> 
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="sup_name">Supplier Name</label>
+                                <div class="form-group col-6">
+                                    <label for="sup_name">Supplier Name *</label>
                                     <input id="sup_name" class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-8">
-                                    <label for="sup_address">Address</label>
+                                <div class="form-group col-6">
+                                    <label for="sup_address">Address *</label>
                                     <input id="sup_address" class="form-control"/> 
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
+                                <div class="form-group col-6">
                                     <label for="sup_email">Email</label>
                                     <input id="sup_email" class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-8">
+                                <div class="form-group col-6">
                                     <label for="city">City</label>
                                     <input id="city" class="form-control"/> 
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-8">
+                                <div class="form-group col-6">
                                     <label for="tax_code">Tax Code</label>
                                     <input id="tax_code" class="form-control"/> 
                                 </div>
                             </div>
+                            <b ><i>Fields marked with * are required.</i></b>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,61 +197,102 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 $(document).ready(function () {
                     console.log($('#excel').val());
                     //var element =  document.getElementById('excel');
-                    if ($('#excel').val().match('Upload')){
-                        Swal.fire(
-                                'Good job!',
-                                $('#excel').val(),
-                                'success'
-                                );
-                    } else if ($('#excel').val().match('Could')) {
-                        Swal.fire(
-                                'Oh no!',
-                                $('#excel').val(),
-                                'error'
-                                );
-                    } else if ($('#excel').val().match('Please')) {
-                        Swal.fire(
-                                'Oh no!',
-                                $('#excel').val(),
-                                'error'
-                                );
-                    }
+
+                        if ($('#excel').val().match('Upload')){
+                            Swal.fire(
+                                    'Good job!',
+                                    $('#excel').val(),
+                                    'success'
+                                    );
+                        } else if ($('#excel').val().match('Could')) {
+                            Swal.fire(
+                                    'Oh no!',
+                                    $('#excel').val(),
+                                    'error'
+                                    );
+                        } else if ($('#excel').val().match('Please')) {
+                            Swal.fire(
+                                    'Oh no!',
+                                    $('#excel').val(),
+                                    'error'
+                                    );
+                        }
+
+                    
                 
+                
+                    function validateSup() {
+                        if (document.getElementById("sup_code").value.trim() === "") {
+                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please input supplier code'
+                                        });
+                            return false;
+                        }
+                        if (document.getElementById("sup_name").value.trim() === "") {
+                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please input supplier name'
+                                        });
+                            return false;
+                        }
+                        if (document.getElementById("sup_address").value.trim() === "") {
+                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please input address'
+                                        });
+                            return false;
+                        }  
+                        
+                        return true;
+                    };
+                    
                     $('.nav-supplier').addClass('active');
                     $('#tblSl').dataTable();
                     $('#btnShow').click(function () {
                         $('#exampleModal').modal('show');
                     });
                     $('#btnAdd').click(function () {
-                        const supplier = {
-                            sup_code: $('#sup_code').val(),
-                            sup_name: $('#sup_name').val(),
-                            sup_address: $('#sup_address').val(),
-                            sup_email: $('#sup_email').val(),
-                            city: $('#city').val(),
-                            tax_code: $('#tax_code').val(),
-                            active: 1
-                        };
+                        if(validateSup()) {
+                            const supplier = {
+                                sup_code: $('#sup_code').val(),
+                                sup_name: $('#sup_name').val(),
+                                sup_address: $('#sup_address').val(),
+                                sup_email: $('#sup_email').val(),
+                                city: $('#city').val(),
+                                tax_code: $('#tax_code').val(),
+                                active: 1
+                            };
 
-                        $.ajax({
-                            url: '/suppliers/save',
-                            type: 'POST',
-                            contentType: "application/json",
-                            data: JSON.stringify(supplier),
-                            success: function (res) {
-                                if (res === 200) {
-                                    Swal.fire(
-                                            'Good job!',
-                                            'Add new Supplier success',
-                                            'success'
-                                            ).then(function () {
+                            $.ajax({
+                                url: '/suppliers/save',
+                                type: 'POST',
+                                contentType: "application/json",
+                                data: JSON.stringify(supplier),
+                                success: function (res) {
+                                    if (res === 200) {
+                                        Swal.fire(
+                                                'Good job!',
+                                                'Add new Supplier success',
+                                                'success'
+                                                ).then(function () {
+                                            window.location.reload();
+                                        });
+                                    }
+                                    if (res===501){
+                                    Swal.fire('Ooobs','This supplier code has been created before','error').then(function(){
                                         window.location.reload();
                                     });
                                 }
-                            }
-                        });
-                        console.log(supplier);
-                        $('#exampleModal').modal('hide');
+                                
+                                }
+                            });
+                            console.log(supplier);
+                            $('#exampleModal').modal('hide');
+                        }
                     });
                     $('#btnEdit').click(function () {
                         const supplier = {

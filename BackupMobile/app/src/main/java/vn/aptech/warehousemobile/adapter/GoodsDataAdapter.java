@@ -59,7 +59,7 @@ public class GoodsDataAdapter extends RecyclerView.Adapter<GoodsDataAdapter.Good
         intent.putExtra("goods_no",goodData.getGoods_no());
         intent.putExtra("goods_name",goodData.getGoods_name());
         mContext.startActivity(intent);
-        Toast.makeText(mContext, goodData.getGoods_name(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, goodData.getGoods_name(), Toast.LENGTH_SHORT).show();
 
     }
     @Override

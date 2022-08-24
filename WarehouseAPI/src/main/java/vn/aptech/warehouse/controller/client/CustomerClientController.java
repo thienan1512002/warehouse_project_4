@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.aptech.warehouse.entity.Customer;
 import vn.aptech.warehouse.entity.Supplier;
+import vn.aptech.warehouse.entity.Warehouse;
 import vn.aptech.warehouse.excelhelper.CustomerEHelper;
 import vn.aptech.warehouse.excelhelper.SupplierEHelper;
 import vn.aptech.warehouse.message.ResponseMessage;
@@ -46,13 +47,34 @@ public class CustomerClientController {
     
     @PostMapping(value="/save")
     public ResponseEntity save(@RequestBody Customer customer){
+       
         
-        int code =200;
-        Customer cust = service.save(customer);
-        if (cust.getCust_code().equals("")  ){
-            code= 500;
+        if(customer.getCust_code().equals("")|| 
+                customer.getCust_name().equals("")|| 
+                customer.getAddress().equals("")||
+                customer.getEmail().equals("")||
+                customer.getCity().equals("")||
+                customer.getCountry().equals("")||
+                customer.getPhone().equals("")){
+             return ResponseEntity.ok(500);
         }
-        return ResponseEntity.ok(code);
+        
+        boolean duplicate = false;
+        List<Customer> whs = service.findAll();
+        for(Customer wh : whs){
+            if(wh.getCust_code().equals(customer.getCust_code())){
+                duplicate=true;
+            }
+        }
+        
+        if(duplicate){
+            return ResponseEntity.ok(501);
+        }else{
+            Customer wh = service.save(customer);
+        }
+        
+        
+        return ResponseEntity.ok(200);
     }
     
     @Autowired

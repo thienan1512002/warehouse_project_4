@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <thead>
                                 <tr>
                                     <th>Location code</th>
-                                    <th>Description</th>
+                                    <th>Location name</th>
                                     <th>Loc Type</th>
                                     <th>Loc Capacity</th>
                                     <th>Loc Remain</th>
@@ -73,12 +73,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="form-group col-4">
-                                    <label for="wh_code">Location code</label>
+                                <div class="form-group col-6">
+                                    <label for="wh_code">Location code *</label>
                                     <input id="loc_code" class="form-control"/> 
                                 </div>
-                                <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
+                                <div class="form-group col-6">
+                                    <label for="wh_desc">Location name *</label>
                                     <input id="loc_desc" class="form-control"/> 
                                 </div>
                             </div>
@@ -92,12 +92,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <option value="Temporary location">Temporary location</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="loc_cap">Capacity</label>
+                                    <label for="loc_cap">Capacity *</label>
                                     <input type="number" class="form-control" id="loc_cap"/>
                                 </div>
+                            </div>
+                            <div class="row">
+                                
                                 <div class="form-group  col-4" >
                                     <label for="flammable" class="form-check-label">Flammable</label>
                                     <div class="form-check">
@@ -105,6 +106,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                 </div>
                             </div>
+                                <span><i>Fields marked with * are required.</i></span>
 
                         </div>
                         <div class="modal-footer">
@@ -132,7 +134,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <input type="hidden" id="loc_editOutgo" class="form-control" readonly/>
                                 <input type="hidden" id="wh_editCode" class="form-control" readonly/>
                                 <div class="form-group col-8">
-                                    <label for="loc_editDesc">Description</label>
+                                    <label for="loc_editDesc">Location name</label>
                                     <input id="loc_editDesc" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-4">
@@ -199,6 +201,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                             'Add new Location success',
                                             'success'
                                             ).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                                if (res===501){
+                                    Swal.fire('Ooops','This location code has been created before','error').then(function(){
+                                        window.location.reload();
+                                    });
+                                }
+                                if (res===500){
+                                    Swal.fire('Ooops','Required fields must not be blank!','error').then(function(){
                                         window.location.reload();
                                     });
                                 }

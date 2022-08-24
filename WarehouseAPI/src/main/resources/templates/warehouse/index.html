@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <thead>
                                 <tr>
                                     <th>Warehouse code</th>
-                                    <th>Description</th>
+                                    <th>Warehouse name</th>
                                     <th>Status</th>
                                     <th>Comment</th>
                                 </tr>
@@ -63,22 +63,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <div class="modal-body">
                             <div class="row">
                                 <div class="form-group col-4">
-                                    <label for="wh_code">Warehouse code</label>
+                                    <label for="wh_code">Warehouse code *</label>
                                     <input id="wh_code" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
+                                    <label for="wh_desc">Warehouse name *</label>
                                     <input id="wh_desc" class="form-control"/> 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="wh_cmt">Status</label>
-                                    <textarea class="form-control" id="wh_cmt">
-                                        
-                                    </textarea>
+                                    <label for="wh_cmt">Comment</label>
+                                    <textarea class="form-control" id="wh_cmt"></textarea>
                                 </div>
                             </div>
+                             <b ><i>Fields marked with * are required.</i></b>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -100,7 +99,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <div class="row">
                                 <input type="hidden" id="wh_editCode" class="form-control" readonly/>
                                 <div class="form-group col-8">
-                                    <label for="wh_desc">Description</label>
+                                    <label for="wh_desc">Warehouse name</label>
                                     <input id="wh_editDesc" class="form-control"/> 
                                 </div>
                                 <div class="form-group col-4">
@@ -158,12 +157,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                             'success'
                                             ).then(function () {
                                         window.location.reload();
+                                        $('#exampleModal').modal('hide');
+                                    });
+                                }
+                                if (res===501){
+                                    Swal.fire('Ooops','This warehouse code has been created before','error').then(function(){
+                                        window.location.reload();
+                                    });
+                                }
+                                
+                                if (res===500){
+                                    Swal.fire('Ooops','Required fields must not be blank!','error').then(function(){
+                                        window.location.reload();
                                     });
                                 }
                             }
                         });
                         console.log(warehouse);
-                        $('#exampleModal').modal('hide');
+                        
                     });
                     $('#btnEdit').click(function () {
                         const warehouse = {

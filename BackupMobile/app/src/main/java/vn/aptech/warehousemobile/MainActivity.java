@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                   filterRole = listRole.stream().filter(role -> allowRole.contains(role.getName()))
                           .collect(Collectors.toList());
                   if(filterRole.size()>0){
-                      Toast.makeText(MainActivity.this, "Admin or manager", Toast.LENGTH_SHORT).show();
+                      //Toast.makeText(MainActivity.this, "Admin or manager", Toast.LENGTH_SHORT).show();
 
                       SharedPreferences sharedPreferences = getSharedPreferences("application", Context.MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
