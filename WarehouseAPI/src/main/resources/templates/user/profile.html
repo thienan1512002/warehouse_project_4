@@ -19,7 +19,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <h5 th:if="${alert}" class="alert alert-danger" th:text="${alert}"></h5>
             <form th:action="@{/user/save-profile}" method="post" th:object="${user}" 
                   oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'
-                  onsubmit="return confirmForm()">
+                  name="myForm" onsubmit="return confirm('Are you sure want to change your profile?')">
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label>Username</label>
@@ -47,30 +47,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             </div>
-        <script>
-            function confirmForm(){
-                  Swal.fire({
-                        title: 'Do you want to save change?',
-                        showDenyButton: true,
-                        showCancelButton: false,
-                        confirmButtonText: 'Yes',
-                        denyButtonText: `No`
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                             return true;
-
-                        }else{
-                            return false;
-                        };
-                    });
-            }
-        </script>
+        
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            
-        </div>
+            <script>
+//                function confirmSave() {
+//                    let $form = $(this).closest('form');
+//                    console.log(id);
+//                    Swal.fire({
+//                        title: 'Do you want to save profile?',
+//                        icon: 'question',
+//                        showCancelButton: true,
+//                        confirmButtonColor: '#3085d6',
+//                        cancelButtonColor: '#d33',
+//                        confirmButtonText: 'Yes'
+//                    }).then((result) => {
+//                        if (result.isConfirmed) {
+//                            $form.submit();
+//                        }
+//                    });
+//                };
+            </script>
     </body>
 </html>

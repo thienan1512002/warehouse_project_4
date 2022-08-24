@@ -16,7 +16,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Update GoodsData</h1>
 
-            <form  th:action="@{/goods/save2}" method="post" enctype="multipart/form-data" th:object="${good}">
+            <form  th:action="@{/goods/save2}" method="post" enctype="multipart/form-data" th:object="${good}"
+                   onsubmit="return confirm('Do you really want to change goods information?');">
                 
                 <input type="hidden" th:field="*{goods_no}">
                 <div class="form-group">
