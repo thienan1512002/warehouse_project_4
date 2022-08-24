@@ -96,15 +96,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                     </div>
                                     <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
                                          or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
-                                        <!--<td><span class="badge badge-info">Wait for Qc Check</span></td>-->
-                                        <td><button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">Update</button></td>
-                                    </div>
+                                        <td><span class="badge badge-info">Wait for Qc Check</span></td><!--
+                                        <td>
+                                            <button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">ACCEPT</button>
+                                            <button class="btn btn-outline-danger" id="btnReject" th:onclick="deletedItem([[${item.pt_id}]])">REJECT</button>
+                                        </td>
+                                    </div>-->
                                 </div>
                                 <!--<td><a th:href="@{/goods/update/{no}(no=${item.goods_no})}">Update</a></td>-->
                                 <td>
                                     <button class="btn btn-outline-danger" th:if="${!incoming.closed}" th:onclick="deletedItem([[${item.pt_id}]])">
                                         <i class="fa fa-trash"></i>
                                     </button>
+                                    <div th:unless="${item.passed}" sec:authorize="hasRole('ROLE_ADMIN')
+                                         or hasRole('ROLE_MANAGER') or hasRole('ROLE_QC')">
+                                            <button class="btn btn-outline-success" id="btnUpdate" th:onclick="checkQc([[${item.pt_id}]])">ACCEPT</button>
+                                            <button class="btn btn-outline-danger" id="btnReject" th:onclick="deletedItem([[${item.pt_id}]])">REJECT</button>
+                                    </div>
                                 </td>
                                 </tr>
                                 </tbody>
@@ -241,7 +249,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             Swal.fire('Not deleted', '', 'info');
                         }
                     });
-                }
+                };
 
                 $(document).ready(function () {
                     $('.nav-incoming').addClass('active');
@@ -330,7 +338,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         pt_id: id
                     };
                     console.log(goodsMaster);
-                    $.ajax({
+                    Swal.fire({
+                            title: 'Do you want to submit?',
+                            showDenyButton: true,
+                            confirmButtonText: 'Yes',
+                            denyButtonText: `No`
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                $.ajax({
                         type: 'post',
                         url: '/qc/qc-check',
                         contentType: "application/json",
@@ -346,6 +362,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 });
                             }
                         }
+                    });
+                    }
                     });
                 };
             </script>

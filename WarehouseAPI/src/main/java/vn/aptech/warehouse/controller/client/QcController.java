@@ -51,7 +51,6 @@ public class QcController {
         gm.setQc(authentication.getName());
         gm.setPassed(true);
         gm.setLoc_code("");
-        
         GoodsMaster edit = goodsMasterService.save(gm);
         
         return ResponseEntity.ok(200);
