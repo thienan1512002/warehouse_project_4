@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">User Lists</h1>
 
-            <h5 th:if="${message}" class="alert alert-success" th:text="${message}"></h5>
+            <input th:if="${message}" type="hidden" id="messageReturn" th:value="${message}"></h5>
             <h5 th:if="${alert}" class="alert alert-danger" th:text="${alert}"></h5>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -99,18 +99,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
             </div>
 
-            
+
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $(document).ready(function () {
+                    if (document.getElementById("messageReturn") !== null) {
+                        Swal.fire(
+                                'Good job!',
+                                $('#messageReturn').value,
+                                'success'
+                                );
+                    }
                     $('.nav-user').addClass('active');
                     $('#tblUser').dataTable();
                     $('#btnShow').click(function () {
 //                        $('#exampleModal').modal('show');
-                          location.href = "/user/create";  
+                        location.href = "/user/create";
                     });
                     $('#btnAdd').click(function () {
                         const user = {

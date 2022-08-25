@@ -16,9 +16,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Update GoodsData</h1>
 
-            <form  th:action="@{/goods/save2}" method="post" enctype="multipart/form-data" th:object="${good}"
-                   onsubmit="return confirm('Do you really want to change goods information?');">
-                
+            <form id="updateForm"  th:action="@{/goods/save2}" method="post" enctype="multipart/form-data" th:object="${good}"
+                  >
+
                 <input type="hidden" th:field="*{goods_no}">
                 <div class="form-group">
                     <label>Photo</label>
@@ -42,20 +42,38 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <label>Qty/Package</label>
                     <input type="number" class="form-control" th:field="*{qty_per_package}" min="1" placeholder="Enter Qty/Package" required>
                 </div>
-                
+
                 <div class="form-check">
                     <input type="checkbox" th:field="*{active}"  class="form-check-input">
                     <label class="form-check-label" >Active?</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary" id="btnSubmit">Update</button>
             </form>
-            </div>
-        
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            
+            <script>
+                        $('#btnSubmit').click(function (e) {
+                            e.preventDefault();
+                            Swal.fire({
+                                title: 'Do you want to save the changes?',
+                                showDenyButton: true,
+                                confirmButtonText: 'Save',
+                                denyButtonText: `Don't save`,
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                    $('#updateForm').submit();
+                                } else if (result.isDenied) {
+                                    Swal.fire('Changes are not saved', '', 'info')
+                                }
+                            });
+                        });
+            </script>
         </div>
-    </body>
+
+
+    </div>
+</body>
 </html>
