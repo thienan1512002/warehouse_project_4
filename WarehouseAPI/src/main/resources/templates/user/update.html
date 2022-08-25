@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Update User</h1>
 
-            <form  th:action="@{/user/save2}" method="post" th:object="${user}">
+            <form  th:action="@{/user/save2}" method="post" th:object="${user}" id="myForm">
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label>Username</label>
@@ -34,14 +34,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <label>Active</label>
                     <input type="checkbox" th:field="*{active}" >
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" id="btnSubmit" class="btn btn-primary">Update</button>
             </form>
-            </div>
-        
             <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
             <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
             <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $('#btnSubmit').click(function (e) {
+                            e.preventDefault();
+                            Swal.fire({
+                                title: 'Do you want to save the changes?',
+                                showDenyButton: true,
+                                confirmButtonText: 'Save',
+                                denyButtonText: `Don't save`,
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                    $('#myForm').submit();
+                                } else if (result.isDenied) {
+                                    Swal.fire('Changes are not saved', '', 'info')
+                                }
+                            });
+                        });
+            </script>
+            </div>
+        
+            
 
     </body>
 </html>
