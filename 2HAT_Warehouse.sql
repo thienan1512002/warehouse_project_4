@@ -201,6 +201,7 @@ insert into roles values('ROLE_CREATE_SO')
 insert into roles values('ROLE_SALE_LEADER')
 insert into roles values('ROLE_MOVEMENT')
 INSERT into users_roles values(1,1)
+insert into supplier values('sup-00','Warehouse Recycle','HCM','recycle@warehouse.com','HCM','1543466',1)
 
 
 
