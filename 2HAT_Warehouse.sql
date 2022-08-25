@@ -191,7 +191,16 @@ create table unqualified
 	action_qty int
 )
 insert into warehouses values('WH001','Warehouse CMT8',1,'General Warehouse')
-
+insert into users values('admin','admin@gmail.com','$2a$10$E1u3qxICkZ9HgeiknEc7gemfo9QCIb2Tysfkk1F3FCYKoqgI.oMGS',1)
+insert into roles values('ROLE_MANAGER')
+insert into roles values('ROLE_ADMIN')
+insert into roles values('ROLE_APP')
+insert into roles values('ROLE_RECEIVE_INCOM')
+insert into roles values('ROLE_QC')
+insert into roles values('ROLE_CREATE_SO')
+insert into roles values('ROLE_SALE_LEADER')
+insert into roles values('ROLE_MOVEMENT')
+INSERT into users_roles values(1,1)
 
 
 
