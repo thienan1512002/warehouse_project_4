@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="container-fluid" layout:fragment="contents">
+        <div class="container-fluid" layout:fragment="contents" >
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -19,330 +19,347 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <a  id="pdfExport" style="cursor:pointer"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
-            
-            <input type="hidden" id="jan_count" th:value="${jan}"/>
-            <input type="hidden" id="feb_count" th:value="${feb}"/>
-            <input type="hidden" id="thi_count" th:value="${thi}"/>
-            <input type="hidden" id="apr_count" th:value="${apr}"/>
-            <input type="hidden" id="may_count" th:value="${may}"/>
-            <input type="hidden" id="jun_count" th:value="${jun}"/>
-            <input type="hidden" id="july_count" th:value="${july}"/>
-            <input type="hidden" id="aug_count" th:value="${aug}"/>
-            <input type="hidden" id="sep_count" th:value="${sep}"/>
-            <input type="hidden" id="oct_count" th:value="${oct}"/>
-            <input type="hidden" id="nov_count" th:value="${nov}"/>
-            <input type="hidden" id="dec_count" th:value="${dec}"/>
+            <div id="content1">
+                <input type="hidden" id="jan_count" th:value="${jan}"/>
+                <input type="hidden" id="feb_count" th:value="${feb}"/>
+                <input type="hidden" id="thi_count" th:value="${thi}"/>
+                <input type="hidden" id="apr_count" th:value="${apr}"/>
+                <input type="hidden" id="may_count" th:value="${may}"/>
+                <input type="hidden" id="jun_count" th:value="${jun}"/>
+                <input type="hidden" id="july_count" th:value="${july}"/>
+                <input type="hidden" id="aug_count" th:value="${aug}"/>
+                <input type="hidden" id="sep_count" th:value="${sep}"/>
+                <input type="hidden" id="oct_count" th:value="${oct}"/>
+                <input type="hidden" id="nov_count" th:value="${nov}"/>
+                <input type="hidden" id="dec_count" th:value="${dec}"/>
 
-            <input type="hidden" id="order1" th:value="${order1}"/>
-            <input type="hidden" id="order2" th:value="${order2}"/>
-            <input type="hidden" id="order3" th:value="${order3}"/>
-            <input type="hidden" id="order4" th:value="${order4}"/>
-            <input type="hidden" id="order5" th:value="${order5}"/>
-            <input type="hidden" id="order6" th:value="${order6}"/>
-            <input type="hidden" id="order7" th:value="${order7}"/>
-            <input type="hidden" id="order8" th:value="${order8}"/>
-            <input type="hidden" id="order9" th:value="${order9}"/>
-            <input type="hidden" id="order10" th:value="${order10}"/>
-            <input type="hidden" id="order11" th:value="${order11}"/>
-            <input type="hidden" id="order12" th:value="${order12}"/>
+                <input type="hidden" id="order1" th:value="${order1}"/>
+                <input type="hidden" id="order2" th:value="${order2}"/>
+                <input type="hidden" id="order3" th:value="${order3}"/>
+                <input type="hidden" id="order4" th:value="${order4}"/>
+                <input type="hidden" id="order5" th:value="${order5}"/>
+                <input type="hidden" id="order6" th:value="${order6}"/>
+                <input type="hidden" id="order7" th:value="${order7}"/>
+                <input type="hidden" id="order8" th:value="${order8}"/>
+                <input type="hidden" id="order9" th:value="${order9}"/>
+                <input type="hidden" id="order10" th:value="${order10}"/>
+                <input type="hidden" id="order11" th:value="${order11}"/>
+                <input type="hidden" id="order12" th:value="${order12}"/>
 
-            <input type="hidden" id="pendingRate" th:value="${pendingRate/totalSo*100}"/>
-            <input type="hidden" id="completedRate" th:value="${completedRate/totalSo*100}"/>
+                <input type="hidden" id="pendingRate" th:value="${pendingRate/totalSo*100}"/>
+                <input type="hidden" id="completedRate" th:value="${completedRate/totalSo*100}"/>
 
-            <input type="hidden" id="logoSrc"value="http://localhost:8080/goods-photos/logo.jpg"/>
-            <!-- Content Row -->
-            <div class="row">
+                <input type="hidden" id="logoSrc"value="http://localhost:8080/goods-photos/logo.jpg"/>
+                <!-- Content Row -->
+                <div class="row">
 
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        <a th:href="@{/allocated}" class="card-link" style="text-decoration: none;">Allocate Request</a></div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${jan+feb+thi+apr+may+jun+july+aug+sep+oct+nov+dec}"></div>
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            <a th:href="@{/allocated}" class="card-link" style="text-decoration: none;">Allocate Request</a></div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${jan+feb+thi+apr+may+jun+july+aug+sep+oct+nov+dec}"></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            <a th:href="@{/Issue}" class="card-link" style="text-decoration: none;">Issue Order</a></div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${order1+order2+order3+order4+order5+order6+order7+order8+order9+order10+order11+order12}"></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                            <a th:href="@{/unqualified}" class="card-link" style="text-decoration: none;">Unqualified Items</a></div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${unqualified}"></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-regular fa-not-equal fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Pending Requests</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="pendingRequests1"></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        <a th:href="@{/Issue}" class="card-link" style="text-decoration: none;">Issue Order</a></div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${order1+order2+order3+order4+order5+order6+order7+order8+order9+order10+order11+order12}"></div>
+                <!-- Content Row -->
+
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Total Orders Overview </h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                         aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Action:</div>
+                                        <a class="dropdown-item" id="imgExport" style="cursor:pointer">Export to Img</a>
+
+
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Sale order Rate (%)</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                         aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Dropdown Header:</div>
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="myPieChart"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small">
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-primary"></i> Pending
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="fas fa-circle text-success"></i> Completed
+                                    </span>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-danger shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                        <a th:href="@{/unqualified}" class="card-link" style="text-decoration: none;">Unqualified Items</a></div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${unqualified}"></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fa-regular fa-not-equal fa-2x text-gray-300"></i>
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Content Column -->
+                    <div class="col-lg-6 mb-4">
+
+                        <!-- Project Card Example -->
+                        <div class="card shadow mb-4" id="loc_cap_rp">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Locations capacity available</h6>
+                            </div>
+                            <div class="card-body">
+                                <div th:each="item : ${locations}">
+                                    <!--
+                                    
+                                    -->
+                                    <h4 class="small font-weight-bold" th:text="${item.loc_desc}">Server Migration </h4><span
+
+                                        class="float-right" th:text="${#numbers.formatDecimal(((item.loc_remain+item.loc_holding)/item.loc_cap *100),0,'COMMA',2,'POINT') +'%'}" style=" transform: translate(-60px,-30px);">20%</span>
+                                    <div class="progress mb-4">
+                                        <div class="progress-bar bg-primary" role="progressbar" th:style="'width:'+@{${100-((item.loc_remain+item.loc_holding)/item.loc_cap *100)}}+'%;' "
+                                             aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+
 
                     </div>
-                </div>
 
-                <!-- Pending Requests Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        Pending Requests</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="pendingRequests1"></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                </div>
+                    <div class="col-lg-6 mb-4">
+
+                        <!-- Illustrations -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Nearly transacions</h6>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" id="tblTrans" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='10'>
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Type</th>
+                                            <th>Goods Name</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item: ${trans}">
+                                            <td th:text="${item.id}">Id</td>
 
-            <!-- Content Row -->
+                                    <div th:if="${item.type.equals('in')}">
+                                        <td><span class="badge badge-warning">Allocate</span></td>
+                                    </div>
+                                    <div th:if="${item.type.equals('out')}">
+                                        <td><span class="badge badge-success">Issue</span></td>
+                                    </div>
+                                    <div th:if="${item.type.equals('unqualified')}">
+                                        <td><span class="badge badge-danger">Unqualified</span></td>
+                                    </div>
+                                    <div th:if="${item.type.equals('Recycle')}">
+                                        <td><span class="badge badge-primary">Recycle</span></td>
+                                    </div>
+                                    <div th:if="${item.type.equals('Disposed')}">
+                                        <td><span class="badge badge-danger">Disposed</span></td>
+                                    </div>
 
-            <div class="row">
-
-                <!-- Area Chart -->
-                <div class="col-xl-8 col-lg-7">
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Total Orders Overview </h6>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                     aria-labelledby="dropdownMenuLink">
-                                    <div class="dropdown-header">Action:</div>
-                                    <a class="dropdown-item" id="imgExport" style="cursor:pointer">Export to Img</a>
-                                  
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <canvas id="myAreaChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Sale order Rate (%)</h6>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                     aria-labelledby="dropdownMenuLink">
-                                    <div class="dropdown-header">Dropdown Header:</div>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-pie pt-4 pb-2">
-                                <canvas id="myPieChart"></canvas>
-                            </div>
-                            <div class="mt-4 text-center small">
-                                <span class="mr-2">
-                                    <i class="fas fa-circle text-primary"></i> Pending
-                                </span>
-                                <span class="mr-2">
-                                    <i class="fas fa-circle text-success"></i> Completed
-                                </span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Row -->
-            <div class="row">
-
-                <!-- Content Column -->
-                <div class="col-lg-6 mb-4">
-
-                    <!-- Project Card Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Locations capacity available</h6>
-                        </div>
-                        <div class="card-body">
-                            <div th:each="item : ${locations}">
-                                <!--
-                                
-                                -->
-                                <h4 class="small font-weight-bold" th:text="${item.loc_desc}">Server Migration </h4><span
-
-                                    class="float-right" th:text="${#numbers.formatDecimal(((item.loc_remain+item.loc_holding)/item.loc_cap *100),0,'COMMA',2,'POINT') +'%'}" style=" transform: translate(-60px,-30px);">20%</span>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-primary" role="progressbar" th:style="'width:'+@{${100-((item.loc_remain+item.loc_holding)/item.loc_cap *100)}}+'%;' "
-                                         aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    <td th:text="${item.goods_name}">Goods Name</td>
+                                    <td th:text="${item.from_loc}">From Location</td>
+                                    <td th:text="${item.to_loc}">To Location</td>
+                                    <td th:text="${item.quantity}">Quantity</td>
 
 
-
-                </div>
-
-                <div class="col-lg-6 mb-4">
-
-                    <!-- Illustrations -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Nearly transacions</h6>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered" id="tblTrans" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='10'>
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Type</th>
-                                        <th>Goods Name</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Quantity</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="item: ${trans}">
-                                        <td th:text="${item.id}">Id</td>
-
-                                <div th:if="${item.type.equals('in')}">
-                                    <td><span class="badge badge-warning">Allocate</span></td>
-                                </div>
-                                <div th:if="${item.type.equals('out')}">
-                                    <td><span class="badge badge-success">Issue</span></td>
-                                </div>
-                                <div th:if="${item.type.equals('unqualified')}">
-                                    <td><span class="badge badge-danger">Unqualified</span></td>
-                                </div>
-                                <div th:if="${item.type.equals('Recycle')}">
-                                    <td><span class="badge badge-primary">Recycle</span></td>
-                                </div>
-                                <div th:if="${item.type.equals('Disposed')}">
-                                    <td><span class="badge badge-danger">Disposed</span></td>
-                                </div>
-
-                                <td th:text="${item.goods_name}">Goods Name</td>
-                                <td th:text="${item.from_loc}">From Location</td>
-                                <td th:text="${item.to_loc}">To Location</td>
-                                <td th:text="${item.quantity}">Quantity</td>
-
-
-                                </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+
+                        <!-- Approach -->
+
+
                     </div>
-
-                    <!-- Approach -->
-
-
                 </div>
-            </div>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
-            <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-            <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-            <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+                <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+                <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+                <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <script>
-                $(document).ready(function () {
-                    const logo = new Image();
-                        logo.src = "http://localhost:8080/goods-photos/logo123.png";
-                        logo.width=200;
-                        logo.height=100;
+                <script>
+                    $(document).ready(function () {
+                        const logo = new Image();
+                        logo.src = "http://localhost:8080/goods-photos/logo456.png";
+                        logo.width = 200;
+                        logo.height = 150;
                         console.log(logo);
-                    $('.nav-dash').addClass('active');
-                    $('#tblTrans').DataTable().order([1, 'desc']);
-                    $('#imgExport').click(function () {
-                        var canvas = document.getElementById("myAreaChart");
-                        var anchor = document.createElement("a");
-                        var ctx = canvas.getContext("2d");
-                        ctx.globalCompositeOperation = 'destination-over'
-// Now draw!
-                        ctx.fillStyle = "white";
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        anchor.href = canvas.toDataURL("image/png");
-                        anchor.download = "order_chart.PNG";
-                        anchor.click();
-                    });
-                    $('#pdfExport').click(function () {
-                        var canvas = document.getElementById("myAreaChart");
-                        var imgData = canvas.toDataURL("image/png");
-                         var canvas1 = document.getElementById("myPieChart");
-                        var imgData1 = canvas1.toDataURL("image/png");
-                        imgData1.height=200;
-                        var pdf = new jsPDF({
-                            orientation: "landscape",
-                            format:[300,270]
+                        $('.nav-dash').addClass('active');
+                        $('#tblTrans').DataTable().order([1, 'desc']);
+                        $('#imgExport').click(function () {
+                            var canvas = document.getElementById("myAreaChart");
+                            var anchor = document.createElement("a");
+                            var ctx = canvas.getContext("2d");
+                            ctx.globalCompositeOperation = 'destination-over'
+                            // Now draw!
+                            ctx.fillStyle = "white";
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            anchor.href = canvas.toDataURL("image/png");
+                            anchor.download = "order_chart.PNG";
+                            anchor.click();
                         });
-                        
-                        const date = new Date();
+                        $('#pdfExport').click(function () {
+                            //const loc_cap_rp = document.getElementById("loc_cap_rp");
+                            var canvas = document.getElementById("myAreaChart");
+                            var imgData = canvas.toDataURL("image/png");
+                            var canvas1 = document.getElementById("myPieChart");
+                            var imgData1 = canvas1.toDataURL("image/png");
+                            imgData1.height = 200;
+                           
 
-                        let day = date.getDate();
-                        let month = date.getMonth() + 1;
-                        let year = date.getFullYear();
-                        let currentDate = `${day}-${month}-${year}`;
-                        pdf.addImage(logo,'PNG',5,5);
-                        pdf.text("2HAT Warehouses", 5, 40);                      
-                        pdf.text("Total Orders report(In 1 year)", 120, 40);
-                        pdf.addImage(imgData, 'PNG', 10, 50);
-                        pdf.text("Sale Orders rate report(%)", 120, 160);
-                        pdf.addImage(imgData1, 'PNG', 100, 170);
-                        pdf.save("order_chart"+currentDate + ".pdf");
+                            const date = new Date();
+
+                                                    let day = date.getDate();
+                                                    let month = date.getMonth() + 1;
+                                                    let year = date.getFullYear();
+                                                    let currentDate = `${day}-${month}-${year}`;
+                            //                        pdf.addImage(logo,'PNG',10,5);
+                            //                        pdf.setFont("times");
+                            //                                           
+                            //                        pdf.text("TOTAL ORDERS REPORT(IN A YEAR)", 105, 33);
+                            //                        pdf.addImage(imgData, 'PNG', 40, 40);
+                            //                        pdf.text("SALE ORDERS RATE REPORT(%)", 100, 160);
+                            //                        pdf.addImage(imgData1, 'PNG', 40, 170);
+
+                            html2canvas(document.getElementById("content1")).then(function (canvas) {
+                                var img =canvas.toDataURL();
+                                console.log(img.width, img.height);
+                                var anchorTag = document.createElement("a");
+                                document.body.appendChild(anchorTag);
+                                 var pdf = new jsPDF({
+                                    orientation: "landscape",
+                                    format: [450, 470]
+                                });
+                               
+                                pdf.addImage(img, 'PNG', 26, 17);
+                                pdf.setFontStyle("bold");
+                                pdf.text("2HAT WAREHOUSE", 225, 13);
+                                pdf.save("order_chart" + currentDate + ".pdf");
+                            });
+
+                        });
                     });
-                });
-            </script>
+                </script>
+            </div>
         </div>
     </body>
 </html>
