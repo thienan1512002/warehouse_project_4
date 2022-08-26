@@ -319,14 +319,10 @@
                                     });
                                 }
                                 if (res===501){
-                                    Swal.fire('Ooops','This customer code has been created before','error').then(function(){
-                                        window.location.reload();
-                                    });
+                                    Swal.fire('Ooops','This customer code has been created before','error');
                                 }
                                 if (res===500){
-                                    Swal.fire('Ooops','Required fields must not be blank!','error').then(function(){
-                                        window.location.reload();
-                                    });
+                                    Swal.fire('Ooops','Required fields must not be blank!','error');
                                 }
                             }
                         });

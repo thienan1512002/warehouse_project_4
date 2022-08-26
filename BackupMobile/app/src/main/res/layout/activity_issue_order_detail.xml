@@ -161,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint ="@color/green"
+                android:backgroundTint="@color/green"
                 android:text="Submit" />
         </LinearLayout>
         <LinearLayout
@@ -169,14 +169,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="left"
-            android:orientation="vertical" >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnIssueDecline"
-                android:backgroundTint ="@color/red"
-                android:text="Decline"
-                android:layout_marginLeft="10dp"/>
-        </LinearLayout>
+            android:orientation="vertical" />
     </LinearLayout>
 </RelativeLayout>
